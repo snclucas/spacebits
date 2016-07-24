@@ -1,9 +1,9 @@
-import org.braincycles.spacebits.components.propulsion.Engine;
-import org.braincycles.spacebits.components.propulsion.EngineVector;
-import org.braincycles.spacebits.components.propulsion.ThrustDriveInterface;
-import org.braincycles.spacebits.software.PropulsionManagementSoftware;
-import org.braincycles.spacebits.spacecraft.Spacecraft;
-import org.braincycles.spacebits.status.SystemStatusMessage;
+import org.spacebits.components.propulsion.Engine;
+import org.spacebits.components.propulsion.EngineVector;
+import org.spacebits.components.propulsion.ThrustDriveInterface;
+import org.spacebits.software.PropulsionManagementSoftware;
+import org.spacebits.spacecraft.Spacecraft;
+import org.spacebits.status.SystemStatusMessage;
 
 import asg.cliche.Command;
 import asg.cliche.InputConverter;

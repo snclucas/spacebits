@@ -5,8 +5,8 @@ import asg.cliche.ShellFactory;
 
 import java.io.IOException;
 
-import org.braincycles.spacebits.spacecraft.Spacecraft;
-import org.braincycles.spacebits.spacecraft.SpacecraftFactory;
+import org.spacebits.spacecraft.Spacecraft;
+import org.spacebits.spacecraft.SpacecraftFactory;
 
 public class CommandRunner implements ShellDependent {
     

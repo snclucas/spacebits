@@ -1,16 +1,16 @@
 
 
-import org.braincycles.spacebits.algorithm.SimpleRadioFrequencyPropagationModel;
-import org.braincycles.spacebits.components.comms.RadioCommunicator;
-import org.braincycles.spacebits.components.propulsion.Engine;
-import org.braincycles.spacebits.components.propulsion.ThrustDriveInterface;
-import org.braincycles.spacebits.software.PropulsionManagementSoftware;
-import org.braincycles.spacebits.spacecraft.BusComponentSpecification;
-import org.braincycles.spacebits.spacecraft.Spacecraft;
-import org.braincycles.spacebits.spacecraft.SpacecraftFactory;
-import org.braincycles.spacebits.status.SystemStatus;
-import org.braincycles.spacebits.universe.Universe;
-import org.braincycles.spacebits.universe.celestialobjects.Star;
+import org.spacebits.algorithm.SimpleRadioFrequencyPropagationModel;
+import org.spacebits.components.comms.RadioCommunicator;
+import org.spacebits.components.propulsion.Engine;
+import org.spacebits.components.propulsion.ThrustDriveInterface;
+import org.spacebits.software.PropulsionManagementSoftware;
+import org.spacebits.spacecraft.BusComponentSpecification;
+import org.spacebits.spacecraft.Spacecraft;
+import org.spacebits.spacecraft.SpacecraftFactory;
+import org.spacebits.status.SystemStatus;
+import org.spacebits.universe.Universe;
+import org.spacebits.universe.celestialobjects.Star;
 
 
 public class Driver {
