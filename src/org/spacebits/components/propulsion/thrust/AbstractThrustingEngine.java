@@ -78,8 +78,9 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 
 
 	@Override
-	public void callVector(EngineVector engineVector) {
+	public BusRequirement callVector(EngineVector engineVector) {
 		this.engineVector = engineVector;
+		return new BusRequirement(0, 0);//TOT: change this or look if correct
 	}
 	
 	

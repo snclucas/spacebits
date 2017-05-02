@@ -9,7 +9,7 @@ import org.spacebits.spacecraft.BusRequirement;
 public interface ThrustingEngine extends Engine {
 	BusRequirement callDrive(double powerLevel);
 	BusRequirement callStop();
-	void callVector(EngineVector engineVector);
+	BusRequirement callVector(EngineVector engineVector);
 
 	ThrustProfile getThrustProfile();
 
