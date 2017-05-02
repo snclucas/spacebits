@@ -1,12 +1,12 @@
 package org.spacebits.components.propulsion;
 
-import org.spacebits.algorithm.thrust.ThrustAlgorithm;
-import org.spacebits.algorithm.thrust.ThrustAlgorithmFactory;
 import org.spacebits.components.propulsion.thrust.SimpleIonEngine;
 import org.spacebits.components.propulsion.thrust.SimpleThruster;
 import org.spacebits.data.DataFactory;
 import org.spacebits.data.SpacecraftComponentData;
 import org.spacebits.physics.Unit;
+import org.spacebits.profiles.ThrustProfile;
+import org.spacebits.profiles.ThrustProfileFactory;
 
 public class EngineFactory extends DataFactory {
 
@@ -16,8 +16,8 @@ public class EngineFactory extends DataFactory {
 		if(engineType.equals(SimpleIonEngine.typeID.toString())){
 			double maximumThrust = 1 * Unit.N;			
 
-			ThrustAlgorithm thrustAlgorithm = ThrustAlgorithmFactory.getThrustAlgorithm(
-					ThrustAlgorithmFactory.SIMPLE_LINEAR);	
+			ThrustProfile thrustAlgorithm = ThrustProfileFactory.getThrustAlgorithm(
+					ThrustProfileFactory.SIMPLE_LINEAR);	
 
 			//Align along axis of spacecraft
 			EngineVector engineVector = new EngineVector(1,0,0);
@@ -30,8 +30,8 @@ public class EngineFactory extends DataFactory {
 		else if(engineType.equals(SimpleThruster.typeID.toString())){
 			double maximumThrust = 1 * Unit.kN; // N	
 
-			ThrustAlgorithm thrustAlgorithm = ThrustAlgorithmFactory.getThrustAlgorithm(
-					ThrustAlgorithmFactory.SIMPLE_LINEAR);	
+			ThrustProfile thrustAlgorithm = ThrustProfileFactory.getThrustAlgorithm(
+					ThrustProfileFactory.SIMPLE_LINEAR);	
 
 			//Align along axis of spacecraft
 			EngineVector engineVector = new EngineVector(1,0,0);

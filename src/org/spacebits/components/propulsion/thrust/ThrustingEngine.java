@@ -1,19 +1,19 @@
 package org.spacebits.components.propulsion.thrust;
 
-import org.spacebits.algorithm.thrust.ThrustAlgorithm;
 import org.spacebits.components.propulsion.Engine;
 import org.spacebits.components.propulsion.EngineVector;
+import org.spacebits.profiles.ThrustProfile;
 import org.spacebits.spacecraft.BusRequirement;
 
 
-public interface ThrustEngine extends Engine {
+public interface ThrustingEngine extends Engine {
 	BusRequirement callDrive(double powerLevel);
 	BusRequirement callStop();
-	BusRequirement callVector(EngineVector engineVector);
+	void callVector(EngineVector engineVector);
 
-	ThrustAlgorithm getThrustAlgorithm();
+	ThrustProfile getThrustProfile();
 
-	void setThrustAlgorithm(ThrustAlgorithm thrustAlgorithm);
+	void setThrustProfile(ThrustProfile thrustProfile);
 
 	double[] getThrust(double[] velocity);
 

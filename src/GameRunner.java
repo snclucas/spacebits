@@ -16,7 +16,7 @@ public class GameRunner {
 	public void gameLoop()
 	{
 		long lastLoopTime = System.nanoTime();
-		final int TARGET_FPS = 1;
+		final int TARGET_FPS = 10;
 		final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;   
 
 		// keep looping round til the game ends

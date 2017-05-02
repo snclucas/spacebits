@@ -2,45 +2,36 @@ package org.spacebits.components.propulsion.thrust;
 
 import java.util.List;
 
-import org.spacebits.algorithm.thrust.ThrustAlgorithm;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.comms.Status;
-import org.spacebits.components.propulsion.AbstractEngine;
 import org.spacebits.components.propulsion.EngineVector;
+import org.spacebits.profiles.FuelConsumptionProfile;
+import org.spacebits.profiles.SimpleLinearFuelConsumptionProfile;
+import org.spacebits.profiles.ThrustProfile;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatus;
 
-public abstract class AbstractFuelConsumingEngine extends AbstractEngine implements FuelConsumingEngine {
+public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrustingEngine implements FuelConsumingEngine {
 
+	protected FuelConsumptionProfile fuelConsumptionProfile;
 	protected FuelSubSystem fuelSubSystem;
 	
-	public AbstractFuelConsumingEngine(String name, BusComponentSpecification busResourceSpecification,
-			double maximumThrust, ThrustAlgorithm thrustModel,
+	public AbstractThrustingFuelConsumingEngine(String name, BusComponentSpecification busResourceSpecification,
+			double maximumThrust, ThrustProfile thrustModel, FuelConsumptionProfile fuelConsumptionModel,
 			EngineVector engineVector, boolean vectored) {
-		super(name, busResourceSpecification, maximumThrust, thrustModel,
+		super(name, busResourceSpecification, maximumThrust, thrustModel, 
 				engineVector, vectored);	
+		this.fuelConsumptionProfile = fuelConsumptionModel;
 	}
 	
 
-	public AbstractFuelConsumingEngine(String name, BusComponentSpecification busResourceSpecification,
+	public AbstractThrustingFuelConsumingEngine(String name, BusComponentSpecification busResourceSpecification,
 			double maximumThrust, EngineVector engineVector, boolean vectored) {
 		super(name, busResourceSpecification, maximumThrust,
 				engineVector, vectored);	
+		this.fuelConsumptionProfile = new SimpleLinearFuelConsumptionProfile("Linear model");
 	}
 	
-	
-	@Override
-	public double getFuelConsumptionRate() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-	@Override
-	public void setFuelSubSystem(FuelSubSystem fuelSubSystem) {
-		this.fuelSubSystem = fuelSubSystem;
-	}
-
 	
 	@Override
 	public SystemStatus online() {
@@ -70,7 +61,33 @@ public abstract class AbstractFuelConsumingEngine extends AbstractEngine impleme
 	}
 
 
+	@Override
+	public double getFuelConsumptionRate() {
+		return fuelConsumptionProfile.getNormalizedFuelConsumption(this.powerLevel);
+	}
+	
+	
+	@Override
+	public double getFuelConsumptionRate(double powerLevel) {
+		return fuelConsumptionProfile.getNormalizedFuelConsumption(powerLevel);
+	}
+	
+	
+	@Override
+	public void setFuelSubSystem(FuelSubSystem fuelSubSystem) {
+		this.fuelSubSystem = fuelSubSystem;
+	}
+	
+	
+	@Override
+	public FuelConsumptionProfile getFuelConsumptionProfile() {
+		return this.fuelConsumptionProfile;
+	}
 
 
+	@Override
+	public void setFuelConsumptionProfile(FuelConsumptionProfile fuelConsumptionProfile) {
+		this.fuelConsumptionProfile = fuelConsumptionProfile;
+	}
 
 }

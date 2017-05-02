@@ -1,53 +1,33 @@
 package org.spacebits.components.propulsion;
 
-import org.spacebits.algorithm.thrust.SimpleLinearThrustAlgorithm;
-import org.spacebits.algorithm.thrust.ThrustAlgorithm;
 import org.spacebits.components.AbstractBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.software.Message;
 import org.spacebits.software.PropulsionManagementSoftware;
 import org.spacebits.spacecraft.BusComponentSpecification;
-import org.spacebits.spacecraft.BusRequirement;
 import org.spacebits.status.SystemStatus;
 
 public abstract class AbstractEngine extends AbstractBusComponent implements Engine {
 
-	protected ThrustAlgorithm thrustModel;
+	
 	protected double powerLevel;
-	protected double maximumThrust;
 	protected EngineVector engineVector;
 	protected boolean vectored;
 	protected double requestedPowerLevel;
 	protected EngineVector requestedEngineVector;
 
-	public AbstractEngine(String name, BusComponentSpecification busResourceSpecification, double maximumThrust, ThrustAlgorithm thrustModel, 
+	public AbstractEngine(String name, BusComponentSpecification busResourceSpecification, 
 			EngineVector engineVector, boolean vectored) {
 		super(name, busResourceSpecification);
 
-		this.thrustModel = thrustModel;
-		this.maximumThrust = maximumThrust;
 		this.engineVector = engineVector;
 		this.requestedEngineVector = engineVector;
 		this.vectored = vectored;
 		this.powerLevel = 0;
-		this.requestedPowerLevel = powerLevel;
+		this.requestedPowerLevel = 0;
 	}
 
-	
-	
-	public AbstractEngine(String name, BusComponentSpecification busResourceSpecification, double maximumThrust, 
-			EngineVector engineVector, boolean vectored) {
-		super(name, busResourceSpecification);
-
-		this.thrustModel = new SimpleLinearThrustAlgorithm("Linear thrust model");
-		this.maximumThrust = maximumThrust;
-		this.engineVector = engineVector;
-		this.requestedEngineVector = engineVector;
-		this.vectored = vectored;
-		this.powerLevel = 0;
-		this.requestedPowerLevel = powerLevel;
-	}
 	
 
 	@Override
@@ -56,13 +36,9 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	}
 
 
-	public void setMaximumThrust(double maxThrust) {
-		this.maximumThrust = maxThrust;
-	}
-
-
-	public double getMaximumThrust() {
-		return this.maximumThrust;
+	@Override
+	public TypeInfo getTypeId() {
+		return typeID;
 	}
 
 
@@ -84,6 +60,12 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 		this.engineVector = this.requestedEngineVector;
 	}
 	
+	
+	@Override
+	public void setPowerLevel(double powerLevel) {
+		this.powerLevel = powerLevel;
+	}
+	
 
 	@Override
 	public double getPowerLevel() {
@@ -91,32 +73,18 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	}
 	
 
-	@Override
-	public double getRequiredPower(double requiredPowerLevel) {
-		double nominalPower = busResourceSpecification.getNominalPower();
-		double maximumOperatingPower = busResourceSpecification.getMaximumOperationalPower();
-		return nominalPower + (maximumOperatingPower-nominalPower) * thrustModel.getNormalizedPower(requiredPowerLevel);
-	}
 	
-
-	@Override
-	public double getRequiredCPUThroughput(double requiredPowerLevel) {
-		// The CPU throughput does not depend upon power level in this model
-		double nominalCPU = busResourceSpecification.getNominalCPUThroughout();
-		double maximumOperatingCPU = busResourceSpecification.getMaximumOperationalCPUThroughput();
-		return nominalCPU + (maximumOperatingCPU-nominalCPU) * thrustModel.getNormalizedCPU(requiredPowerLevel);
-	}
 
 
 	
 
 
-	public BusRequirement callVector(EngineVector engineVector) {
-		this.requestedEngineVector = engineVector;
-		double requiredPower = getOperatingPower();
-		double requiredCPUThroughput = getOperatingCPUThroughput();
-		return new BusRequirement(requiredPower, requiredCPUThroughput);
-	}
+	//public BusRequirement callVector(EngineVector engineVector) {
+	//	this.requestedEngineVector = engineVector;
+	//	double requiredPower = getOperatingPower();
+	//	double requiredCPUThroughput = getOperatingCPUThroughput();
+	//	return new BusRequirement(requiredPower, requiredCPUThroughput);
+	//}
 
 
 
@@ -134,15 +102,11 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 				"Mass: " + getMass() + " Kg, Volume: " + getVolume() + " m3, Power: <thrust dep.> GJ/s, CPU: " + getNominalCPUThroughput() + " GFLOPS";
 		description += "\n";
 		description += "   ---------------------------------------------";
-		description += "   Thrust model: " + thrustModel.toString() +"\n";
 		return description;
 	}
 
 
-	@Override
-	public SystemStatus runDiagnostics(int level) {
-		return thrustModel.runDiagnostics(level);
-	}
+	
 
 
 	@Override
@@ -152,11 +116,13 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	}
 
 
+	@Override
 	public EngineVector getEngineVector() {
 		return engineVector;
 	}
+	
 
-
+	@Override
 	public boolean isVectored() {
 		return vectored;
 	}

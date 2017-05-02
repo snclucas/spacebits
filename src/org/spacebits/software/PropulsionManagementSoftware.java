@@ -9,7 +9,7 @@ import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.components.propulsion.Engine;
 import org.spacebits.components.propulsion.EngineVector;
 import org.spacebits.components.propulsion.ThrustDriveInterface;
-import org.spacebits.components.propulsion.thrust.ThrustEngine;
+import org.spacebits.components.propulsion.thrust.ThrustingEngine;
 import org.spacebits.spacecraft.BusRequirement;
 import org.spacebits.status.SystemStatusMessage;
 
@@ -34,7 +34,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 		SystemStatusMessage message = null;
 		List<SpacecraftBusComponent> engines = computer.findBusComponent(Engine.categoryID);
 		for(SpacecraftBusComponent engine : engines)
-			if(engine instanceof ThrustEngine) {
+			if(engine instanceof ThrustingEngine) {
 				message =    ((ThrustDriveInterface) engine).callDrive(powerLevel);
 			}
 		return message;
@@ -42,7 +42,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 
 	public SystemStatusMessage callDrive(double powerLevel, int engineId) {
-		ThrustEngine engine = findEngineByIdent(engineId);
+		ThrustingEngine engine = findEngineByIdent(engineId);
 		if(engine == null)
 			return new SystemStatusMessage(this, "No engine found with ident:"+engineId, 
 					computer.getUniversalTime(), Status.CRITICAL);
@@ -70,7 +70,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 	
 	
 	public SystemStatusMessage callVector(EngineVector engineVector, int engineId) {
-		ThrustEngine engine = findEngineByIdent(engineId);
+		ThrustingEngine engine = findEngineByIdent(engineId);
 		if(engine == null)
 			return new SystemStatusMessage(null, "No engine found with id: "+engineId, computer.getUniversalTime(), Status.CRITICAL);
 
@@ -107,11 +107,11 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 
 
-	private ThrustEngine findEngineByIdent(int id) {
+	private ThrustingEngine findEngineByIdent(int id) {
 		List<SpacecraftBusComponent> engines = computer.findBusComponent(Engine.categoryID);
 		for(SpacecraftBusComponent engine : engines) {
 			if(engine.getId() == id)
-				return (ThrustEngine) engine;
+				return (ThrustingEngine) engine;
 		}
 		return null;
 	}

@@ -158,7 +158,7 @@ public class Universe {
 	public double[] moveSpacecraft() {
 		double[] thrust = new double[]{};
 		for(Spacecraft spacecraft : spacecraftInUniverse.values()) {
-			thrust = spacecraft.getThrust();
+			//thrust = spacecraft.getThrust();
 		}
 		return thrust;
 	}

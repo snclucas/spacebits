@@ -1,14 +1,14 @@
-package org.spacebits.algorithm.thrust;
+package org.spacebits.profiles;
 
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.status.SystemStatus;
 
-public class SimpleLinearThrustAlgorithm extends AbstractThrustAlgorithm {
+public class SimpleLinearFuelConsumptionProfile extends AbstractProfile implements FuelConsumptionProfile {
 	
-	public static TypeInfo typeID = new TypeInfo("SimpleLinearThrustAlgorithm");
+	public static TypeInfo typeID = new TypeInfo("SimpleLinearFuelConsumptionProfile");
 
-	public SimpleLinearThrustAlgorithm(String name) {
+	public SimpleLinearFuelConsumptionProfile(String name) {
 		super(name);
 	}
 	
@@ -20,46 +20,26 @@ public class SimpleLinearThrustAlgorithm extends AbstractThrustAlgorithm {
 	
 
 	@Override
-	public double getNormalizedThrust(double powerLevel) {
+	public double getNormalizedFuelConsumption(double powerLevel) {
 		return powerLevel;
 	}
 	
-	@Override
-	public double getNormalizedPower(double powerLevel) {
-		return powerLevel;
-	}
-
-	@Override
-	public double getNormalizedCPU(double powerLevel) {
-		return powerLevel;
-	}
 	
 	@Override
 	public String toString() {
-		return "Simple Linear Thrust Model";
+		return "Simple Linear Fuel Consumption";
 	}
 
 
 	@Override
-	public double[][] getNormalizedThrustProfile() {
+	public double[][] getNormalizedFuelConsumptionProfile() {
 		double[] profile = new double[10];
 		for(int i = 0; i<10;i++)
 			profile[i] =  1.0 / (10-i);
 		return new double[][]{profile};
 	}
 	
-	@Override
-	public double[][] getNormalizedPowerProfile() {
-		double[] profile = new double[10];
-		for(int i = 0; i<10;i++)
-			profile[i] =  1.0 / (10-i);
-		return new double[][]{profile};
-	}
-	
-	
 
-	
-	
 
 	@Override
 	public SystemStatus runDiagnostics(int level) {
@@ -75,6 +55,18 @@ public class SimpleLinearThrustAlgorithm extends AbstractThrustAlgorithm {
 	
 	private boolean validateModel() {
 		return true;
+	}
+	
+	
+	@Override
+	public int getId() {
+		return this.hashCode();
+	}
+
+
+	@Override
+	public final TypeInfo getCategoryId() {
+		return categoryID;
 	}
 	
 }

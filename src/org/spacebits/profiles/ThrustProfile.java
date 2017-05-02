@@ -1,12 +1,12 @@
-package org.spacebits.algorithm.thrust;
+package org.spacebits.profiles;
 
 import org.spacebits.Diagnosable;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.status.StatusProvider;
 
-public interface ThrustAlgorithm extends Diagnosable, StatusProvider {
+public interface ThrustProfile extends Diagnosable, StatusProvider {
 	
-	TypeInfo categoryID = new TypeInfo("ThrustAlgorithm");
+	TypeInfo categoryID = new TypeInfo("ThrustProfile");
 
 	double getNormalizedThrust(double powerLevel);
 	double getNormalizedPower(double powerLevel);
