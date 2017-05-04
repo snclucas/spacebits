@@ -6,13 +6,10 @@ import java.util.List;
 import org.spacebits.components.AbstractBusComponent;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
-import org.spacebits.components.comms.CommunicationComponent;
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.computers.SystemComputer;
-import org.spacebits.components.propulsion.Engine;
 import org.spacebits.status.SystemStatus;
 import org.spacebits.structures.hulls.Hull;
-import org.spacebits.utils.Utils;
 
 
 public abstract class AbstractSpacecraft extends AbstractBusComponent implements Spacecraft {
@@ -28,6 +25,8 @@ public abstract class AbstractSpacecraft extends AbstractBusComponent implements
 
 	protected List<SpacecraftBusComponent> components;
 	
+	protected Bus bus;
+	
 	
 	public AbstractSpacecraft(String name, Hull hull) {
 		super(name, new BusComponentSpecification());
@@ -35,6 +34,8 @@ public abstract class AbstractSpacecraft extends AbstractBusComponent implements
 		this.name = name;
 		setHull(hull);
 		systemsOnline = false;
+		this.bus = new SpacecraftBus("Spacecraft bus"); ;
+		this.bus.setSpacecraft(this);
 	}
 
 	@Override
@@ -42,14 +43,26 @@ public abstract class AbstractSpacecraft extends AbstractBusComponent implements
 		return Spacecraft.categoryID;
 	}
 	
+	
+	
+
+	public Bus getSpacecraftBus() {
+		return bus;
+	}
+
+	public void setBus(Bus bus) {
+		this.bus = bus;
+	}
+	
+	
 
 	@Override
 	public SystemStatus online() {
 		SystemStatus status = new SystemStatus(this);
 		
-		BasicSpacecraftFirmware.scanSpacecraftComponents(this);
+		BasicSpacecraftFirmware.scanSpacecraftComponents(bus);
 		
-		if(BasicSpacecraftFirmware.bootstrapSystemComputer(this) == false) {
+		if(BasicSpacecraftFirmware.bootstrapSystemComputer(bus) == false) {
 			status.addSystemMessage("No system computer found! Aborting spacecraft onlining.", 11, Status.CRITICAL);
 			systemsOnline = false;
 			online = false;
@@ -57,7 +70,7 @@ public abstract class AbstractSpacecraft extends AbstractBusComponent implements
 		}
 		else {
 			//Online the system computer
-			SystemStatus systemComputerStatus = systemComputer.online();
+			SystemStatus systemComputerStatus = bus.getSystemComputer().online();
 			status.mergeSystemStatus(systemComputerStatus);
 			if(status.isOK()) {
 				systemsOnline = true;
@@ -68,10 +81,11 @@ public abstract class AbstractSpacecraft extends AbstractBusComponent implements
 	}
 	
 	
-	@Override
-	public List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType) {
-		return BasicSpacecraftFirmware.findBusComponent(this, componentType);
-	}
+//	@Override
+//	public List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType) {
+//		return bus.findBusComponent(this, componentType);
+//		//return BasicSpacecraftFirmware.findBusComponent(this, componentType);
+//	}
 	
 	protected boolean isSystemsOnline() {
 		return systemsOnline;
@@ -85,7 +99,7 @@ public abstract class AbstractSpacecraft extends AbstractBusComponent implements
 
 	public void setHull(Hull hull) {
 		this.hull = hull;
-		addComponent(hull);
+		//addComponent(hull);
 	}
 
 
@@ -93,10 +107,10 @@ public abstract class AbstractSpacecraft extends AbstractBusComponent implements
 
 	
 	
-	@Override
-	public List<SystemComputer> getComputers() {
-		return BasicSpacecraftFirmware.getComputers(this);
-	}
+	//@Override
+	//public List<SystemComputer> getComputers() {
+	//	return BasicSpacecraftFirmware.getComputers(this);
+	//}
 	
 	
 	@Override
@@ -111,26 +125,17 @@ public abstract class AbstractSpacecraft extends AbstractBusComponent implements
 	}
 
 
-	@Override
-	public List<CommunicationComponent> getCommunicationDevices() {
-		return BasicSpacecraftFirmware.getCommunicationDevices(this);
-	}
 	
-	
-	@Override
-	public List<Engine> getEngines() {
-		return BasicSpacecraftFirmware.getEngines(this);
-	}
 
 	
 	@Override
 	public SystemComputer getSystemComputer() {
-		return this.systemComputer;
+		return bus.getSystemComputer();
 	}
 
 	
 	public void setSystemComputer(SystemComputer systemComputer) {
-		this.systemComputer = systemComputer;
+		bus.setSystemComputer(systemComputer);
 	}
 	
 	
@@ -195,12 +200,12 @@ public abstract class AbstractSpacecraft extends AbstractBusComponent implements
 
 
 	public double getTotalPowerRequirementOfSpacecraftBusComponents() {
-		return BasicSpacecraftFirmware.getTotalPowerAvailable(this);
+		return BasicSpacecraftFirmware.getTotalPowerAvailable(bus);
 	}
 
 
 	public double getTotalCPURequirementOfSpacecraftBusComponents() {
-		return BasicSpacecraftFirmware.getTotalCPUThroughputAvailable(this);
+		return BasicSpacecraftFirmware.getTotalCPUThroughputAvailable(bus);
 	}
 	
 	
@@ -217,31 +222,31 @@ public abstract class AbstractSpacecraft extends AbstractBusComponent implements
 
 	
 	
-	// -- Private methods -- //
-	
-	
-	@Override
-	public double getTotalPowerAvailable() {
-		return BasicSpacecraftFirmware.getTotalPowerAvailable(this);
-	}
-	
-	
-	@Override
-	public double getTotalCPUThroughputAvailable() {
-		return BasicSpacecraftFirmware.getTotalCPUThroughputAvailable(this);
-	}
-	
-	
-	@Override
-	public double getCurrentPowerRequirement() {
-		return BasicSpacecraftFirmware.getCurrentSpacecraftBusPowerRequirement(this);
-	}
-
-	
-	@Override
-	public double getCurrentCPUThroughputRequirement() {
-		return BasicSpacecraftFirmware.getCurrentSpacecraftBusCPUThroughputRequirement(this);
-	}
+//	// -- Private methods -- //
+//	
+//	
+//	@Override
+//	public double getTotalPowerAvailable() {
+//		return BasicSpacecraftFirmware.getTotalPowerAvailable(this);
+//	}
+//	
+//	
+//	@Override
+//	public double getTotalCPUThroughputAvailable() {
+//		return BasicSpacecraftFirmware.getTotalCPUThroughputAvailable(this);
+//	}
+//	
+//	
+//	@Override
+//	public double getCurrentPowerRequirement() {
+//		return BasicSpacecraftFirmware.getCurrentSpacecraftBusPowerRequirement(this);
+//	}
+//
+//	
+//	@Override
+//	public double getCurrentCPUThroughputRequirement() {
+//		return BasicSpacecraftFirmware.getCurrentSpacecraftBusCPUThroughputRequirement(this);
+//	}
 	
 	
 /*	@Override

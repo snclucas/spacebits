@@ -2,6 +2,7 @@ package org.spacebits.universe.celestialobjects;
 
 import org.spacebits.components.TypeInfo;
 import org.spacebits.universe.Coordinates;
+import org.spacebits.universe.Location;
 
 public class Planet extends AbstractCelestialObject {
 	
@@ -45,6 +46,8 @@ public class Planet extends AbstractCelestialObject {
 	public void setHabitatClass(String habitatClass) {
 		this.habitatClass = habitatClass;
 	}
+
+	
 
 
 }

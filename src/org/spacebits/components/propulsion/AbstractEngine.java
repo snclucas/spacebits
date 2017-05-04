@@ -5,7 +5,9 @@ import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.software.Message;
 import org.spacebits.software.PropulsionManagementSoftware;
+import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.BusComponentSpecification;
+import org.spacebits.spacecraft.BusRequirement;
 import org.spacebits.status.SystemStatus;
 
 public abstract class AbstractEngine extends AbstractBusComponent implements Engine {
@@ -36,20 +38,17 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	}
 
 
-	@Override
-	public TypeInfo getTypeId() {
-		return typeID;
-	}
+
 
 
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		if(systemComputer.hasSoftware(PropulsionManagementSoftware.typeID) != true) 
-			systemStatus.addSystemMessage("No engine management software loaded", systemComputer.getUniversalTime(), Status.PROBLEM);
+		if(getSystemComputer().hasSoftware(PropulsionManagementSoftware.typeID) != true) 
+			systemStatus.addSystemMessage("No engine management software loaded", getUniversalTime(), Status.PROBLEM);
 		else
-			systemStatus.addSystemMessage("Engine management software loaded", systemComputer.getUniversalTime(), Status.OK);
-		systemStatus.addSystemMessage(getName() + " online.", systemComputer.getUniversalTime(), Status.OK);
+			systemStatus.addSystemMessage("Engine management software loaded", getUniversalTime(), Status.OK);
+		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
 		return systemStatus;	
 	}
 
@@ -72,25 +71,15 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 		return powerLevel;
 	}
 	
-
 	
 
 
-	
-
-
-	//public BusRequirement callVector(EngineVector engineVector) {
-	//	this.requestedEngineVector = engineVector;
-	//	double requiredPower = getOperatingPower();
-	//	double requiredCPUThroughput = getOperatingCPUThroughput();
-	//	return new BusRequirement(requiredPower, requiredCPUThroughput);
-	//}
-
-
-
-
-
-	
+	public BusRequirement callVector(EngineVector engineVector) {
+		this.requestedEngineVector = engineVector;
+		double requiredPower = getOperatingPower();
+		double requiredCPUThroughput = getOperatingCPUThroughput();
+		return new BusRequirement(requiredPower, requiredCPUThroughput);
+	}
 
 
 
@@ -106,13 +95,10 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 	}
 
 
-	
-
-
 	@Override
-	public void recieveMessage(Message message) {
-		System.out.println("Message recieved by engine : " + getName() + "\n " + message.getMessage());
-
+	public Message recieveBusMessage(Message message) {
+		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
+		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
 
 

@@ -11,6 +11,8 @@ import org.spacebits.components.TypeInfo;
 import org.spacebits.navigation.BeaconSignal;
 import org.spacebits.physics.Physics;
 import org.spacebits.physics.Unit;
+import org.spacebits.software.Message;
+import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatus;
 import org.spacebits.universe.Coordinates;
@@ -145,6 +147,12 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 		return "Subspace beacon transciever: A device capable of detecting subspace harmonic distortions usually created by subspace beacons.";
 	}
 
+	
+	@Override
+	public Message recieveBusMessage(Message message) {
+		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
+		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
+	}
 
 
 }

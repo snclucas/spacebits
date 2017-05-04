@@ -13,11 +13,7 @@ public interface ThrustingEngine extends Engine {
 
 	ThrustProfile getThrustProfile();
 
-	void setThrustProfile(ThrustProfile thrustProfile);
-
 	double[] getThrust(double[] velocity);
-
-	void setMaximumThrust(double maxThrust);
 
 	double getMaximumThrust();
 }

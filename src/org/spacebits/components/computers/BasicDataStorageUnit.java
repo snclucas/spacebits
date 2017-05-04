@@ -1,43 +1,42 @@
-package org.spacebits.structures.hulls;
+package org.spacebits.components.computers;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.software.Message;
 import org.spacebits.software.SystemMessage;
+import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatus;
 
-public class SimpleMonocoqueHull extends AbstractHull {
-	public static TypeInfo typeID = new TypeInfo("SimpleMonocoqueHull");
-	
-	public SimpleMonocoqueHull(String name, HullSpecification hullSpecification, TypeInfo hullType) {
-		super(name, hullSpecification, hullType);
-	}
-	
 
-	@Override
+public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
+	
+	public BasicDataStorageUnit(String name,
+			BusComponentSpecification busResourceSpecification) {
+		super(name, busResourceSpecification);
+	}
+
+	public static TypeInfo typeID = new TypeInfo("BasicDataStorageUnit");
+	
+	private final Map<String, ArchivableData> data = new HashMap<String, ArchivableData>();
+
 	public TypeInfo getTypeId() {
 		return typeID;
 	}
 
 	@Override
-	public String describe() {
-		return "Simple Monocoque Hull ["+ hullSpecification.getName() +"]";
-	}
-	
-	
-	@Override
-	public double getOperatingPower() {
-		// Nominal and operation power are the same for this hull
-		return getNominalPower();
-	}
-	
-
-	@Override
-	public double getOperatingCPUThroughput() {
-		// Nominal and operation CPU are the same for this hull
-		return getNominalCPUThroughput();
+	public ArchivableData saveData(String id, ArchivableData dataRecord) {
+		return data.put(id, dataRecord);
 	}
 
+
+	@Override
+	public ArchivableData getData(String id) {
+		return data.get(id);
+	}
+	
 	@Override
 	public SystemStatus runDiagnostics(int level) {
 		//Nothing really to diagnose with this simple hull
@@ -49,9 +48,9 @@ public class SimpleMonocoqueHull extends AbstractHull {
 	@Override
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
-		return new SystemMessage(null, this, replyMessage, getUniversalTime());
+		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
-
+	
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
@@ -60,5 +59,14 @@ public class SimpleMonocoqueHull extends AbstractHull {
 	}
 	
 	
+	@Override
+	public String describe() {
+		return toString();
+	}
+
+	@Override
+	public String toString() {
+		return "BasicDataStorageUnit";
+	}
 
 }

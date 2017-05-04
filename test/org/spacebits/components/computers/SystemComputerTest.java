@@ -12,12 +12,14 @@ import org.spacebits.components.propulsion.EngineVector;
 import org.spacebits.components.propulsion.thrust.SimpleIonEngine;
 import org.spacebits.physics.Unit;
 import org.spacebits.software.PropulsionManagementSoftware;
+import org.spacebits.spacecraft.Bus;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.spacecraft.BusRequirement;
 import org.spacebits.spacecraft.OperationalSpecification;
 import org.spacebits.spacecraft.PhysicalSpecification;
 import org.spacebits.spacecraft.SimpleSpacecraft;
 import org.spacebits.spacecraft.Spacecraft;
+import org.spacebits.spacecraft.SpacecraftBus;
 import org.spacebits.spacecraft.SpacecraftFactory;
 import org.spacebits.status.SystemStatusMessage;
 import org.spacebits.structures.hulls.Hull;
@@ -34,6 +36,8 @@ public class SystemComputerTest {
 	double powerAtMaximumThrust = 1 * Unit.MW;
 	double cpuThroughputAtMaximumThrust = nominalCpu;
 	boolean vectored = false;
+	
+	Bus spacecraftBus = new SpacecraftBus("Spacecraft bus"); 
 
 	BusComponentSpecification busSpecs = new BusComponentSpecification(
 			new PhysicalSpecification(mass, volume),
@@ -41,6 +45,7 @@ public class SystemComputerTest {
 
 	Hull hull = HullFactory.getHull("Shuttle");
 
+	
 	Spacecraft spacecraft = new SimpleSpacecraft(SpacecraftFactory.SHUTTLE, hull);
 
 	//Align along axis of spacecraft
@@ -57,7 +62,7 @@ public class SystemComputerTest {
 	public void testRequestOperation() {
 
 		MockSystemComputer computer = new MockSystemComputer("Test computer", busSpecs, 
-				10 * Unit.GFLOP, spacecraft);
+				10 * Unit.GFLOP, spacecraftBus);
 
 		computer.totalPowerAvailable = 1 * Unit.kW;
 		computer.totalCPUAvailable = 1 * Unit.GFLOP;
@@ -82,7 +87,7 @@ public class SystemComputerTest {
 
 
 		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs, 
-				10 * Unit.GFLOP, spacecraft);
+				10 * Unit.GFLOP, spacecraftBus);
 
 
 

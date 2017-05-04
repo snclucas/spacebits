@@ -1,12 +1,14 @@
 package org.spacebits.software;
 
+import java.util.Map;
+
 import org.spacebits.components.SpacecraftBusComponent;
 
-public interface MessageMediator {
+public interface MessageMediator extends Software {
 	
-	boolean sendMessageTo(Message message, SpacecraftBusComponent component);
+	Message sendMessageTo(Message message, SpacecraftBusComponent component);
 	
-	int broadcastMessage(Message message);
+	Map<Integer, Message> broadcastMessage(Message message);
 	 
     boolean addComponent(SpacecraftBusComponent component);
 

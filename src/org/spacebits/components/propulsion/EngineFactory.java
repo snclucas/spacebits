@@ -2,6 +2,7 @@ package org.spacebits.components.propulsion;
 
 import org.spacebits.components.propulsion.thrust.SimpleIonEngine;
 import org.spacebits.components.propulsion.thrust.SimpleThruster;
+import org.spacebits.components.propulsion.thrust.ThrustingEngine;
 import org.spacebits.data.DataFactory;
 import org.spacebits.data.SpacecraftComponentData;
 import org.spacebits.physics.Unit;
@@ -12,7 +13,7 @@ import org.spacebits.profiles.ThrustProfileFactory;
 
 public class EngineFactory extends DataFactory {
 
-	public static Engine getEngine(String engineType, boolean vectored){
+	public static ThrustingEngine getEngine(String engineType, boolean vectored){
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(engineType);
 
 		if(engineType.equals(SimpleIonEngine.typeID.toString())){

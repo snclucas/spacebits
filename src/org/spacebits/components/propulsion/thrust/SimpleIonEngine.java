@@ -21,6 +21,9 @@ public class SimpleIonEngine extends AbstractThrustingFuelConsumingEngine implem
 	}
 	
 	
-
+	@Override
+	public TypeInfo getTypeId() {
+		return typeID;
+	}
 	
 }

@@ -3,15 +3,19 @@ package org.spacebits.components.propulsion;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.spacebits.algorithm.thrust.ThrustAlgorithm;
-import org.spacebits.algorithm.thrust.ThrustAlgorithmFactory;
+
 import org.spacebits.components.propulsion.Engine;
 import org.spacebits.components.propulsion.EngineFactory;
 import org.spacebits.components.propulsion.EngineVector;
 import org.spacebits.components.propulsion.thrust.SimpleIonEngine;
 import org.spacebits.components.propulsion.thrust.SimpleThruster;
+import org.spacebits.components.propulsion.thrust.ThrustingEngine;
 import org.spacebits.data.SpacecraftComponentData;
 import org.spacebits.physics.Unit;
+import org.spacebits.profiles.FuelConsumptionProfile;
+import org.spacebits.profiles.FuelConsumptionProfileFactory;
+import org.spacebits.profiles.ThrustProfile;
+import org.spacebits.profiles.ThrustProfileFactory;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.spacecraft.OperationalSpecification;
 import org.spacebits.spacecraft.PhysicalSpecification;
@@ -25,7 +29,7 @@ public class EngineTest {
 
 	@Test
 	public void testEngineConstruction() {
-		Engine engine = getTestEngine(true);
+		ThrustingEngine engine = getTestEngine(true);
 		engine.callVector(new EngineVector(0.3,0.1, 0.5));
 
 		assertEquals("Engine category incorrect", Engine.categoryID, engine.getCategoryId());
@@ -38,11 +42,9 @@ public class EngineTest {
 		assertEquals("Engine volume not set correctly", volume, engine.getVolume(), 0.001);
 		assertEquals("Engine power level not set correctly", 0.0, engine.getPowerLevel(), 0.001);
 		assertEquals("Engine maximum thrust not set correctly", maximumThrust, engine.getMaximumThrust(), 0.001);
-		
-		double newMaximumThrust = 10 * Unit.kN;
-		engine.setMaximumThrust(newMaximumThrust);
-		assertEquals("Engine maximum thrust not set correctly", newMaximumThrust, engine.getMaximumThrust(), 0.001);
 	}
+	
+
 
 
 
@@ -51,7 +53,7 @@ public class EngineTest {
 		// Engines can vector only if true is passed to their constructor.
 		// Setting the engine vectoring (directly on the engine) will do nothing if the engine cannot be vectored.
 
-		Engine engine = getTestEngine(false);
+		ThrustingEngine engine = getTestEngine(false);
 
 		//Try to vector engine - should fail, and original engine vector in place.
 		engine.callVector(engineVector2);
@@ -78,7 +80,7 @@ public class EngineTest {
 
 	@Test
 	public void testEnginePowerLevels() {
-		Engine engine = EngineFactory.getEngine(SimpleIonEngine.typeID.toString(), true);
+		ThrustingEngine engine = EngineFactory.getEngine(SimpleIonEngine.typeID.toString(), true);
 		/* Power level 0, expected zero thrust and nominal power use */
 		double powerLevel = 0.0;
 		
@@ -121,9 +123,8 @@ public class EngineTest {
 
 	@Test
 	public void testEnginePowerAndThrust() {
-		double maximumThrust = 1 * Unit.kN; // N	
 
-		Engine engine = getTestEngine(true);
+		ThrustingEngine engine = getTestEngine(true);
 		EngineVector engineVector = new EngineVector(0.3,0.1, 0.5);
 		engine.callVector(engineVector);
 
@@ -147,17 +148,22 @@ public class EngineTest {
 		engine.execute();
 		thrust = engine.getThrust(velocity);
 		double[] expectedThrustVector = new double[]{
-				engineVector.getVectorComponent(EngineVector.ROLL_AXIS) * (1 * Unit.kN) * powerLevel,
-				engineVector.getVectorComponent(EngineVector.PITCH_AXIS) * (1 * Unit.kN) * powerLevel,
-				engineVector.getVectorComponent(EngineVector.YAW_AXIS) * (1 * Unit.kN) * powerLevel
+				engineVector.getVectorComponent(EngineVector.Axis.ROLL) * maximumThrust * powerLevel,
+				engineVector.getVectorComponent(EngineVector.Axis.PITCH) * maximumThrust * powerLevel,
+				engineVector.getVectorComponent(EngineVector.Axis.YAW) * maximumThrust * powerLevel
 		};
 
 		expectedPower = engine.getNominalPower() + (engine.getMaximumOperationalPower() - engine.getNominalPower()) * powerLevel;
 		
 		assertEquals("Engine power not set correctly", expectedPower, engine.getOperatingPower(), 0.001);
-		assertEquals("Engine thrust not set correctly ROLL_AXIS", expectedThrustVector[EngineVector.ROLL_AXIS], thrust[EngineVector.ROLL_AXIS], 0.001);
-		assertEquals("Engine thrust not set correctly PITCH_AXIS", expectedThrustVector[EngineVector.PITCH_AXIS], thrust[EngineVector.PITCH_AXIS], 0.001);
-		assertEquals("Engine thrust not set correctly YAW_AXIS", expectedThrustVector[EngineVector.YAW_AXIS], thrust[EngineVector.YAW_AXIS], 0.001);
+		assertEquals("Engine thrust not set correctly ROLL_AXIS", expectedThrustVector[EngineVector.Axis.ROLL.getIndex()], 
+				thrust[EngineVector.Axis.ROLL.getIndex()], 0.001);
+		
+		assertEquals("Engine thrust not set correctly PITCH_AXIS", expectedThrustVector[EngineVector.Axis.PITCH.getIndex()], 
+				thrust[EngineVector.Axis.PITCH.getIndex()], 0.001);
+		
+		assertEquals("Engine thrust not set correctly YAW_AXIS", expectedThrustVector[EngineVector.Axis.YAW.getIndex()], 
+				thrust[EngineVector.Axis.YAW.getIndex()], 0.001);
 
 	}
 	
@@ -173,24 +179,27 @@ public class EngineTest {
 	double maxPower = 1000 * Unit.kW;
 	double maxCPU = 1 * Unit.kFLOP;
 	
-	double maximumThrust = 1 * Unit.kN; // N	
+	double maximumThrust = 1.04523 * Unit.kN; // N	
 	
 	
-	private Engine getTestEngine(boolean vectored) {
+	private ThrustingEngine getTestEngine(boolean vectored) {
 		
 		SpacecraftComponentData spacecraftComponentData = new SpacecraftComponentData(new BusComponentSpecification(
 				new PhysicalSpecification(mass, volume), new OperationalSpecification(nominalPower, nominalCPU, maxPower, maxCPU)));
 
-		ThrustAlgorithm thrustAlgorithm = ThrustAlgorithmFactory.getThrustAlgorithm(
-				ThrustAlgorithmFactory.SIMPLE_LINEAR);	
+		ThrustProfile thrustProfile = ThrustProfileFactory.getThrustAlgorithm(
+				ThrustProfileFactory.SIMPLE_LINEAR);	
+		
+		FuelConsumptionProfile fuelProfile = FuelConsumptionProfileFactory.getFuelConsumptionProfile (
+				FuelConsumptionProfileFactory.SIMPLE_LINEAR);	
 
 		//Align along axis of spacecraft
 		EngineVector engineVector = new EngineVector(1,0,0);
 
 		return new SimpleThruster(
 				SimpleThruster.typeID.typeIdString, spacecraftComponentData.getBusComponentSpecification(), 
-				maximumThrust, 
-				thrustAlgorithm, engineVector, vectored);
+				maximumThrust,
+				thrustProfile, fuelProfile,  engineVector, vectored);
 	}
 
 

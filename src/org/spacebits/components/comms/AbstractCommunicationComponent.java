@@ -10,6 +10,7 @@ import org.spacebits.components.AbstractBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.physics.Physics;
 import org.spacebits.software.Message;
+import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.BusComponentSpecification;
 
 public abstract class AbstractCommunicationComponent extends AbstractBusComponent implements CommunicationComponent {
@@ -137,9 +138,9 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 
 
 	@Override
-	public void recieveMessage(Message message) {
-		System.out.println("Message recieved by comm device: " + getName() + "\n " + message.getMessage());
-		
+	public Message recieveBusMessage(Message message) {
+		String replyMessage = "Message recieved by comm device: " + getName() + "\n " + message.getMessage();
+		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
 	
 	

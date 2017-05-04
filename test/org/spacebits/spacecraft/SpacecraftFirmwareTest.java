@@ -27,7 +27,9 @@ public class SpacecraftFirmwareTest {
 		
 		Hull hull = HullFactory.getHull("Shuttle");
 		
-		Spacecraft spacecraftBus = new SimpleSpacecraft("Test spacecraft", hull);
+		
+		Spacecraft spacecraft = new SimpleSpacecraft("Test spacecraft", hull);
+		Bus spacecraftBus = spacecraft.getSpacecraftBus();
 		
 		boolean hasComputer = BasicSpacecraftFirmware.bootstrapSystemComputer(spacecraftBus);
 		
@@ -61,7 +63,8 @@ public class SpacecraftFirmwareTest {
 		
 		
 		// New spacecraft
-		spacecraftBus = SpacecraftFactory.getSpacecraft("Shuttle");
+		spacecraft = SpacecraftFactory.getSpacecraft("Shuttle");
+		spacecraftBus = spacecraft.getSpacecraftBus();
 		
 		engines = BasicSpacecraftFirmware.getEngines(spacecraftBus);
 		assertEquals("Number of engines should be 1", 1, engines.size());

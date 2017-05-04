@@ -23,8 +23,8 @@ public class ComputerFactory extends DataFactory {
 			Software engineSoftware = new PropulsionManagementSoftware("Engine software", computer);
 			computer.loadSoftware(engineSoftware);
 			
-			MessageMediator messagingSystem = new SystemMessageService();
-			computer.setMessagingSystem(messagingSystem);
+			MessageMediator messagingSystem = new SystemMessageService("System message mediator software", computer);
+			computer.loadSoftware(messagingSystem);
 			return computer;
 		}
 

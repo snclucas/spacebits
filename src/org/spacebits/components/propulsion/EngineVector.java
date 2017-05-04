@@ -5,12 +5,19 @@ import java.util.Arrays;
 public class EngineVector {
 	
 	public enum Axis {
-		ROLL, PITCH, YAW;
+		ROLL(0), 
+		PITCH(1), 
+		YAW(2);
+		
+		private final int index;
+		Axis(int index) {
+			this.index = index;
+		}
+		
+		public int getIndex() {
+			return index;
+		}
 	}
-	
-	//public static int ROLL_AXIS = 0;
-	//public static int PITCH_AXIS = 1;
-	//public static int YAW_AXIS = 2;
 	
 	private final double[] vectorComponents;
 
@@ -30,8 +37,8 @@ public class EngineVector {
 	}
 	
 	
-	public double getVectorComponent(int index) {
-		return vectorComponents[index];
+	public double getVectorComponent(Axis axis) {
+		return vectorComponents[axis.getIndex()];
 	}
 	
 

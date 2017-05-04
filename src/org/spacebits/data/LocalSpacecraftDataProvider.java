@@ -2,6 +2,7 @@ package org.spacebits.data;
 
 import org.spacebits.components.comms.RadioCommunicator;
 import org.spacebits.components.comms.SubSpaceCommunicator;
+import org.spacebits.components.computers.BasicDataStorageUnit;
 import org.spacebits.components.computers.BasicSystemComputer;
 import org.spacebits.components.energygeneration.SimpleSolarArray;
 import org.spacebits.components.energygeneration.SubspacePowerExtractor;
@@ -39,6 +40,13 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.3 * Unit.l), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 
+		// Datastore 
+		
+		if(componentType.equals(BasicDataStorageUnit.typeID.toString()))	
+			return new SpacecraftComponentData(new BusComponentSpecification(
+					new PhysicalSpecification(100 * Unit.kg, 1.3 * Unit.l), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
+
+		
 
 		// Energy generators
 

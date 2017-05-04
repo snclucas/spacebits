@@ -8,8 +8,8 @@ import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.software.MessageMediator;
 import org.spacebits.software.Software;
+import org.spacebits.spacecraft.Bus;
 import org.spacebits.spacecraft.BusRequirement;
-import org.spacebits.spacecraft.Spacecraft;
 import org.spacebits.status.SystemStatusMessage;
 
 public interface SystemComputer extends SpacecraftBusComponent, BusCommunicator {
@@ -20,10 +20,10 @@ public interface SystemComputer extends SpacecraftBusComponent, BusCommunicator 
 	Software getSoftware(TypeInfo softwareType);
 	boolean hasSoftware(TypeInfo softwareType);
 	SystemStatusMessage loadSoftware(Software software);
-	Spacecraft getSpacecraftBus();
+	Bus getSpacecraftBus();
 	double getMaxCPUThroughput();
 	
-	void registerSpacecraftBus(Spacecraft spacecraft);
+	void registerSpacecraftBus(Bus bus);
 	
 	double getUniversalTime();
 	
@@ -47,4 +47,5 @@ public interface SystemComputer extends SpacecraftBusComponent, BusCommunicator 
 	double getCurrentPowerRequirement();
     double getCurrentCPUThroughputRequirement();
 
+    boolean isOnSpacecraftBus();
 }

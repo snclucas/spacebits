@@ -2,6 +2,7 @@ package org.spacebits.spacecraft;
 
 import org.spacebits.components.TypeInfo;
 import org.spacebits.software.Message;
+import org.spacebits.software.SystemMessage;
 import org.spacebits.status.SystemStatus;
 import org.spacebits.structures.hulls.Hull;
 
@@ -40,9 +41,9 @@ public class SimpleSpacecraft extends AbstractSpacecraft {
 	
 
 	@Override
-	public void recieveMessage(Message message) {
-		// TODO Auto-generated method stub
-		
+	public Message recieveBusMessage(Message message) {
+		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
+		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
 	
 

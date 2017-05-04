@@ -1,10 +1,10 @@
 package org.spacebits.structures.hulls;
 
 import org.spacebits.components.BusCommunicator;
-import org.spacebits.components.SpacecraftBusComponent;
+import org.spacebits.components.PhysicalComponent;
 import org.spacebits.components.TypeInfo;
 
-public interface Hull extends SpacecraftBusComponent, BusCommunicator {
+public interface Hull extends PhysicalComponent, BusCommunicator {
 	
 	TypeInfo categoryID = new TypeInfo("Hull");
 	

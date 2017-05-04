@@ -27,7 +27,7 @@ public class RadioCommunicator extends AbstractCommunicationComponent {
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", systemComputer.getUniversalTime(), Status.OK);
+		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
 		return systemStatus; 
 	}
 
@@ -49,10 +49,10 @@ public class RadioCommunicator extends AbstractCommunicationComponent {
 		
 		if(propagationModel == null)
 			systemStatus.addSystemMessage(
-					"Level " + level + "diagnostics : Problem. No propagation model.", systemComputer.getUniversalTime(), Status.PROBLEM);
+					"Level " + level + "diagnostics : Problem. No propagation model.", getUniversalTime(), Status.PROBLEM);
 		else 
 			systemStatus.addSystemMessage(
-					"Running diagnostics [level " + level + "].", systemComputer.getUniversalTime(), Status.OK);
+					"Running diagnostics [level " + level + "].", getUniversalTime(), Status.OK);
 		
 		return systemStatus;
 	}

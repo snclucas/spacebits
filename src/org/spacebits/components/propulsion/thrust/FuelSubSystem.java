@@ -9,15 +9,15 @@ import org.spacebits.components.BusCommunicator;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
-import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.software.Message;
+import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatus;
-import org.spacebits.status.SystemStatusMessage;
 import org.spacebits.structures.storage.fuel.FuelStorageTank;
 
+
 public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBusComponent, BusCommunicator {
-	
+	public static TypeInfo typeID = new TypeInfo("FuelSubSystem");
 	public static TypeInfo categoryID = new TypeInfo("FuelSubSystem");
 	
 	public static int PROPULSION_FUEL_SUBSYSTEM = 1;
@@ -64,12 +64,12 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 	}
 	
 	
-	public SystemStatusMessage registerSystemComputer(SystemComputer systemComputer) {
-		SystemStatusMessage systemStatusMessage = super.registerSystemComputer(systemComputer);
-		for(FuelStorageTank tank : fuelTanks)
-			tank.registerSystemComputer(systemComputer);
-		return systemStatusMessage;
-	}
+//	public SystemStatusMessage registerSystemComputer(SystemComputer systemComputer) {
+//		SystemStatusMessage systemStatusMessage = super.registerSystemComputer(systemComputer);
+//		for(FuelStorageTank tank : fuelTanks)
+//			tank.registerSystemComputer(systemComputer);
+//		return systemStatusMessage;
+//	}
 	
 
 
@@ -126,9 +126,9 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 
 
 	@Override
-	public void recieveMessage(Message message) {
-		// TODO Auto-generated method stub
-		
+	public Message recieveBusMessage(Message message) {
+		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
+		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
 
 
@@ -141,7 +141,7 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", systemComputer.getUniversalTime(), Status.OK);
+		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
 		
 		for(FuelStorageTank tank : fuelTanks)
 			tank.online();

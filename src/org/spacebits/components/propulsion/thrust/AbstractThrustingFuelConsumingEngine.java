@@ -37,26 +37,26 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 	public SystemStatus online() {
 		SystemStatus systemStatus = super.online();
 		
-		List<SpacecraftBusComponent> busComponents = systemComputer.findBusComponent(FuelSubSystem.typeID);
+		List<SpacecraftBusComponent> busComponents = getSystemComputer().findBusComponent(FuelSubSystem.typeID);
 
 		if(busComponents.size() > 0) {
 			for(SpacecraftBusComponent component : busComponents) {	
 				if( ((FuelSubSystem)component).getFuelSubsystemType() == FuelSubSystem.PROPULSION_FUEL_SUBSYSTEM) {
-					systemStatus.addSystemMessage("Propulsion fuel subsystem found", systemComputer.getUniversalTime(), Status.OK);
+					systemStatus.addSystemMessage("Propulsion fuel subsystem found", getSystemComputer().getUniversalTime(), Status.OK);
 					FuelSubSystem fuelSubSystem = (FuelSubSystem)busComponents.get(0);
 					if(fuelSubSystem.hasFuelTanks() == false)
 						systemStatus.addSystemMessage("No fuel storage tanks found", 
-								systemComputer.getUniversalTime(), Status.WARNING);
+								getSystemComputer().getUniversalTime(), Status.WARNING);
 					else
-						systemStatus.addSystemMessage(fuelSubSystem.getFuelTanks().size() +  " fuel tank(s) found", systemComputer.getUniversalTime(), Status.OK);
+						systemStatus.addSystemMessage(fuelSubSystem.getFuelTanks().size() +  " fuel tank(s) found", getUniversalTime(), Status.OK);
 				}
 			}
 		}
 		else {
 			systemStatus.addSystemMessage("No fuel subsystem found", 
-					systemComputer.getUniversalTime(), Status.WARNING);
+					getSystemComputer().getUniversalTime(), Status.WARNING);
 		}
-		systemStatus.addSystemMessage(getName() + " online.", systemComputer.getUniversalTime(), Status.OK);
+		systemStatus.addSystemMessage(getName() + " online.", getSystemComputer().getUniversalTime(), Status.OK);
 		return systemStatus;
 	}
 

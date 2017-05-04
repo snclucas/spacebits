@@ -5,7 +5,8 @@ import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatus;
 
 public class Capacitor extends AbstractEnergyStorageDevice {
-
+	public static TypeInfo typeID = new TypeInfo("Capacitor");
+	
 	public Capacitor(String name,
 			BusComponentSpecification busResourceSpecification,
 			double storageCapacity, double chargeRate, double dischargeRate) {

@@ -7,6 +7,8 @@ import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.software.MessageMediator;
+import org.spacebits.software.SystemMessageService;
+import org.spacebits.spacecraft.Bus;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.spacecraft.BusRequirement;
 import org.spacebits.spacecraft.Spacecraft;
@@ -14,44 +16,43 @@ import org.spacebits.status.SystemStatus;
 import org.spacebits.status.SystemStatusMessage;
 
 public class BasicSystemComputer extends AbstractComputer implements SystemComputer {
-	
+
 	public static TypeInfo typeID = new TypeInfo("BasicSystemComputer");
-	
-	private MessageMediator messagingSystem;
 
 	private List<SystemStatusMessage> systemMessages;
-	
-	
-	public BasicSystemComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput, Spacecraft spacecraftBus) {
+
+
+	public BasicSystemComputer(String name, BusComponentSpecification busResourceSpecification, 
+			double maxCPUThroughput, Bus spacecraftBus) {
 		super(name, busResourceSpecification, maxCPUThroughput, spacecraftBus);
 		systemMessages = new ArrayList<SystemStatusMessage>();
 	}
-	
+
 	public TypeInfo getTypeId() {
 		return typeID;
 	}
-	
-	
+
+
 	@Override
 	public double getOperatingPower() {
 		return getNominalPower();
 	}
-	
+
 	@Override
 	public double getOperatingCPUThroughput() {
 		return getNominalCPUThroughput();
 	}
-	
-	
+
+
 	@Override
 	public SystemStatusMessage requestOperation(SpacecraftBusComponent component, BusRequirement busRequirement) {
-	 	//Remove current component power and add back the new requested power
+		//Remove current component power and add back the new requested power
 		double newBusPowerRequirement = getCurrentPowerRequirement() - component.getNominalPower() + busRequirement.getPowerRequirement();
 		double newBusCPUThroughputRequirement = getCurrentCPUThroughputRequirement() - component.getNominalCPUThroughput() + busRequirement.getCPUThroughputRequirement();
-		
+
 		//System.out.println("In request " + newBusPowerRequirement + " " + getTotalPowerAvailable());
 		//System.out.println("In request " + newBusCPUThroughputRequirement + " " + getTotalCPUThroughputAvailable());
-		
+
 		if((newBusPowerRequirement > getTotalPowerAvailable()))
 			return new SystemStatusMessage(this, "Not enough bus power to perform operation, " + newBusPowerRequirement + " needed, " + getTotalPowerAvailable() + " available", getUniversalTime(), Status.NOT_ENOUGH_POWER);
 		else if((newBusCPUThroughputRequirement > getTotalCPUThroughputAvailable()))
@@ -59,9 +60,9 @@ public class BasicSystemComputer extends AbstractComputer implements SystemCompu
 		else
 			return new SystemStatusMessage(this, "Operation permitted", getUniversalTime(), Status.PERMITTED);
 	}
-	
-	
-	
+
+
+
 
 	@Override
 	public List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType) {
@@ -104,7 +105,7 @@ public class BasicSystemComputer extends AbstractComputer implements SystemCompu
 		return status;
 	}
 
-	
+
 	public List<SystemStatusMessage> scanSpacecraftBusForComponents() {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
 		systemStatusMessages.add(new SystemStatusMessage(this, "Scanning spacecraft bus for components.", getUniversalTime(), Status.INFO));
@@ -112,25 +113,26 @@ public class BasicSystemComputer extends AbstractComputer implements SystemCompu
 		return systemStatusMessages;
 	}
 
-	
+
 
 	@Override
-	public void registerSpacecraftBus(Spacecraft spacecraftBus) {
+	public void registerSpacecraftBus(Bus spacecraftBus) {
 		this.spacecraftBus = spacecraftBus;
 		addSystemMessage(this, "Spacecraft bus " + spacecraftBus.getName() + " registered with system computer [" + this.getName() + "]", Status.OK);
 	}
-	
+
 
 
 	public List<SystemStatusMessage> registerSpacecraftComponents() {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
-		
+
 		for(SpacecraftBusComponent component : spacecraftBus.getComponents()) {
 			//Set this as the registered computer in the component
-			systemStatusMessages.add(component.registerSystemComputer(this));
+			//systemStatusMessages.add(component.registerSystemComputer(this));
 			// Register the component with the messaging system
-			messagingSystem.addComponent(component);
+			getMessagingSystem().addComponent(component);
 		}
+
 		return systemStatusMessages;
 	}
 
@@ -153,49 +155,50 @@ public class BasicSystemComputer extends AbstractComputer implements SystemCompu
 
 
 
-	
 
 
 
-	
+
+
 
 
 	@Override
 	public List<SystemStatusMessage> checkSystems() {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
 
-		double maximumAvailableVolume = spacecraftBus.getVolume();
-		
-		
 
-		systemStatusMessages.add(
-				new SystemStatusMessage(this, "Total vessel mass: " + 
-						spacecraftBus.getTotalMassOfSpacecraftBusComponents(), getUniversalTime(), Status.INFO));
-		
-		systemStatusMessages.add(
-				new SystemStatusMessage(this, "Available hull volume: " + maximumAvailableVolume, getUniversalTime(), Status.INFO));
-		systemStatusMessages.add(
-				new SystemStatusMessage(this, "Required hull volume: " + spacecraftBus.getTotalVolumeOfSpacecraftBusComponents(), getUniversalTime(), Status.INFO));
-		
-		if(maximumAvailableVolume < spacecraftBus.getTotalVolumeOfSpacecraftBusComponents())
+			double maximumAvailableVolume = bus.getSystemComputer().getVolume();
+
+
+
 			systemStatusMessages.add(
-					new SystemStatusMessage(this, "Not enough space", getUniversalTime(), Status.CRITICAL));
+					new SystemStatusMessage(this, "Total vessel mass: " + 
+							spacecraftBus.getTotalMassOfSpacecraftBusComponents(), getUniversalTime(), Status.INFO));
 
-		systemStatusMessages.add(
-				new SystemStatusMessage(this, "Available CPU throughput: " + getTotalCPUThroughputAvailable(), getUniversalTime(), Status.INFO));
-		systemStatusMessages.add(
-				new SystemStatusMessage(this, "Required CPU throughput: " + getCurrentCPUThroughputRequirement(), getUniversalTime(), Status.INFO));
-		
-		if(spacecraftBus.getTotalCPUThroughputAvailable() < getCurrentCPUThroughputRequirement())
-			systemStatusMessages.add(new SystemStatusMessage(this, "Not enough CPU", getUniversalTime(), Status.PROBLEM));
+			systemStatusMessages.add(
+					new SystemStatusMessage(this, "Available hull volume: " + maximumAvailableVolume, getUniversalTime(), Status.INFO));
+			systemStatusMessages.add(
+					new SystemStatusMessage(this, "Required hull volume: " + spacecraftBus.getTotalVolumeOfSpacecraftBusComponents(), getUniversalTime(), Status.INFO));
 
+			if(maximumAvailableVolume < spacecraftBus.getTotalVolumeOfSpacecraftBusComponents())
+				systemStatusMessages.add(
+						new SystemStatusMessage(this, "Not enough space", getUniversalTime(), Status.CRITICAL));
+
+			systemStatusMessages.add(
+					new SystemStatusMessage(this, "Available CPU throughput: " + getTotalCPUThroughputAvailable(), getUniversalTime(), Status.INFO));
+			systemStatusMessages.add(
+					new SystemStatusMessage(this, "Required CPU throughput: " + getCurrentCPUThroughputRequirement(), getUniversalTime(), Status.INFO));
+
+			if(spacecraftBus.getTotalCPUThroughputAvailable() < getCurrentCPUThroughputRequirement())
+				systemStatusMessages.add(new SystemStatusMessage(this, "Not enough CPU", getUniversalTime(), Status.PROBLEM));
+	
 		return systemStatusMessages;
 	}
 
-	
-	
-	
-	
+
+
+
+
 
 	@Override
 	public SystemStatusMessage addSystemMessage(SpacecraftBusComponent component, String message, Status status) {
@@ -206,33 +209,33 @@ public class BasicSystemComputer extends AbstractComputer implements SystemCompu
 
 
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	// -- Getters and setters -- //
-	
-	
-	
+
+
+
 
 	@Override
 	public List<SystemStatusMessage> getSystemMessages() {
 		return this.systemMessages;
 	}
-	
-	
-	
+
+
+
 	@Override
 	public MessageMediator getMessagingSystem() {
-		return messagingSystem;
+		return (MessageMediator)getSoftware(SystemMessageService.typeID);
 	}
 
 
 	@Override
 	public void setMessagingSystem(MessageMediator messagingSystem) {
-		this.messagingSystem = messagingSystem;
+		loadSoftware(messagingSystem);
 	}
-	
+
 
 }

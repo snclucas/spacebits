@@ -3,6 +3,7 @@ package org.spacebits.components.energygeneration;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.software.Message;
+import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatus;
 
@@ -33,7 +34,7 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", systemComputer.getUniversalTime(), Status.OK);
+		systemStatus.addSystemMessage(getName() + " online.", getSystemComputer().getUniversalTime(), Status.OK);
 		return systemStatus; 
 	}
 	
@@ -56,9 +57,9 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 	}
 
 	@Override
-	public void recieveMessage(Message message) {
-		// TODO Auto-generated method stub
-		
+	public Message recieveBusMessage(Message message) {
+		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
+		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
 
 	@Override

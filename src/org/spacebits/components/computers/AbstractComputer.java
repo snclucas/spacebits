@@ -9,8 +9,10 @@ import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.software.Message;
 import org.spacebits.software.Software;
+import org.spacebits.software.SystemMessage;
+import org.spacebits.spacecraft.Bus;
 import org.spacebits.spacecraft.BusComponentSpecification;
-import org.spacebits.spacecraft.Spacecraft;
+import org.spacebits.spacecraft.LocalBus;
 import org.spacebits.status.SystemStatus;
 import org.spacebits.status.SystemStatusMessage;
 
@@ -19,12 +21,20 @@ public abstract class AbstractComputer extends AbstractBusComponent implements S
 	protected Map<TypeInfo, Software> loadedSoftware;
 	
 	protected double maxCPUThroughput;
-	protected Spacecraft spacecraftBus;
+	protected Bus spacecraftBus;
+	protected boolean isOnSpacecraftbus = false;
 	
-	public AbstractComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput, Spacecraft spacecraftBus) {
+	public AbstractComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput, Bus spacecraftBus) {
 		super(name, busResourceSpecification);
 		this.maxCPUThroughput = maxCPUThroughput;
 		this.spacecraftBus = spacecraftBus;
+		loadedSoftware = new HashMap<TypeInfo, Software>();
+	}
+	
+	public AbstractComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput) {
+		super(name, busResourceSpecification);
+		this.maxCPUThroughput = maxCPUThroughput;
+		this.spacecraftBus = new LocalBus("LocalBus");
 		loadedSoftware = new HashMap<TypeInfo, Software>();
 	}
 	
@@ -35,7 +45,7 @@ public abstract class AbstractComputer extends AbstractBusComponent implements S
 	}
 	
 	
-	public Spacecraft getSpacecraftBus() {
+	public Bus getSpacecraftBus() {
 		return spacecraftBus;
 	}
 
@@ -43,12 +53,21 @@ public abstract class AbstractComputer extends AbstractBusComponent implements S
 
 
 
-	public void setSpacecraftBus(Spacecraft spacecraftBus) {
+	public void setSpacecraftBus(Bus spacecraftBus) {
 		this.spacecraftBus = spacecraftBus;
+		this.isOnSpacecraftbus = true;
 	}
+	
+	
 
 	
 	
+	@Override
+	public boolean isOnSpacecraftBus() {
+		return isOnSpacecraftbus;
+	}
+
+
 	@Override
 	public SystemStatusMessage loadSoftware(Software software) {
 		software.setComputer(this);
@@ -93,10 +112,12 @@ public abstract class AbstractComputer extends AbstractBusComponent implements S
 
 
 	@Override
-	public void recieveMessage(Message message) {
-		// TODO Auto-generated method stub
-		
+	public Message recieveBusMessage(Message message) {
+		String replyMessage = "Message recieved by computer: " + getName() + "\n " + message.getMessage();
+		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
+	
+	
 	
 
 	public double getMaxCPUThroughput() {
@@ -109,7 +130,7 @@ public abstract class AbstractComputer extends AbstractBusComponent implements S
 	}
 
 	@Override
-	public void registerSpacecraftBus(Spacecraft spacecraftBus) {
+	public void registerSpacecraftBus(Bus spacecraftBus) {
 		this.spacecraftBus = spacecraftBus;
 	}
 	

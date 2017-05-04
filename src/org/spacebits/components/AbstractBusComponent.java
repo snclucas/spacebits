@@ -2,20 +2,19 @@ package org.spacebits.components;
 
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.computers.SystemComputer;
+import org.spacebits.spacecraft.Bus;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatus;
 import org.spacebits.status.SystemStatusMessage;
 
 
-public abstract class AbstractBusComponent implements SpacecraftBusComponent {
-
-	public static TypeInfo typeID = new TypeInfo("AbstractBusComponent");
+public abstract class AbstractBusComponent implements SpacecraftBusComponent, PhysicalComponent {
 
 	protected boolean online;
 	
 	protected String name;
 
-	protected SystemComputer systemComputer;
+	protected Bus bus;
 	
 	protected BusComponentSpecification busResourceSpecification;
 	
@@ -116,18 +115,19 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 	
 
 	public SystemComputer getSystemComputer() {
-		return systemComputer;
+		return bus.getSystemComputer();
 	}
 
-	
-	public SystemStatusMessage registerSystemComputer(SystemComputer systemComputer) {
-		this.systemComputer = systemComputer;
-		return new SystemStatusMessage(this,getName() + " registering with systemcomputer", systemComputer.getUniversalTime(), Status.INFO);
-	}
+	//@Override
+	//public SystemStatusMessage registerWithSystemComputer(SystemComputer systemComputer) {
+	//	getSystemComputer().registerSpacecraftComponents()
+	//	this.systemComputer = systemComputer;
+	//	return new SystemStatusMessage(this,getName() + " registering with systemcomputer", systemComputer.getUniversalTime(), Status.INFO);
+	//}
 	
 	
 	public boolean isRegisteredWithSystemComputer() {
-		return this.systemComputer != null;
+		return getSystemComputer() != null;
 	}
 
 
@@ -141,10 +141,18 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent {
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
 		if(this.isRegisteredWithSystemComputer())
-			systemStatus.addSystemMessage(getName() + " online.", systemComputer.getUniversalTime(), Status.OK);
+			systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
 		else
-			systemStatus.addSystemMessage(getName() + " not registered with system computer.", systemComputer.getUniversalTime(), Status.CRITICAL); 
+			systemStatus.addSystemMessage(getName() + " not registered with system computer.", getUniversalTime(), Status.CRITICAL); 
 		return systemStatus; 
 	}
+
+
+	@Override
+	public double getUniversalTime() {
+		return getSystemComputer().getUniversalTime();
+	}
+	
+	
 
 }

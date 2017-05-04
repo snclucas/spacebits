@@ -25,7 +25,10 @@ public class SimpleThruster extends AbstractThrustingFuelConsumingEngine {
 	
 	
 	
-
+	@Override
+	public TypeInfo getTypeId() {
+		return typeID;
+	}
 
 
 	

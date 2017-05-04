@@ -53,7 +53,7 @@ public abstract class BasicSensorArray extends AbstractSensor {
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
-		systemStatus.addSystemMessage(getName() + " online.", systemComputer.getUniversalTime(), Status.OK);
+		systemStatus.addSystemMessage(getName() + " online.", getSystemComputer().getUniversalTime(), Status.OK);
 		return systemStatus; 
 	}
 
@@ -62,7 +62,7 @@ public abstract class BasicSensorArray extends AbstractSensor {
 		SystemStatus systemStatus = new SystemStatus(this);
 		// TODO Change this
 		systemStatus.addSystemMessage(
-				"Level " + level + "diagnostics : All OK.", systemComputer.getUniversalTime(), Status.OK);
+				"Level " + level + "diagnostics : All OK.", getSystemComputer().getUniversalTime(), Status.OK);
 
 		return systemStatus;
 	}

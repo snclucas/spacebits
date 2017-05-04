@@ -7,8 +7,11 @@ import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.comms.CommunicationComponent;
 import org.spacebits.components.comms.CommunicatorDeviceFactory;
 import org.spacebits.components.comms.RadioCommunicator;
+import org.spacebits.components.computers.BasicDataStorageUnit;
 import org.spacebits.components.computers.BasicSystemComputer;
 import org.spacebits.components.computers.ComputerFactory;
+import org.spacebits.components.computers.DataStore;
+import org.spacebits.components.computers.DataStoreFactory;
 import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.components.energygeneration.PowerGenerationFactory;
 import org.spacebits.components.energygeneration.PowerGenerator;
@@ -47,6 +50,9 @@ public class SpacecraftFactory {
 			
 			SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.typeID.toString());	
 			spacecraft.addComponent(systemComputer);
+
+			DataStore dataStore = DataStoreFactory.getDataStore(DataStoreFactory.BASIC_DATASTORE);
+			spacecraft.addComponent(dataStore);
 			
 			PropulsionManagementSoftware engineManagementSoftware = new PropulsionManagementSoftware("Test EngineManagementSoftware", systemComputer);
 			//systemComputer.loadSoftware(engineManagementSoftware);

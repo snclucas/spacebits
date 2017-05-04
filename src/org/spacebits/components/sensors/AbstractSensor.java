@@ -5,7 +5,6 @@ import java.util.List;
 import org.spacebits.Configuration;
 import org.spacebits.components.AbstractBusComponent;
 import org.spacebits.components.TypeInfo;
-import org.spacebits.software.Message;
 import org.spacebits.spacecraft.BusComponentSpecification;
 
 public abstract class AbstractSensor extends AbstractBusComponent implements Sensor {
@@ -67,12 +66,6 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 		return sensorProfile;
 	}
 
-
-	@Override
-	public void recieveMessage(Message message) {
-		System.out.println("Message recieved by comm device: " + getName() + "\n " + message.getMessage());
-		
-	}
 
 
 

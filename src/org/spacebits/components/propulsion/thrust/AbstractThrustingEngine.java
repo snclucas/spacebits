@@ -10,15 +10,15 @@ import org.spacebits.status.SystemStatus;
 
 public abstract class AbstractThrustingEngine extends AbstractEngine implements ThrustingEngine {
 	
-	protected ThrustProfile thrustModel;
-	private double maximumThrust;
+	protected final ThrustProfile thrustProfile;
+	private final double maximumThrust;
 
 	public AbstractThrustingEngine(String name,
 			BusComponentSpecification busResourceSpecification,
 			double maximumThrust, EngineVector engineVector, boolean vectored) {
 		super(name, busResourceSpecification, engineVector, vectored);
 		this.maximumThrust = maximumThrust;
-		this.thrustModel = new SimpleLinearThrustProfile("Linear thrust model");
+		this.thrustProfile = new SimpleLinearThrustProfile("Linear thrust model");
 	}
 
 	
@@ -28,7 +28,7 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 			EngineVector engineVector, boolean vectored) {
 		super(name, busResourceSpecification, engineVector,vectored);
 		this.maximumThrust = maximumThrust;
-		this.thrustModel = thrustModel;
+		this.thrustProfile = thrustModel;
 	}
 	
 	
@@ -47,19 +47,13 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 
 	@Override
 	public ThrustProfile getThrustProfile() {
-		return this.thrustModel;
-	}
-
-
-	@Override
-	public void setThrustProfile(ThrustProfile thrustModel) {
-		this.thrustModel = thrustModel;
+		return this.thrustProfile;
 	}
 
 
 	@Override
 	public double[] getThrust(double[] velocity) {
-		double thrust = maximumThrust * thrustModel.getNormalizedThrust(powerLevel);
+		double thrust = maximumThrust * thrustProfile.getNormalizedThrust(powerLevel);
 		double[] vector = engineVector.getVectorComponents();		
 		return new double[]{thrust * vector[0], thrust * vector[1], thrust * vector[2]};
 	}
@@ -69,26 +63,14 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 	public double getMaximumThrust() {
 		return this.maximumThrust;
 	}
-	
-	
-	@Override
-	public void setMaximumThrust(double maximumThrust) {
-		this.maximumThrust = maximumThrust;
-	}
 
 
-	@Override
-	public BusRequirement callVector(EngineVector engineVector) {
-		this.engineVector = engineVector;
-		return new BusRequirement(0, 0);//TOT: change this or look if correct
-	}
-	
 	
 	@Override
 	public double getRequiredPower(double requiredPowerLevel) {
 		double nominalPower = busResourceSpecification.getNominalPower();
 		double maximumOperatingPower = busResourceSpecification.getMaximumOperationalPower();
-		return nominalPower + (maximumOperatingPower-nominalPower) * thrustModel.getNormalizedPower(requiredPowerLevel);
+		return nominalPower + (maximumOperatingPower-nominalPower) * thrustProfile.getNormalizedPower(requiredPowerLevel);
 	}
 	
 
@@ -97,13 +79,13 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 		// The CPU throughput does not depend upon power level in this model
 		double nominalCPU = busResourceSpecification.getNominalCPUThroughout();
 		double maximumOperatingCPU = busResourceSpecification.getMaximumOperationalCPUThroughput();
-		return nominalCPU + (maximumOperatingCPU-nominalCPU) * thrustModel.getNormalizedCPU(requiredPowerLevel);
+		return nominalCPU + (maximumOperatingCPU-nominalCPU) * thrustProfile.getNormalizedCPU(requiredPowerLevel);
 	}
 	
 	
 	@Override
 	public SystemStatus runDiagnostics(int level) {
-		return thrustModel.runDiagnostics(level);
+		return thrustProfile.runDiagnostics(level);
 	}
 
 }

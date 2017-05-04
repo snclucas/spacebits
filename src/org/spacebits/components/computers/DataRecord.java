@@ -2,50 +2,33 @@ package org.spacebits.components.computers;
 
 import org.spacebits.components.TypeInfo;
 
-
-
 public class DataRecord {
 	
-	private int recordID;
+	private String recordTag;
 	private TypeInfo recordType;
-	private ArchivableData data;
+	private ArchivableData<?> data;
 	
-	
-	public DataRecord() {
+	public DataRecord(String recordTag, ArchivableData<?> data) {
 		super();
-		this.recordID = -1;
-		this.recordType = null;
-		this.data = null;
-	}
-	
-	
-	public DataRecord(int recordID, ArchivableData data) {
-		super();
-		this.recordID = recordID;
-		this.recordType = data.getCategoryId();
+		this.recordTag = recordTag;
+		this.recordType = data.getTypeId();
 		this.data = data;
 	}
-	
-	
-	public boolean isEmpty() {
-		return recordID < 0;
-	}
-	
 	
 	public TypeInfo getRecordType() {
 		return recordType;
 	}
 
-
 	public int getRecordID() {
-		return recordID;
+		return hashCode();
 	}
 
+	public String getRecordTag() {
+		return recordTag;
+	}
 
-
-	public ArchivableData getData() {
+	public ArchivableData<?> getData() {
 		return data;
 	}
-
 
 }

@@ -1,8 +1,9 @@
 package org.spacebits.components.computers;
 
 import org.spacebits.components.computers.BasicSystemComputer;
+import org.spacebits.spacecraft.Bus;
 import org.spacebits.spacecraft.BusComponentSpecification;
-import org.spacebits.spacecraft.Spacecraft;
+
 
 public class MockSystemComputer extends BasicSystemComputer{
 
@@ -12,7 +13,7 @@ public class MockSystemComputer extends BasicSystemComputer{
 	
 	public MockSystemComputer(String name,
 			BusComponentSpecification busResourceSpecification,
-			double maxCPUThroughput, Spacecraft spacecraftBus) {
+			double maxCPUThroughput, Bus spacecraftBus) {
 		super(name, busResourceSpecification, maxCPUThroughput, spacecraftBus);
 	}
 

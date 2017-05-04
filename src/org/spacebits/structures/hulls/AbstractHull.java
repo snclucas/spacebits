@@ -4,11 +4,14 @@ import org.spacebits.components.AbstractBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.materials.Material;
 import org.spacebits.software.Message;
+import org.spacebits.software.SystemMessage;
 
 public abstract class AbstractHull extends AbstractBusComponent implements Hull {
 
 	protected HullSpecification hullSpecification;
 	protected TypeInfo hullType;
+	
+	protected double usedVolume;
 	
 	private double hullSkinVolume;
 	
@@ -74,9 +77,9 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 
 
 	@Override
-	public void recieveMessage(Message message) {
-		// TODO Auto-generated method stub
-		
+	public Message recieveBusMessage(Message message) {
+		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
+		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
 	}
 
 

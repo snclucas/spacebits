@@ -2,13 +2,14 @@ package org.spacebits.universe;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.computers.DataRecord;
 import org.spacebits.utils.math.MathUtils;
 
-public abstract class AbstractLocation implements Location {
-	
+public abstract class AbstractLocation implements Location  {
 	
 	protected String name;
 	protected int id;
@@ -91,13 +92,7 @@ public abstract class AbstractLocation implements Location {
 	}
 
 	
-
-
 	
-	@Override
-	public DataRecord getDataRecord() {
-		return new DataRecord(this.getId(), this);
-	}
 
 	
 	@Override
@@ -122,6 +117,14 @@ public abstract class AbstractLocation implements Location {
 		} else if (!coordinates.equals(other.coordinates))
 			return false;
 		return true;
+	}
+
+	@Override
+	public Coordinates getData(String id) {
+		if("location".equals(id))
+			return coordinates;
+		else
+			return null;
 	}
 	
 	
