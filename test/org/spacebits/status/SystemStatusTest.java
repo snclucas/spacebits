@@ -85,4 +85,9 @@ class MockStatusProvider implements StatusProvider{
 		return 100;
 	}
 
+	@Override
+	public String describe() {
+		return"MockStatusProvider";
+	}
+
 }

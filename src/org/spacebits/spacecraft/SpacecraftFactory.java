@@ -7,11 +7,8 @@ import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.comms.CommunicationComponent;
 import org.spacebits.components.comms.CommunicatorDeviceFactory;
 import org.spacebits.components.comms.RadioCommunicator;
-import org.spacebits.components.computers.BasicDataStorageUnit;
 import org.spacebits.components.computers.BasicSystemComputer;
 import org.spacebits.components.computers.ComputerFactory;
-import org.spacebits.components.computers.DataStore;
-import org.spacebits.components.computers.DataStoreFactory;
 import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.components.energygeneration.PowerGenerationFactory;
 import org.spacebits.components.energygeneration.PowerGenerator;
@@ -27,7 +24,6 @@ import org.spacebits.components.sensors.SensorFactory;
 import org.spacebits.consumables.Fuel;
 import org.spacebits.data.SpacecraftDataProvider;
 import org.spacebits.physics.Unit;
-import org.spacebits.software.PropulsionManagementSoftware;
 import org.spacebits.structures.hulls.Hull;
 import org.spacebits.structures.hulls.HullFactory;
 import org.spacebits.structures.storage.fuel.CryogenicLiquidStorageTank;
@@ -50,11 +46,8 @@ public class SpacecraftFactory {
 			
 			SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.typeID.toString());	
 			spacecraft.addComponent(systemComputer);
-
-			DataStore dataStore = DataStoreFactory.getDataStore(DataStoreFactory.BASIC_DATASTORE);
-			spacecraft.addComponent(dataStore);
 			
-			PropulsionManagementSoftware engineManagementSoftware = new PropulsionManagementSoftware("Test EngineManagementSoftware", systemComputer);
+			//PropulsionManagementSoftware engineManagementSoftware = new PropulsionManagementSoftware("Test EngineManagementSoftware", systemComputer);
 			//systemComputer.loadSoftware(engineManagementSoftware);
 			
 			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.typeID.toString());

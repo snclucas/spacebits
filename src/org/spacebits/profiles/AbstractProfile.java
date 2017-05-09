@@ -18,7 +18,4 @@ public abstract class AbstractProfile {
 		this.name = name;
 	}
 	
-	
-	
-	
 }

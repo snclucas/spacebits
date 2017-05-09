@@ -5,8 +5,7 @@ import org.spacebits.components.TypeInfo;
 public interface DataStore {
 	TypeInfo categoryID = new TypeInfo("DataStore");
 	
-	ArchivableData saveData(String id, ArchivableData dataRecord);
-	
-	ArchivableData getData(String id);
+	void saveData(String id, ArchivableData data);
+	ArchivableData getData(String id, TypeInfo typeInfo);
 	
 }

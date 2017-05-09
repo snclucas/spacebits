@@ -14,7 +14,7 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent, Ph
 	
 	protected String name;
 
-	protected Bus bus;
+	protected Bus spacecraftBus;
 	
 	protected BusComponentSpecification busResourceSpecification;
 	
@@ -24,6 +24,17 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent, Ph
 		this.name = name;
 		this.busResourceSpecification = busResourceSpecification;
 	}
+	
+	
+
+
+	@Override
+	public void registerWithBus(Bus bus) {
+		bus.addBusComponent(this);
+		this.spacecraftBus = bus;
+	}
+
+
 
 
 	@Override
@@ -115,7 +126,7 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent, Ph
 	
 
 	public SystemComputer getSystemComputer() {
-		return bus.getSystemComputer();
+		return spacecraftBus.getSystemComputer();
 	}
 
 	//@Override

@@ -2,7 +2,6 @@ package org.spacebits.universe.celestialobjects;
 
 import org.spacebits.components.TypeInfo;
 import org.spacebits.universe.Coordinates;
-import org.spacebits.universe.Location;
 
 public class Planet extends AbstractCelestialObject {
 	
@@ -13,13 +12,15 @@ public class Planet extends AbstractCelestialObject {
 	private double radius;
 	private String habitatClass;
 
-	public Planet(int id, String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile, double radius, String habitatClass) {
+	public Planet(int id, String name, Coordinates coordinates, 
+			SensorSignalResponseProfile sensorSignalResponseProfile, double radius, String habitatClass) {
 		super(id, name, coordinates, sensorSignalResponseProfile);
 		this.radius = radius;
 		this.habitatClass = habitatClass;
 	}
 
-	public Planet(int id, String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile, double radius, String habitatClass) {
+	public Planet(int id, String name, Coordinates coordinates, 
+			CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile, double radius, String habitatClass) {
 		super(id, name, coordinates, relativeTo, sensorSignalResponseProfile);
 		this.radius = radius;
 		this.habitatClass = habitatClass;
@@ -47,7 +48,9 @@ public class Planet extends AbstractCelestialObject {
 		this.habitatClass = habitatClass;
 	}
 
-	
-
+	@Override
+	public String describe() {
+		return "A planet is a large body orbiting one or more stars.";
+	}
 
 }

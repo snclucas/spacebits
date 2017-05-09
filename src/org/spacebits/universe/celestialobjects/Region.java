@@ -34,5 +34,10 @@ public class Region extends AbstractCelestialObject {
 		this.sizeOfRegion = sizeOfRegion;
 	}
 
+	@Override
+	public String describe() {
+		return "An area of space defined by a location and extent.";
+	}
+
 
 }

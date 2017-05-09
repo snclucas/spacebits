@@ -6,12 +6,11 @@ import java.util.List;
 
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.sensors.SignalResponse;
-import org.spacebits.universe.AbstractLocation;
 import org.spacebits.universe.Coordinates;
 import org.spacebits.universe.Location;
 import org.spacebits.universe.SimpleLocation;
 
-public abstract class AbstractCelestialObject extends AbstractLocation implements CelestialObject {
+public abstract class AbstractCelestialObject implements CelestialObject {
 
 	protected Location location;
 	protected List<CelestialObject> celestialObjects;
@@ -19,14 +18,14 @@ public abstract class AbstractCelestialObject extends AbstractLocation implement
 	
 	
 	public AbstractCelestialObject(int id, String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(id, name, coordinates);
+		//super(id, name, coordinates);
 		celestialObjects = new ArrayList<CelestialObject>();
 		this.sensorSignalResponseProfile = sensorSignalResponseProfile;
 		this.location = new SimpleLocation(id, name, coordinates);
 	}
 	
 	public AbstractCelestialObject(int id, String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(id, name, coordinates);
+		//super(id, name, coordinates);
 		celestialObjects = new ArrayList<CelestialObject>();
 		this.sensorSignalResponseProfile = sensorSignalResponseProfile;
 		this.location = new SimpleLocation(id, name, coordinates.set(relativeTo.getLocation().getCoordinates()));

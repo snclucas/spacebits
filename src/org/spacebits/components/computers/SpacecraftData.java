@@ -6,9 +6,9 @@ import java.util.Map;
 import org.spacebits.components.TypeInfo;
 
 public class SpacecraftData implements ArchivableData {
-
+	private TypeInfo typeID = new TypeInfo("SpacecraftData");
 	private final String dataName;
-	private final Map<String, Object> data = new HashMap<String, Object>();
+	private final Map<String, Double> data = new HashMap<String, Double>();
 	
 	public SpacecraftData(String dataName) {
 		super();
@@ -21,56 +21,39 @@ public class SpacecraftData implements ArchivableData {
 	}
 
 	
-	public Map<String, Object> getData() {
+	public Map<String, Double> getData() {
 		return data;
 	}
 
 
 	@Override
-	public Object getData(String id) {
-		return data.get(id);
-	}
-
-	@Override
-	public void setData(String id, Object data) {
-		this.data.put(id, data);
-	}
-
-
-	@Override
 	public TypeInfo getTypeId() {
-		// TODO Auto-generated method stub
-		return null;
+		return typeID;
 	}
 
 
 	@Override
 	public TypeInfo getCategoryId() {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryID;
 	}
 
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.dataName;
 	}
 
 
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.hashCode();
 	}
 
 
 	@Override
-	public DataRecord getDataRecord() {
-		// TODO Auto-generated method stub
-		return null;
+	public String describe() {
+		return "Data record to hold spacecraft data.";
 	}
-	
-	
+
 
 }

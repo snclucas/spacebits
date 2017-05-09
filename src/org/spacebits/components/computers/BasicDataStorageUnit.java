@@ -5,38 +5,52 @@ import java.util.Map;
 
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
-import org.spacebits.software.Message;
-import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatus;
 
 
 public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
-	
+
 	public BasicDataStorageUnit(String name,
 			BusComponentSpecification busResourceSpecification) {
 		super(name, busResourceSpecification);
 	}
 
 	public static TypeInfo typeID = new TypeInfo("BasicDataStorageUnit");
-	
-	private final Map<String, ArchivableData> data = new HashMap<String, ArchivableData>();
+
+	private final Map<TypeInfo, Archive> dataArchives = new HashMap<TypeInfo, Archive>();
 
 	public TypeInfo getTypeId() {
 		return typeID;
 	}
 
 	@Override
-	public ArchivableData saveData(String id, ArchivableData dataRecord) {
-		return data.put(id, dataRecord);
+	public void saveData(String id, ArchivableData data) {
+		if(dataArchives.containsKey(data.getTypeId())) {
+			Archive archive = dataArchives.get(data.getTypeId());
+			archive.put(id, data);
+		}
+		else {
+			Archive archive = new Archive();
+			archive.put(id, data);
+			dataArchives.put(data.getTypeId(), archive);
+		}
 	}
 
 
 	@Override
-	public ArchivableData getData(String id) {
-		return data.get(id);
+	public ArchivableData getData(String id, TypeInfo typeInfo) {
+		if(dataArchives.containsKey(typeInfo)) {
+			Archive archive = dataArchives.get(typeInfo);
+			return archive.get(id);
+		}
+		else {
+			return null;
+		}
 	}
 	
+	
+
 	@Override
 	public SystemStatus runDiagnostics(int level) {
 		//Nothing really to diagnose with this simple hull
@@ -45,20 +59,16 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 		return systemStatus;
 	}
 
-	@Override
-	public Message recieveBusMessage(Message message) {
-		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
-		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
-	}
-	
+
+
 	@Override
 	public SystemStatus online() {
 		SystemStatus systemStatus = new SystemStatus(this);
 		systemStatus.addSystemMessage(getName() + " online.", getUniversalTime(), Status.OK);
 		return systemStatus; 
 	}
-	
-	
+
+
 	@Override
 	public String describe() {
 		return toString();
@@ -69,4 +79,8 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 		return "BasicDataStorageUnit";
 	}
 
+}
+
+class Archive extends HashMap<String, ArchivableData> {
+	private static final long serialVersionUID = 925935940538264787L;
 }

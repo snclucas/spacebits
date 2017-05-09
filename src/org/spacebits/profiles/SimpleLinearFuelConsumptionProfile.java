@@ -68,5 +68,11 @@ public class SimpleLinearFuelConsumptionProfile extends AbstractProfile implemen
 	public final TypeInfo getCategoryId() {
 		return categoryID;
 	}
+
+
+	@Override
+	public String describe() {
+		return "Simple linear fuel consumption profile.";
+	}
 	
 }

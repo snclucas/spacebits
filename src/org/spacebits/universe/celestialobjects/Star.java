@@ -24,5 +24,10 @@ public class Star extends AbstractCelestialObject {
 	public TypeInfo getTypeId() {
 		return typeID;
 	}
+
+	@Override
+	public String describe() {
+		return "A luminous sphere of plasma large enough to be held together by its own gravity.";
+	}
 	
 }

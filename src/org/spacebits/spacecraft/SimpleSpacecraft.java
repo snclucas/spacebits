@@ -1,8 +1,6 @@
 package org.spacebits.spacecraft;
 
 import org.spacebits.components.TypeInfo;
-import org.spacebits.software.Message;
-import org.spacebits.software.SystemMessage;
 import org.spacebits.status.SystemStatus;
 import org.spacebits.structures.hulls.Hull;
 
@@ -16,22 +14,16 @@ public class SimpleSpacecraft extends AbstractSpacecraft {
 	
 	
 	@Override
+	public int getId() {
+		return this.hashCode();
+	}
+	
+	
+	@Override
 	public TypeInfo getTypeId() {
 		return typeID;
 	}
 	
-	
-	@Override
-	public double getOperatingPower() {
-		return getNominalPower();
-	}
-	
-	
-	@Override
-	public double getOperatingCPUThroughput() {
-		return getNominalCPUThroughput();
-	}
-
 
 	@Override
 	public SystemStatus runDiagnostics(int level) {
@@ -41,21 +33,8 @@ public class SimpleSpacecraft extends AbstractSpacecraft {
 	
 
 	@Override
-	public Message recieveBusMessage(Message message) {
-		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
-		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
-	}
-	
-
-	@Override
 	public String describe() {
 		return "Simple spacecraft";
 	}
-
-	
-
-
-
-	
 
 }

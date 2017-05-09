@@ -16,21 +16,6 @@ public abstract class AbstractDataStorageUnit extends AbstractBusComponent imple
 	}
 
 
-	private final Map<String, ArchivableData> data = new HashMap<String, ArchivableData>();
-
-	
-	
-
-	@Override
-	public ArchivableData saveData(String id, ArchivableData dataRecord) {
-		return data.put(id, dataRecord);
-	}
-
-
-	@Override
-	public ArchivableData getData(String id) {
-		return data.get(id);
-	}
 
 
 	@Override

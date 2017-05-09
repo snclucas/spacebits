@@ -10,12 +10,11 @@ import org.spacebits.software.MessageMediator;
 import org.spacebits.software.SystemMessageService;
 import org.spacebits.spacecraft.Bus;
 import org.spacebits.spacecraft.BusComponentSpecification;
-import org.spacebits.spacecraft.BusRequirement;
 import org.spacebits.spacecraft.Spacecraft;
 import org.spacebits.status.SystemStatus;
 import org.spacebits.status.SystemStatusMessage;
 
-public class BasicSystemComputer extends AbstractComputer implements SystemComputer {
+public class BasicSystemComputer extends AbstractSystemComputer implements SystemComputer {
 
 	public static TypeInfo typeID = new TypeInfo("BasicSystemComputer");
 
@@ -23,8 +22,8 @@ public class BasicSystemComputer extends AbstractComputer implements SystemCompu
 
 
 	public BasicSystemComputer(String name, BusComponentSpecification busResourceSpecification, 
-			double maxCPUThroughput, Bus spacecraftBus) {
-		super(name, busResourceSpecification, maxCPUThroughput, spacecraftBus);
+			double maxCPUThroughput) {
+		super(name, busResourceSpecification, maxCPUThroughput);
 		systemMessages = new ArrayList<SystemStatusMessage>();
 	}
 
@@ -44,22 +43,7 @@ public class BasicSystemComputer extends AbstractComputer implements SystemCompu
 	}
 
 
-	@Override
-	public SystemStatusMessage requestOperation(SpacecraftBusComponent component, BusRequirement busRequirement) {
-		//Remove current component power and add back the new requested power
-		double newBusPowerRequirement = getCurrentPowerRequirement() - component.getNominalPower() + busRequirement.getPowerRequirement();
-		double newBusCPUThroughputRequirement = getCurrentCPUThroughputRequirement() - component.getNominalCPUThroughput() + busRequirement.getCPUThroughputRequirement();
-
-		//System.out.println("In request " + newBusPowerRequirement + " " + getTotalPowerAvailable());
-		//System.out.println("In request " + newBusCPUThroughputRequirement + " " + getTotalCPUThroughputAvailable());
-
-		if((newBusPowerRequirement > getTotalPowerAvailable()))
-			return new SystemStatusMessage(this, "Not enough bus power to perform operation, " + newBusPowerRequirement + " needed, " + getTotalPowerAvailable() + " available", getUniversalTime(), Status.NOT_ENOUGH_POWER);
-		else if((newBusCPUThroughputRequirement > getTotalCPUThroughputAvailable()))
-			return new SystemStatusMessage(this, "Not enough bus CPU throughput to perform operation", getUniversalTime(), Status.NOT_ENOUGH_CPU);
-		else
-			return new SystemStatusMessage(this, "Operation permitted", getUniversalTime(), Status.PERMITTED);
-	}
+	
 
 
 
@@ -80,7 +64,7 @@ public class BasicSystemComputer extends AbstractComputer implements SystemCompu
 		status.mergeSystemMessages(checkSystems());
 
 		status.addSystemMessage(addSystemMessage(this, "Onlining spacecraft components", Status.OK));
-		for(SpacecraftBusComponent component : spacecraftBus.getComponents()) {
+		for(SpacecraftBusComponent component : spacecraftBus.getBusComponents()) {
 			if(component != this) { // Ignore this computer
 				SystemStatus busComponentStatus = component.online();
 				status.mergeSystemStatus(busComponentStatus);
@@ -126,7 +110,7 @@ public class BasicSystemComputer extends AbstractComputer implements SystemCompu
 	public List<SystemStatusMessage> registerSpacecraftComponents() {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
 
-		for(SpacecraftBusComponent component : spacecraftBus.getComponents()) {
+		for(SpacecraftBusComponent component : spacecraftBus.getBusComponents()) {
 			//Set this as the registered computer in the component
 			//systemStatusMessages.add(component.registerSystemComputer(this));
 			// Register the component with the messaging system
@@ -165,22 +149,29 @@ public class BasicSystemComputer extends AbstractComputer implements SystemCompu
 	@Override
 	public List<SystemStatusMessage> checkSystems() {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
+		
+			SpacecraftData spacecraftData = new SpacecraftData("Spacecraft data");
 
-
-			double maximumAvailableVolume = bus.getSystemComputer().getVolume();
+			double maximumAvailableVolume = getVolume();
+			
+			spacecraftData.getData().put("maximumAvailableVolume", maximumAvailableVolume);
+			//spacecraftData.getData().put("maximumAvailableVolume", maximumAvailableVolume);
+			
+			
+			Spacecraft spacecraft = spacecraftBus.getSpacecraft();
 
 
 
 			systemStatusMessages.add(
 					new SystemStatusMessage(this, "Total vessel mass: " + 
-							spacecraftBus.getTotalMassOfSpacecraftBusComponents(), getUniversalTime(), Status.INFO));
+							spacecraft.getTotalMassOfSpacecraftBusComponents(), getUniversalTime(), Status.INFO));
 
 			systemStatusMessages.add(
 					new SystemStatusMessage(this, "Available hull volume: " + maximumAvailableVolume, getUniversalTime(), Status.INFO));
 			systemStatusMessages.add(
-					new SystemStatusMessage(this, "Required hull volume: " + spacecraftBus.getTotalVolumeOfSpacecraftBusComponents(), getUniversalTime(), Status.INFO));
+					new SystemStatusMessage(this, "Required hull volume: " + spacecraft.getTotalVolumeOfSpacecraftBusComponents(), getUniversalTime(), Status.INFO));
 
-			if(maximumAvailableVolume < spacecraftBus.getTotalVolumeOfSpacecraftBusComponents())
+			if(maximumAvailableVolume < spacecraft.getTotalVolumeOfSpacecraftBusComponents())
 				systemStatusMessages.add(
 						new SystemStatusMessage(this, "Not enough space", getUniversalTime(), Status.CRITICAL));
 
@@ -192,6 +183,10 @@ public class BasicSystemComputer extends AbstractComputer implements SystemCompu
 			if(spacecraftBus.getTotalCPUThroughputAvailable() < getCurrentCPUThroughputRequirement())
 				systemStatusMessages.add(new SystemStatusMessage(this, "Not enough CPU", getUniversalTime(), Status.PROBLEM));
 	
+			
+			
+			storageDevice.saveData("maximumAvailableVolume", spacecraftData);
+			
 		return systemStatusMessages;
 	}
 

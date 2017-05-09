@@ -20,26 +20,26 @@ import org.spacebits.structures.hulls.HullFactory;
 public class SpacecraftTest {
 	
 	Hull hull = HullFactory.getHull("Shuttle");
-	Spacecraft spacecraftBus = new SimpleSpacecraft("Test spacecraft", hull);
+	Spacecraft spacecraft = new SimpleSpacecraft("Test spacecraft", hull);
 
 	@Test
 	public void testSpacecraft() {
-		assertEquals(Spacecraft.categoryID, spacecraftBus.getCategoryId());
+		assertEquals(Spacecraft.categoryID, spacecraft.getCategoryId());
 		
-		SystemStatus systemStatus = spacecraftBus.online();
+		SystemStatus systemStatus = spacecraft.online();
 		
-		assertEquals(false, spacecraftBus.isOnline());
+		assertEquals(false, spacecraft.isOnline());
 		assertEquals(false, systemStatus.isOK());
 		assertEquals(true, systemStatus.hasCriticalMessages());
 		assertEquals(false, systemStatus.hasWarningMessages());
 		
 		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.typeID.toString());	
-		spacecraftBus.addComponent(systemComputer);
+		spacecraft.addComponent(systemComputer);
 		
 		
-		systemStatus = spacecraftBus.online();
+		systemStatus = spacecraft.online();
 		
-		assertEquals(true, spacecraftBus.isOnline());
+		assertEquals(true, spacecraft.isOnline());
 		assertEquals(true, systemStatus.isOK());
 		assertEquals(false, systemStatus.hasCriticalMessages());
 		assertEquals(false, systemStatus.hasWarningMessages());

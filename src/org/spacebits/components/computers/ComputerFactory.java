@@ -18,7 +18,7 @@ public class ComputerFactory extends DataFactory {
 			double maxCPUThroughput = 1000; //GFLOP
 			
 			// Set spacecraft bus to null
-			SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), maxCPUThroughput, null);
+			SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), maxCPUThroughput);
 			
 			Software engineSoftware = new PropulsionManagementSoftware("Engine software", computer);
 			computer.loadSoftware(engineSoftware);

@@ -2,12 +2,12 @@ package org.spacebits.components;
 
 import org.spacebits.Diagnosable;
 import org.spacebits.components.computers.SystemComputer;
+import org.spacebits.spacecraft.Bus;
 import org.spacebits.status.StatusProvider;
-import org.spacebits.status.SystemStatus;
 
-public interface SpacecraftBusComponent extends PhysicalComponent, Diagnosable, StatusProvider, Identifiable {
+public interface SpacecraftBusComponent extends PhysicalComponent, Diagnosable, StatusProvider, Identifiable, Onlineable {
 	
-	boolean isOnline();
+	void registerWithBus(Bus bus);
 	
 	double getNominalPower();
 	void setNominalPower(double nominalPower);
@@ -16,21 +16,16 @@ public interface SpacecraftBusComponent extends PhysicalComponent, Diagnosable, 
 	void setNominalCPUThroughput(double nominalCPUThroughput);
 	
 	double getMaximumOperationalPower();
-	void setMaximumOperationalPower(double nominalPower);
 	
 	double getMaximumOperationalCPUThroughput();
-	void setMaximumOperationalCPUThroughput(double maximumOperationalCPUThroughput);
 	
 	double getOperatingPower();
 	double getOperatingCPUThroughput();
 	
 	SystemComputer getSystemComputer();
 
-	String describe();
 
 	void accept(ComponentVisitor componentVisitor);
-
-	SystemStatus online();
 	
 	double getUniversalTime();
 }

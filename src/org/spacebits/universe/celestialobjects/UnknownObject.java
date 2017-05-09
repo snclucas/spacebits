@@ -20,4 +20,9 @@ public class UnknownObject extends AbstractCelestialObject {
 		return typeID;
 	}
 
+	@Override
+	public String describe() {
+		return "An unknown object.";
+	}
+
 }

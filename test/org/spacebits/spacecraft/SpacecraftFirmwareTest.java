@@ -12,7 +12,7 @@ import org.spacebits.components.computers.ComputerFactory;
 import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.components.energygeneration.PowerGenerator;
 import org.spacebits.components.propulsion.Engine;
-import org.spacebits.spacecraft.BasicSpacecraftFirmware;
+import org.spacebits.spacecraft.SpacecraftFirmware;
 import org.spacebits.spacecraft.SimpleSpacecraft;
 import org.spacebits.spacecraft.Spacecraft;
 import org.spacebits.spacecraft.SpacecraftFactory;
@@ -31,33 +31,33 @@ public class SpacecraftFirmwareTest {
 		Spacecraft spacecraft = new SimpleSpacecraft("Test spacecraft", hull);
 		Bus spacecraftBus = spacecraft.getSpacecraftBus();
 		
-		boolean hasComputer = BasicSpacecraftFirmware.bootstrapSystemComputer(spacecraftBus);
+		boolean hasComputer = Bus.SpacecraftFirmware.bootstrapSystemComputer(spacecraftBus);
 		
 		assertEquals(false, hasComputer);
 		
-		List<CommunicationComponent> commComponents = BasicSpacecraftFirmware.getCommunicationDevices(spacecraftBus);
+		List<CommunicationComponent> commComponents = Bus.SpacecraftFirmware.getCommunicationDevices(spacecraftBus);
 		assertEquals("Number of communication components should be 0", 0, commComponents.size());
 		
-		List<Engine> engines = BasicSpacecraftFirmware.getEngines(spacecraftBus);
+		List<Engine> engines = Bus.SpacecraftFirmware.getEngines(spacecraftBus);
 		assertEquals("Number of engines should be 0", 0, engines.size());
 		
-		List<SystemComputer> computers = BasicSpacecraftFirmware.getComputers(spacecraftBus);
+		List<SystemComputer> computers = Bus.SpacecraftFirmware.getComputers(spacecraftBus);
 		assertEquals("Number of computers should be 0", 0, computers.size());
 		
 		
 		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.typeID.toString());	
-		spacecraftBus.addComponent(systemComputer);
+		spacecraftBus.addBusComponent(systemComputer);
 		
-		hasComputer = BasicSpacecraftFirmware.bootstrapSystemComputer(spacecraftBus);
+		hasComputer = Bus.SpacecraftFirmware.bootstrapSystemComputer(spacecraftBus);
 		
 		assertEquals(true, hasComputer); 
 		
-		computers = BasicSpacecraftFirmware.getComputers(spacecraftBus);
+		computers = Bus.SpacecraftFirmware.getComputers(spacecraftBus);
 		assertEquals("Number of computers should be 1", 1, computers.size());
 		
 		
 		
-		SpacecraftBusComponent component = BasicSpacecraftFirmware.findBusComponent(spacecraftBus, SystemComputer.categoryID).get(0);
+		SpacecraftBusComponent component = Bus.SpacecraftFirmware.findBusComponent(spacecraftBus, SystemComputer.categoryID).get(0);
 		assertEquals("", component, systemComputer);
 		
 		
@@ -66,38 +66,38 @@ public class SpacecraftFirmwareTest {
 		spacecraft = SpacecraftFactory.getSpacecraft("Shuttle");
 		spacecraftBus = spacecraft.getSpacecraftBus();
 		
-		engines = BasicSpacecraftFirmware.getEngines(spacecraftBus);
+		engines = Bus.SpacecraftFirmware.getEngines(spacecraftBus);
 		assertEquals("Number of engines should be 1", 1, engines.size());
 		
-		commComponents = BasicSpacecraftFirmware.getCommunicationDevices(spacecraftBus);
+		commComponents = Bus.SpacecraftFirmware.getCommunicationDevices(spacecraftBus);
 		assertEquals("Number of communication components should be 1", 1, commComponents.size());
 		
 		
-		double totalCPUAvailable = BasicSpacecraftFirmware.getTotalCPUThroughputAvailable(spacecraftBus);
+		double totalCPUAvailable = Bus.SpacecraftFirmware.getTotalCPUThroughputAvailable(spacecraftBus);
 		 
 		assertEquals("Total CPU throughput available not correct", systemComputer.getMaxCPUThroughput(), totalCPUAvailable, 0.00001);
 		
 		double expectedTotalPowerAvailable = 0.0;
-		for(SpacecraftBusComponent scComponent : BasicSpacecraftFirmware.getPowerGenerators(spacecraftBus))
+		for(SpacecraftBusComponent scComponent : Bus.SpacecraftFirmware.getPowerGenerators(spacecraftBus))
 			expectedTotalPowerAvailable += ((PowerGenerator)scComponent).getMaximumPowerOutput();
 			
 		
-		double totalPower = BasicSpacecraftFirmware.getTotalPowerAvailable(spacecraftBus);
+		double totalPower = Bus.SpacecraftFirmware.getTotalPowerAvailable(spacecraftBus);
 		
 		assertEquals("Total power available not correct", expectedTotalPowerAvailable, totalPower, 0.00001);
 		
 		
-		double currentPowerRequirement = BasicSpacecraftFirmware.getCurrentSpacecraftBusPowerRequirement(spacecraftBus);
+		double currentPowerRequirement = Bus.SpacecraftFirmware.getCurrentSpacecraftBusPowerRequirement(spacecraftBus);
 		double expectedPowerRequirement = 0.0;
-		for(SpacecraftBusComponent scComponent : spacecraftBus.getComponents())
+		for(SpacecraftBusComponent scComponent : spacecraftBus.getBusComponents())
 			expectedPowerRequirement += scComponent.getOperatingPower();
 		
 		assertEquals("Current power available not correct", expectedPowerRequirement, currentPowerRequirement, 0.00001);
 		
 		
-		double currentCPURequirement = BasicSpacecraftFirmware.getCurrentSpacecraftBusCPUThroughputRequirement(spacecraftBus);
+		double currentCPURequirement = Bus.SpacecraftFirmware.getCurrentSpacecraftBusCPUThroughputRequirement(spacecraftBus);
 		double expectedCPURequirement = 0.0;
-		for(SpacecraftBusComponent scComponent : spacecraftBus.getComponents())
+		for(SpacecraftBusComponent scComponent : spacecraftBus.getBusComponents())
 			expectedCPURequirement += scComponent.getOperatingCPUThroughput();
 		
 		assertEquals("Current CPU available not correct", expectedCPURequirement, currentCPURequirement, 0.00001);

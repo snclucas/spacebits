@@ -46,8 +46,6 @@ public class HullTest {
 		Hull hull = new SimpleMonocoqueHull("TestHull", hullSpecification, Hull.SPHEROID);
 		
 		assertEquals("Hull spec name not set correctly", "Simple test hull spec", hullSpecification.getName());
-		assertEquals("Hull CPU not set correctly", nominalCPUThroughput, hull.getNominalCPUThroughput(), 0.001);
-		assertEquals("Hull power not set correctly", nominalPower, hull.getNominalPower(), 0.001);
 		assertEquals("Hull thickness not set correctly", thickness, hull.getThickness(), 0.001);
 		assertEquals("Hull width not set correctly", width, hull.getWidth(), 0.001);
 		assertEquals("Hull length not set correctly", length, hull.getLength(), 0.001);

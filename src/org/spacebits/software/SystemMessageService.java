@@ -57,5 +57,11 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 		return replies;
 	}
 
+	
+	@Override
+	public String describe() {
+		return "A system service to handle sytem messaging.";
+	}
+
 
 }

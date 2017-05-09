@@ -17,15 +17,12 @@ public class DataRecordTest {
 		Star sol = new Star(1,"Sol", new Coordinates(),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.G_CLASS_STAR));
 		
-		DataRecord record2 = new DataRecord("sol", sol);
-		assertEquals("Data record ID not correct", "sol", record2.getRecordTag());
-		assertEquals("Data record type not equal to its archivable data", sol.getCategoryId().typeId, record2.getRecordType().typeId, 0.0001);
-		
-		DataRecord record3 = sol.getDataRecord();
-		assertEquals("Data record ID not correct", sol.getId(), record3.getRecordID(), 0.0001);
-		assertEquals("Data record type not equal to its archivable data", CelestialObject.categoryID.typeId, record3.getRecordType().typeId, 0.0001);
-		
-		assertEquals("Celestial object not found in data record", true, (record3.getData() instanceof CelestialObject ) );
+		DataRecord record = new DataRecord("sol", sol);
+		assertEquals("Data record ID not correct", "sol", record.getRecordTag());
+		assertEquals("Data record type not equal to its archivable data", 
+				sol.getCategoryId().typeId, record.getRecordType().typeId, 0.0001);
+			
+		assertEquals("Celestial object not found in data record", true, (record.getData() instanceof CelestialObject ) );
 	}
 	
 }

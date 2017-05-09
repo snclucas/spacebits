@@ -6,13 +6,18 @@ public class LocalBus extends AbstractBus {
 	
 	public static TypeInfo typeID = new TypeInfo("LocalBus");
 
-	public LocalBus(String name) {
-		super(name);
+	public LocalBus(String name, Spacecraft spacecraft) {
+		super(name, spacecraft);
 	}
 
 	@Override
 	public TypeInfo getTypeId() {
 		return typeID;
+	}
+
+	@Override
+	public String describe() {
+		return "Local loopback bus";
 	}
 
 }

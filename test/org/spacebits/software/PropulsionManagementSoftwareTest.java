@@ -33,8 +33,9 @@ public class PropulsionManagementSoftwareTest {
 
 	// Setup spacecraft bus
 	Hull hull = HullFactory.getHull("Shuttle");
-	Bus spacecraftBus = new SpacecraftBus("Spacecraft bus"); 
 	Spacecraft spacecraft = new SimpleSpacecraft("Shuttle", hull);
+	Bus spacecraftBus = new SpacecraftBus("Spacecraft bus",spacecraft); 
+	
 
 
 
@@ -46,7 +47,7 @@ public class PropulsionManagementSoftwareTest {
 		spacecraft.addComponent(powerGenerator);
 
 		// Simple computer
-		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOP, spacecraftBus);
+		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOP);
 
 		PropulsionManagementSoftware engineManagementSoftware = new PropulsionManagementSoftware("Test EngineManagementSoftware", computer);
 
@@ -78,10 +79,10 @@ public class PropulsionManagementSoftwareTest {
 		spacecraft.addComponent(powerGenerator);
 
 		// Simple computer
-		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOP, spacecraftBus);
+		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOP);
 		spacecraft.addComponent(computer);
 		
-		for(SpacecraftBusComponent component : computer.getSpacecraftBus().getComponents()) {
+		for(SpacecraftBusComponent component : computer.getSpacecraftBus().getBusComponents()) {
 			System.out.println(component.getName() + " " +  component.getNominalPower() + " " + component.getNominalCPUThroughput());
 		}
 		

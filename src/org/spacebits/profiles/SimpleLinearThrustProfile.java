@@ -84,5 +84,11 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 	public final TypeInfo getCategoryId() {
 		return categoryID;
 	}
+
+
+	@Override
+	public String describe() {
+		return "Simple linear thrust profile.";
+	}
 	
 }

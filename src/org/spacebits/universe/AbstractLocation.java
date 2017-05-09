@@ -2,11 +2,8 @@ package org.spacebits.universe;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.spacebits.components.TypeInfo;
-import org.spacebits.components.computers.DataRecord;
 import org.spacebits.utils.math.MathUtils;
 
 public abstract class AbstractLocation implements Location  {
@@ -118,15 +115,6 @@ public abstract class AbstractLocation implements Location  {
 			return false;
 		return true;
 	}
-
-	@Override
-	public Coordinates getData(String id) {
-		if("location".equals(id))
-			return coordinates;
-		else
-			return null;
-	}
-	
 	
 	
 	

@@ -2,13 +2,14 @@ package org.spacebits.spacecraft;
 
 import java.util.List;
 
-import org.spacebits.components.BusCommunicator;
-import org.spacebits.components.ComponentVisitor;
+import org.spacebits.Diagnosable;
+import org.spacebits.components.Onlineable;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
+import org.spacebits.status.StatusProvider;
 import org.spacebits.structures.hulls.Hull;
 
-public interface Spacecraft extends SpacecraftBusComponent, BusCommunicator, ComponentVisitor {
+public interface Spacecraft extends StatusProvider, Onlineable, Diagnosable {
 	
 	TypeInfo categoryID = new TypeInfo("Spacecraft");
 	
@@ -16,6 +17,9 @@ public interface Spacecraft extends SpacecraftBusComponent, BusCommunicator, Com
 	void setName(String name);
 	
 	double getVolume();
+	double getMass();
+	double getLength();
+	double getWidth();
 	
 	double getTotalMassOfSpacecraftBusComponents();
 	double getTotalVolumeOfSpacecraftBusComponents();
@@ -28,4 +32,5 @@ public interface Spacecraft extends SpacecraftBusComponent, BusCommunicator, Com
 	Hull getHull();
 	
 	Bus getSpacecraftBus();
+	void setSpacecraftBus(Bus bus);
 }

@@ -66,5 +66,11 @@ class MockIdentifiableObject implements Identifiable {
 	public int getId() {
 		return id;
 	}
+
+
+	@Override
+	public String describe() {
+		return "Mock";
+	}
 	
 }

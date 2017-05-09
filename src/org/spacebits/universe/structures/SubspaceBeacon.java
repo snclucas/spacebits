@@ -22,4 +22,9 @@ public class SubspaceBeacon extends AbstractCelestialObject {
 	public TypeInfo getTypeId() {
 		return typeInfo;
 	}
+
+	@Override
+	public String describe() {
+		return "A artifical structure designed to emit subspace signals to be used as a beacon.";
+	}
 }

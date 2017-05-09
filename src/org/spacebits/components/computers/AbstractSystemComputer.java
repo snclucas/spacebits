@@ -2,41 +2,41 @@ package org.spacebits.components.computers;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.spacebits.components.AbstractBusComponent;
+import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
+import org.spacebits.components.comms.CommunicationComponent;
 import org.spacebits.components.comms.Status;
+import org.spacebits.components.propulsion.Engine;
 import org.spacebits.software.Message;
 import org.spacebits.software.Software;
 import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.Bus;
 import org.spacebits.spacecraft.BusComponentSpecification;
-import org.spacebits.spacecraft.LocalBus;
+import org.spacebits.spacecraft.BusRequirement;
 import org.spacebits.status.SystemStatus;
 import org.spacebits.status.SystemStatusMessage;
 
-public abstract class AbstractComputer extends AbstractBusComponent implements SystemComputer {
+public abstract class AbstractSystemComputer extends AbstractBusComponent implements SystemComputer {
 	
 	protected Map<TypeInfo, Software> loadedSoftware;
 	
 	protected double maxCPUThroughput;
-	protected Bus spacecraftBus;
 	protected boolean isOnSpacecraftbus = false;
+	protected DataStore storageDevice;
 	
-	public AbstractComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput, Bus spacecraftBus) {
+	
+	public AbstractSystemComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput) {
 		super(name, busResourceSpecification);
 		this.maxCPUThroughput = maxCPUThroughput;
-		this.spacecraftBus = spacecraftBus;
 		loadedSoftware = new HashMap<TypeInfo, Software>();
+		storageDevice = DataStoreFactory.getDataStore(DataStoreFactory.BASIC_DATASTORE);
 	}
 	
-	public AbstractComputer(String name, BusComponentSpecification busResourceSpecification, double maxCPUThroughput) {
-		super(name, busResourceSpecification);
-		this.maxCPUThroughput = maxCPUThroughput;
-		this.spacecraftBus = new LocalBus("LocalBus");
-		loadedSoftware = new HashMap<TypeInfo, Software>();
-	}
+	
 	
 	
 	@Override
@@ -49,19 +49,13 @@ public abstract class AbstractComputer extends AbstractBusComponent implements S
 		return spacecraftBus;
 	}
 
-
-
-
-
+	
 	public void setSpacecraftBus(Bus spacecraftBus) {
 		this.spacecraftBus = spacecraftBus;
 		this.isOnSpacecraftbus = true;
 	}
 	
-	
 
-	
-	
 	@Override
 	public boolean isOnSpacecraftBus() {
 		return isOnSpacecraftbus;
@@ -90,6 +84,29 @@ public abstract class AbstractComputer extends AbstractBusComponent implements S
 	}
 
 	
+	
+	@Override
+	public SystemStatusMessage requestOperation(SpacecraftBusComponent component, BusRequirement busRequirement) {
+		//Remove current component power and add back the new requested power
+		double newBusPowerRequirement = getCurrentPowerRequirement() 
+				- component.getOperatingPower() + busRequirement.getPowerRequirement();
+		
+		double newBusCPUThroughputRequirement = getCurrentCPUThroughputRequirement() 
+				- component.getOperatingCPUThroughput() + busRequirement.getCPUThroughputRequirement();
+
+		//System.out.println("In request " + newBusPowerRequirement + " " + getTotalPowerAvailable());
+		//System.out.println("In request " + newBusCPUThroughputRequirement + " " + getTotalCPUThroughputAvailable());
+
+		if((newBusPowerRequirement > getTotalPowerAvailable()))
+			return new SystemStatusMessage(this, "Not enough bus power to perform operation, " + 
+		newBusPowerRequirement + " needed, " + getTotalPowerAvailable() + " available", 
+		getUniversalTime(), Status.NOT_ENOUGH_POWER);
+		else if((newBusCPUThroughputRequirement > getTotalCPUThroughputAvailable()))
+			return new SystemStatusMessage(this, "Not enough bus CPU throughput to perform operation, " +
+					newBusCPUThroughputRequirement + " needed, " + getTotalCPUThroughputAvailable() + " available", getUniversalTime(), Status.NOT_ENOUGH_CPU);
+		else
+			return new SystemStatusMessage(this, "Operation permitted", getUniversalTime(), Status.PERMITTED);
+	}
 	
 
 
@@ -133,6 +150,26 @@ public abstract class AbstractComputer extends AbstractBusComponent implements S
 	public void registerSpacecraftBus(Bus spacecraftBus) {
 		this.spacecraftBus = spacecraftBus;
 	}
+	
+	
+	@Override
+	public List<CommunicationComponent> getCommunicationDevices() {
+		return Bus.SpacecraftFirmware.getCommunicationDevices(this.spacecraftBus);
+	}
+
+
+	@Override
+	public List<Engine> getEngines() {
+		return Bus.SpacecraftFirmware.getEngines(this.spacecraftBus);
+	}
+
+
+	@Override
+	public List<SystemComputer> getComputers() {
+		return Bus.SpacecraftFirmware.getComputers(this.spacecraftBus);
+	}
+
+
 	
 	
 	

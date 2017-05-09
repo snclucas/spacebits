@@ -4,14 +4,22 @@ import org.spacebits.components.TypeInfo;
 
 public class DataRecord {
 	
-	private String recordTag;
-	private TypeInfo recordType;
-	private ArchivableData<?> data;
+	private final String recordTag;
+	private final TypeInfo recordType;
+	private final ArchivableData data;
 	
-	public DataRecord(String recordTag, ArchivableData<?> data) {
+	
+	public DataRecord() {
+		super();
+		this.recordTag = "";
+		this.recordType = null;
+		this.data = null;
+	}
+	
+	public DataRecord(String recordTag, ArchivableData data) {
 		super();
 		this.recordTag = recordTag;
-		this.recordType = data.getTypeId();
+		this.recordType = data.getCategoryId();
 		this.data = data;
 	}
 	
@@ -27,8 +35,12 @@ public class DataRecord {
 		return recordTag;
 	}
 
-	public ArchivableData<?> getData() {
+	public ArchivableData getData() {
 		return data;
+	}
+	
+	public boolean hasData() {
+		return data != null;
 	}
 
 }

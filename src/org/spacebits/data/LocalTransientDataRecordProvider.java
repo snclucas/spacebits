@@ -56,7 +56,7 @@ public class LocalTransientDataRecordProvider implements DataRecordProvider {
 	@Override
 	public DataRecord deleteDataRecordByID(int id) {
 		DataRecord recordToDelete = getDataRecordByID(id);
-		if(recordToDelete.isEmpty() == false)
+		if(recordToDelete.hasData() == true)
 			return dataRecords.remove(id);
 		else
 			return new DataRecord();

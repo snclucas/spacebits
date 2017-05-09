@@ -14,7 +14,7 @@ public class MockSystemComputer extends BasicSystemComputer{
 	public MockSystemComputer(String name,
 			BusComponentSpecification busResourceSpecification,
 			double maxCPUThroughput, Bus spacecraftBus) {
-		super(name, busResourceSpecification, maxCPUThroughput, spacecraftBus);
+		super(name, busResourceSpecification, maxCPUThroughput);
 	}
 
 	@Override

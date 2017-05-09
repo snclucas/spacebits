@@ -9,8 +9,6 @@ import org.spacebits.components.computers.BasicSystemComputer;
 import org.spacebits.components.computers.ComputerFactory;
 import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.components.propulsion.Engine;
-import org.spacebits.spacecraft.Spacecraft;
-import org.spacebits.spacecraft.SpacecraftFactory;
 import org.spacebits.status.SystemStatus;
 
 public class SystemMessageTest {

@@ -21,9 +21,10 @@ public class SimpleLocation extends AbstractLocation {
 	public TypeInfo getTypeId() {
 		return typeID;
 	}
-	
-	
-	
 
-
+	@Override
+	public String describe() {
+		return "Location";
+	}
+	
 }

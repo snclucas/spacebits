@@ -36,8 +36,6 @@ public class TypeInfo {
 		if (getClass() != obj.getClass())
 			return false;
 		TypeInfo other = (TypeInfo) obj;
-		if (typeId != other.typeId)
-			return false;
 		if (typeIdString == null) {
 			if (other.typeIdString != null)
 				return false;

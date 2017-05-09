@@ -4,22 +4,22 @@ import java.util.List;
 
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
-import org.spacebits.components.comms.CommunicationComponent;
 import org.spacebits.components.computers.SystemComputer;
-import org.spacebits.components.propulsion.Engine;
 import org.spacebits.software.Message;
 import org.spacebits.status.SystemStatusMessage;
 
 public abstract class AbstractBus implements Bus {
 
+	public static SpacecraftFirmware SpacecraftFirmware = new SpacecraftFirmware();
 	protected Spacecraft spacecraft;
 	
 	protected SystemComputer systemComputer;
 
 	private String name;
 
-	public AbstractBus(String name) {
+	public AbstractBus(String name, Spacecraft spacecraft) {
 		this.name = name;
+		this.spacecraft = spacecraft;
 	}
 	
 	@Override
@@ -27,7 +27,7 @@ public abstract class AbstractBus implements Bus {
 		return this.hashCode();
 	}
 	
-	
+
 	@Override
 	public final TypeInfo getCategoryId() {
 		return categoryID;
@@ -66,12 +66,12 @@ public abstract class AbstractBus implements Bus {
 
 	@Override
 	public List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType) {
-		return BasicSpacecraftFirmware.findBusComponent(this, componentType);
+		return SpacecraftFirmware.findBusComponent(this, componentType);
 	}
 
 	
 	@Override
-	public List<SpacecraftBusComponent> getComponents() {
+	public List<SpacecraftBusComponent> getBusComponents() {
 		return spacecraft.getComponents();
 	}
 
@@ -82,35 +82,18 @@ public abstract class AbstractBus implements Bus {
 	}
 
 	@Override
-	public void addComponent(SpacecraftBusComponent component) {
+	public void addBusComponent(SpacecraftBusComponent component) {
 		spacecraft.addComponent(component);
 	}
 
 
 	@Override
-	public void addComponents(List<SpacecraftBusComponent> components) {
+	public void addBusComponents(List<SpacecraftBusComponent> components) {
 		spacecraft.addComponents(components);
 	}
 
 
-	@Override
-	public List<CommunicationComponent> getCommunicationDevices() {
-		return BasicSpacecraftFirmware.getCommunicationDevices(this);
-	}
-
-
-	@Override
-	public List<Engine> getEngines() {
-		return BasicSpacecraftFirmware.getEngines(this);
-	}
-
-
-	@Override
-	public List<SystemComputer> getComputers() {
-		return BasicSpacecraftFirmware.getComputers(this);
-	}
-
-
+	
 
 	@Override
 	public SystemComputer getSystemComputer() {
@@ -130,25 +113,25 @@ public abstract class AbstractBus implements Bus {
 
 	@Override
 	public double getTotalPowerAvailable() {
-		return BasicSpacecraftFirmware.getTotalPowerAvailable(this);
+		return SpacecraftFirmware.getTotalPowerAvailable(this);
 	}
 
 
 	@Override
 	public double getTotalCPUThroughputAvailable() {
-		return BasicSpacecraftFirmware.getTotalCPUThroughputAvailable(this);
+		return SpacecraftFirmware.getTotalCPUThroughputAvailable(this);
 	}
 
 
 	@Override
 	public double getCurrentPowerRequirement() {
-		return BasicSpacecraftFirmware.getCurrentSpacecraftBusPowerRequirement(this);
+		return SpacecraftFirmware.getCurrentSpacecraftBusPowerRequirement(this);
 	}
 
 
 	@Override
 	public double getCurrentCPUThroughputRequirement() {
-		return BasicSpacecraftFirmware.getCurrentSpacecraftBusCPUThroughputRequirement(this);
+		return SpacecraftFirmware.getCurrentSpacecraftBusCPUThroughputRequirement(this);
 	}
 
 

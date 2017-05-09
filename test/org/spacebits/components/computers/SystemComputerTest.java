@@ -31,29 +31,20 @@ public class SystemComputerTest {
 	double mass = 25.0 * Unit.kg;
 	double volume = 1.0 * Unit.m3;
 	double nominalPower = 1 * Unit.kW; 
-	double nominalCpu = 10 * Unit.kFLOP;
-	double maximumThrust = 1 * Unit.N;
-	double powerAtMaximumThrust = 1 * Unit.MW;
-	double cpuThroughputAtMaximumThrust = nominalCpu;
+	double nominalCPU = 10 * Unit.kFLOP;
+	double maximumPower = 1 * Unit.MW;
+	double maximumCPU = nominalCPU;
 	boolean vectored = false;
 	
-	Bus spacecraftBus = new SpacecraftBus("Spacecraft bus"); 
+	Hull hull = HullFactory.getHull("Shuttle");
+	
+	Spacecraft spacecraft = new SimpleSpacecraft(SpacecraftFactory.SHUTTLE, hull);
+	
+	Bus spacecraftBus = new SpacecraftBus("Spacecraft bus", spacecraft); 
 
 	BusComponentSpecification busSpecs = new BusComponentSpecification(
 			new PhysicalSpecification(mass, volume),
-			new OperationalSpecification(nominalPower, nominalCpu, powerAtMaximumThrust, cpuThroughputAtMaximumThrust));
-
-	Hull hull = HullFactory.getHull("Shuttle");
-
-	
-	Spacecraft spacecraft = new SimpleSpacecraft(SpacecraftFactory.SHUTTLE, hull);
-
-	//Align along axis of spacecraft
-	EngineVector engineVector = new EngineVector(1,0,0);
-
-	Engine engine =  new SimpleIonEngine(
-			"Test engine", busSpecs,
-			maximumThrust, engineVector, vectored);
+			new OperationalSpecification(nominalPower, nominalCPU, maximumPower, maximumCPU));
 
 
 
@@ -61,11 +52,9 @@ public class SystemComputerTest {
 	@Test
 	public void testRequestOperation() {
 
-		MockSystemComputer computer = new MockSystemComputer("Test computer", busSpecs, 
-				10 * Unit.GFLOP, spacecraftBus);
-
-		computer.totalPowerAvailable = 1 * Unit.kW;
-		computer.totalCPUAvailable = 1 * Unit.GFLOP;
+		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs, 
+				10 * Unit.GFLOP);
+		computer.registerWithBus(spacecraftBus);
 
 		BusRequirement busRequirement = new BusRequirement(100 * Unit.W, 100 * Unit.MFLOP);
 		SystemStatusMessage message = computer.requestOperation(computer, busRequirement);
@@ -87,8 +76,8 @@ public class SystemComputerTest {
 
 
 		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs, 
-				10 * Unit.GFLOP, spacecraftBus);
-
+				10 * Unit.GFLOP);
+		computer.registerWithBus(spacecraftBus);
 
 
 		assertEquals("Computer category incorrect", SystemComputer.categoryID, computer.getCategoryId());
@@ -100,32 +89,6 @@ public class SystemComputerTest {
 		//computer.checkSystems()
 
 	}
-
-
-
-
-	@Test
-	public void testEngineControl() {
-
-
-
-
-
-		SystemComputer systemComputer =
-				(SystemComputer) ComputerFactory.getComputer(BasicSystemComputer.typeID.toString());
-
-		spacecraft.addComponent(systemComputer);
-
-		spacecraft.addComponent(engine);
-
-		spacecraft.online();
-
-		((PropulsionManagementSoftware)spacecraft.getSystemComputer().getSoftware(PropulsionManagementSoftware.typeID)).callDrive(70, engine.getId());
-
-
-
-	}
-
 
 
 

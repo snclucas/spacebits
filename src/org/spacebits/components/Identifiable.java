@@ -5,4 +5,5 @@ public interface Identifiable {
 	TypeInfo getCategoryId();
 	String getName();
 	int getId();
+	String describe();
 }

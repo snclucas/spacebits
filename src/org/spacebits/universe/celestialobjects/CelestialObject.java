@@ -6,7 +6,7 @@ import org.spacebits.components.TypeInfo;
 import org.spacebits.components.sensors.SignalResponse;
 import org.spacebits.universe.Location;
 
-public interface CelestialObject {
+public interface CelestialObject extends Location{
 	
 	TypeInfo categoryID = new TypeInfo("CelestialObject");
 
