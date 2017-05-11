@@ -7,7 +7,7 @@ import org.spacebits.spacecraft.BusComponentSpecification;
 
 public class FractalSensorArray extends BasicSensorArray {
 	
-	public static TypeInfo typeID = new TypeInfo("FractalSensorArray");
+	public static TypeInfo type = new TypeInfo("FractalSensorArray");
 
 	public FractalSensorArray(String name,
 			BusComponentSpecification busResourceSpecification,
@@ -17,7 +17,7 @@ public class FractalSensorArray extends BasicSensorArray {
 	}
 	
 	public TypeInfo getTypeId() {
-		return typeID;
+		return type;
 	}
 
 	@Override

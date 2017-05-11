@@ -16,7 +16,7 @@ import org.spacebits.status.SystemStatusMessage;
 
 public class BasicSystemComputer extends AbstractSystemComputer implements SystemComputer {
 
-	public static TypeInfo typeID = new TypeInfo("BasicSystemComputer");
+	public static TypeInfo type = new TypeInfo("BasicSystemComputer");
 
 	private List<SystemStatusMessage> systemMessages;
 
@@ -28,43 +28,28 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 	}
 
 	public TypeInfo getTypeId() {
-		return typeID;
+		return type;
 	}
 
 
-	@Override
-	public double getOperatingPower() {
-		return getNominalPower();
-	}
-
-	@Override
-	public double getOperatingCPUThroughput() {
-		return getNominalCPUThroughput();
-	}
-
-
-	
 
 
 
 
-	@Override
-	public List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType) {
-		return spacecraftBus.findBusComponent(componentType);
-	}
+
+
+
 
 
 	public SystemStatus online() {
 		SystemStatus status = super.online();
-		// Scan spacecraft bus components
+		// Scan spacecraft bus components and register with the messaging system
 		status.mergeSystemMessages(scanSpacecraftBusForComponents());
-		// Register components with the system computer
-		status.mergeSystemMessages(registerSpacecraftComponents());
 		// Check all systems
 		status.mergeSystemMessages(checkSystems());
 
 		status.addSystemMessage(addSystemMessage(this, "Onlining spacecraft components", Status.OK));
-		for(SpacecraftBusComponent component : spacecraftBus.getBusComponents()) {
+		for(SpacecraftBusComponent component : spacecraftBus.getComponents()) {
 			if(component != this) { // Ignore this computer
 				SystemStatus busComponentStatus = component.online();
 				status.mergeSystemStatus(busComponentStatus);
@@ -93,7 +78,8 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 	public List<SystemStatusMessage> scanSpacecraftBusForComponents() {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
 		systemStatusMessages.add(new SystemStatusMessage(this, "Scanning spacecraft bus for components.", getUniversalTime(), Status.INFO));
-		//this.components = spacecraftBus.getComponents();
+		List<SystemStatusMessage> registerMessages = registerSpacecraftComponents(spacecraftBus.getComponents());
+		systemStatusMessages.addAll(registerMessages);
 		return systemStatusMessages;
 	}
 
@@ -107,14 +93,14 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 
 
 
-	public List<SystemStatusMessage> registerSpacecraftComponents() {
+	private List<SystemStatusMessage> registerSpacecraftComponents(List<SpacecraftBusComponent> components) {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
 
-		for(SpacecraftBusComponent component : spacecraftBus.getBusComponents()) {
+		for(SpacecraftBusComponent component : components) {
 			//Set this as the registered computer in the component
 			//systemStatusMessages.add(component.registerSystemComputer(this));
 			// Register the component with the messaging system
-			getMessagingSystem().addComponent(component);
+			systemStatusMessages.add(getMessagingSystem().addComponent(component));
 		}
 
 		return systemStatusMessages;
@@ -149,44 +135,42 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 	@Override
 	public List<SystemStatusMessage> checkSystems() {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
-		
-			SpacecraftData spacecraftData = new SpacecraftData("Spacecraft data");
 
-			double maximumAvailableVolume = getVolume();
-			
-			spacecraftData.getData().put("maximumAvailableVolume", maximumAvailableVolume);
-			//spacecraftData.getData().put("maximumAvailableVolume", maximumAvailableVolume);
-			
-			
-			Spacecraft spacecraft = spacecraftBus.getSpacecraft();
+		SpacecraftData spacecraftData = new SpacecraftData("Spacecraft data");
 
+		double maximumAvailableVolume = getVolume();
 
+		spacecraftData.getData().put("maximumAvailableVolume", maximumAvailableVolume);
 
+		Spacecraft spacecraft = spacecraftBus.getSpacecraft();
+
+		if(spacecraft != null) {
 			systemStatusMessages.add(
 					new SystemStatusMessage(this, "Total vessel mass: " + 
-							spacecraft.getTotalMassOfSpacecraftBusComponents(), getUniversalTime(), Status.INFO));
-
+							spacecraft.getTotalMassOfComponents(), getUniversalTime(), Status.INFO));
 			systemStatusMessages.add(
-					new SystemStatusMessage(this, "Available hull volume: " + maximumAvailableVolume, getUniversalTime(), Status.INFO));
+					new SystemStatusMessage(this, "Available hull volume: " + 
+			maximumAvailableVolume, getUniversalTime(), Status.INFO));
 			systemStatusMessages.add(
-					new SystemStatusMessage(this, "Required hull volume: " + spacecraft.getTotalVolumeOfSpacecraftBusComponents(), getUniversalTime(), Status.INFO));
-
-			if(maximumAvailableVolume < spacecraft.getTotalVolumeOfSpacecraftBusComponents())
+					new SystemStatusMessage(this, "Required hull volume: " + 
+			spacecraft.getTotalVolumeOfComponents(), getUniversalTime(), Status.INFO));
+			if(maximumAvailableVolume < spacecraft.getTotalVolumeOfComponents())
 				systemStatusMessages.add(
 						new SystemStatusMessage(this, "Not enough space", getUniversalTime(), Status.CRITICAL));
+		}
 
-			systemStatusMessages.add(
-					new SystemStatusMessage(this, "Available CPU throughput: " + getTotalCPUThroughputAvailable(), getUniversalTime(), Status.INFO));
-			systemStatusMessages.add(
-					new SystemStatusMessage(this, "Required CPU throughput: " + getCurrentCPUThroughputRequirement(), getUniversalTime(), Status.INFO));
+		systemStatusMessages.add(
+				new SystemStatusMessage(this, "Available CPU throughput: " + getTotalCPUThroughputAvailable(), getUniversalTime(), Status.INFO));
+		systemStatusMessages.add(
+				new SystemStatusMessage(this, "Required CPU throughput: " + getTotalCurrentCPUThroughput(), getUniversalTime(), Status.INFO));
 
-			if(spacecraftBus.getTotalCPUThroughputAvailable() < getCurrentCPUThroughputRequirement())
-				systemStatusMessages.add(new SystemStatusMessage(this, "Not enough CPU", getUniversalTime(), Status.PROBLEM));
-	
-			
-			
-			storageDevice.saveData("maximumAvailableVolume", spacecraftData);
-			
+		if(getTotalCPUThroughputAvailable() < getCurrentCPUThroughput())
+			systemStatusMessages.add(new SystemStatusMessage(this, "Not enough CPU", getUniversalTime(), Status.PROBLEM));
+
+
+
+		storageDevice.saveData("maximumAvailableVolume", spacecraftData);
+
 		return systemStatusMessages;
 	}
 

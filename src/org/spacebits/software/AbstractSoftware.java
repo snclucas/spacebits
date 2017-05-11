@@ -13,10 +13,6 @@ public abstract class AbstractSoftware implements Software {
 	public AbstractSoftware(String name) {
 		this.name = name;
 	}
-	
-	public AbstractSoftware(String name, SystemComputer computer) {
-		this.computer = computer;
-	}
 
 	
 	@Override

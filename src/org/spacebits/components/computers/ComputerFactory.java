@@ -12,7 +12,7 @@ public class ComputerFactory extends DataFactory {
 
 	public static SystemComputer getComputer(String computerType){
 		
-		if(computerType.equals(BasicSystemComputer.typeID.toString())){
+		if(computerType.equals(BasicSystemComputer.type.toString())){
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(computerType);
 
 			double maxCPUThroughput = 1000; //GFLOP
@@ -20,10 +20,10 @@ public class ComputerFactory extends DataFactory {
 			// Set spacecraft bus to null
 			SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), maxCPUThroughput);
 			
-			Software engineSoftware = new PropulsionManagementSoftware("Engine software", computer);
+			Software engineSoftware = new PropulsionManagementSoftware("Engine software");
 			computer.loadSoftware(engineSoftware);
 			
-			MessageMediator messagingSystem = new SystemMessageService("System message mediator software", computer);
+			MessageMediator messagingSystem = new SystemMessageService("System message mediator software");
 			computer.loadSoftware(messagingSystem);
 			return computer;
 		}

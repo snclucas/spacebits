@@ -26,14 +26,14 @@ public class SimpleMonocoqueHull extends AbstractHull {
 	
 	
 	@Override
-	public double getOperatingPower() {
+	public double getCurrentPower() {
 		// Nominal and operation power are the same for this hull
 		return getNominalPower();
 	}
 	
 
 	@Override
-	public double getOperatingCPUThroughput() {
+	public double getCurrentCPUThroughput() {
 		// Nominal and operation CPU are the same for this hull
 		return getNominalCPUThroughput();
 	}

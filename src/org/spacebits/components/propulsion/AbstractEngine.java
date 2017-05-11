@@ -76,8 +76,8 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 
 	public BusRequirement callVector(EngineVector engineVector) {
 		this.requestedEngineVector = engineVector;
-		double requiredPower = getOperatingPower();
-		double requiredCPUThroughput = getOperatingCPUThroughput();
+		double requiredPower = getCurrentPower();
+		double requiredCPUThroughput = getCurrentCPUThroughput();
 		return new BusRequirement(requiredPower, requiredCPUThroughput);
 	}
 
@@ -115,12 +115,12 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 
 
 	@Override
-	public double getOperatingPower() {
+	public double getCurrentPower() {
 		return getRequiredPower(this.powerLevel);
 	}
 	
 	@Override
-	public double getOperatingCPUThroughput() {
+	public double getCurrentCPUThroughput() {
 		return getRequiredCPUThroughput(this.powerLevel);
 	}
 

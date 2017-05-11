@@ -75,6 +75,10 @@ public class BusComponentSpecification {
 		return operationalSpecification.getNominalPower();
 	}
 	
+	public double getNominalPower(double unit) {
+		return operationalSpecification.getNominalPower() / unit;
+	}
+	
 	
 	public void setNominalPower(double nominalPower) {
 		operationalSpecification.setNominalPower(nominalPower);
@@ -93,6 +97,10 @@ public class BusComponentSpecification {
 
 	public double getMaximumOperationalPower() {
 		return operationalSpecification.getMaximumOperationalPower();
+	}
+	
+	public double getMaximumOperationalPower(double unit) {
+		return operationalSpecification.getMaximumOperationalPower() / unit;
 	}
 	
 	

@@ -20,7 +20,7 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	
 	@Override
 	public final TypeInfo getCategoryId() {
-		return categoryID;
+		return category;
 	}
 	
 	

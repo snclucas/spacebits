@@ -5,7 +5,6 @@ import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.spacecraft.Bus;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatus;
-import org.spacebits.status.SystemStatusMessage;
 
 
 public abstract class AbstractBusComponent implements SpacecraftBusComponent, PhysicalComponent {
@@ -18,19 +17,28 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent, Ph
 	
 	protected BusComponentSpecification busResourceSpecification;
 	
+	private double currentPower;
+	private double currentCPUThroughput;
+	
 
 	public AbstractBusComponent(String name, BusComponentSpecification busResourceSpecification) {
 		super();
 		this.name = name;
 		this.busResourceSpecification = busResourceSpecification;
+		this.currentPower = busResourceSpecification.getNominalPower();
+		this.currentCPUThroughput = busResourceSpecification.getNominalCPUThroughout();
+		this.online = false;
 	}
 	
 	
-
+	@Override
+	public boolean isOnSpacecraftBus() {
+		return spacecraftBus != null;
+	}
+	
 
 	@Override
 	public void registerWithBus(Bus bus) {
-		bus.addBusComponent(this);
 		this.spacecraftBus = bus;
 	}
 
@@ -88,6 +96,11 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent, Ph
 	public double getNominalPower() {
 		return busResourceSpecification.getNominalPower();
 	}
+	
+	
+	public double getNominalPower(double unit) {
+		return busResourceSpecification.getNominalPower() / unit;
+	}
 
 	
 	public void setNominalPower(double nominalPower) {
@@ -124,6 +137,27 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent, Ph
 		busResourceSpecification.setMaximumOperationalCPUThroughput(maximumOperationalCPUThroughput);
 	}
 	
+	
+	
+
+	@Override
+	public double getCurrentPower() {
+		return currentPower * (isOnline()?1:0);
+	}
+
+	@Override
+	public double getCurrentPower(double unit) {
+		return getCurrentPower() / unit;
+	}
+
+
+	@Override
+	public double getCurrentCPUThroughput() {
+		return currentCPUThroughput * (isOnline()?1:0);
+	}
+
+
+
 
 	public SystemComputer getSystemComputer() {
 		return spacecraftBus.getSystemComputer();

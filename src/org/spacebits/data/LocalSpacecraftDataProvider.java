@@ -27,7 +27,7 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 		// computers 
 		
-		if(componentType.equals(BasicSystemComputer.typeID.toString()))
+		if(componentType.equals(BasicSystemComputer.type.toString()))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 20 * Unit.m3), new OperationalSpecification(10 * Unit.kW, 0 * Unit.MFLOP)));
 
@@ -85,11 +85,11 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 		//Sensors
 
-		if(componentType.equals(LinearSensorArray.typeID.toString()))	
+		if(componentType.equals(LinearSensorArray.type.toString()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.1 * Unit.l), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 
-		if(componentType.equals(FractalSensorArray.typeID.toString()))	
+		if(componentType.equals(FractalSensorArray.type.toString()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.3 * Unit.l), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 

@@ -31,12 +31,12 @@ public class SubSpaceCommunicator extends AbstractCommunicationComponent {
 
 	
 	@Override
-	public double getOperatingPower() {
+	public double getCurrentPower() {
 		return getNominalPower();
 	}
 	
 	@Override
-	public double getOperatingCPUThroughput() {
+	public double getCurrentCPUThroughput() {
 		// Nominal and operation CPU are the same for this XX change
 		return getNominalCPUThroughput();
 	}

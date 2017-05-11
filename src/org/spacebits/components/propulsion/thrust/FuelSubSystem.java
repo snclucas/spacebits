@@ -107,13 +107,13 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 
 
 	@Override
-	public double getOperatingPower() {
+	public double getCurrentPower() {
 		return busResourceSpecification.getNominalPower();
 	}
 
 
 	@Override
-	public double getOperatingCPUThroughput() {
+	public double getCurrentCPUThroughput() {
 		return busResourceSpecification.getNominalCPUThroughout();
 	}
 

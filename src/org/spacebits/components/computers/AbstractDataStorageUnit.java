@@ -19,14 +19,14 @@ public abstract class AbstractDataStorageUnit extends AbstractBusComponent imple
 
 
 	@Override
-	public double getOperatingPower() {
+	public double getCurrentPower() {
 		// Power remains constant
 		return getNominalPower();
 	}
 
 
 	@Override
-	public double getOperatingCPUThroughput() {
+	public double getCurrentCPUThroughput() {
 		return getNominalCPUThroughput();
 	}
 

@@ -10,6 +10,8 @@ public interface SpacecraftBusComponent extends PhysicalComponent, Diagnosable, 
 	void registerWithBus(Bus bus);
 	
 	double getNominalPower();
+	double getNominalPower(double unit);
+	
 	void setNominalPower(double nominalPower);
 	
 	double getNominalCPUThroughput();
@@ -19,12 +21,13 @@ public interface SpacecraftBusComponent extends PhysicalComponent, Diagnosable, 
 	
 	double getMaximumOperationalCPUThroughput();
 	
-	double getOperatingPower();
-	double getOperatingCPUThroughput();
+	double getCurrentPower();
+	double getCurrentPower(double unit);
+	double getCurrentCPUThroughput();
 	
 	SystemComputer getSystemComputer();
 
-
+	boolean isOnSpacecraftBus();
 	void accept(ComponentVisitor componentVisitor);
 	
 	double getUniversalTime();

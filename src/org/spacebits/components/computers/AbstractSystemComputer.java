@@ -11,12 +11,16 @@ import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.CommunicationComponent;
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.propulsion.Engine;
+import org.spacebits.exceptions.ComponentConfigurationException;
+import org.spacebits.physics.Unit;
 import org.spacebits.software.Message;
 import org.spacebits.software.Software;
 import org.spacebits.software.SystemMessage;
+import org.spacebits.software.SystemMessageService;
 import org.spacebits.spacecraft.Bus;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.spacecraft.BusRequirement;
+import org.spacebits.spacecraft.SpacecraftFirmware;
 import org.spacebits.status.SystemStatus;
 import org.spacebits.status.SystemStatusMessage;
 
@@ -25,7 +29,7 @@ public abstract class AbstractSystemComputer extends AbstractBusComponent implem
 	protected Map<TypeInfo, Software> loadedSoftware;
 	
 	protected double maxCPUThroughput;
-	protected boolean isOnSpacecraftbus = false;
+	
 	protected DataStore storageDevice;
 	
 	
@@ -34,14 +38,30 @@ public abstract class AbstractSystemComputer extends AbstractBusComponent implem
 		this.maxCPUThroughput = maxCPUThroughput;
 		loadedSoftware = new HashMap<TypeInfo, Software>();
 		storageDevice = DataStoreFactory.getDataStore(DataStoreFactory.BASIC_DATASTORE);
+		
+		setMessagingSystem(new SystemMessageService("Default messaging system"));
 	}
 	
 	
+
 	
 	
+
+	@Override
+	public List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType) throws ComponentConfigurationException {
+		if(isOnSpacecraftBus()) {
+			return spacecraftBus.findComponent(componentType);
+		}
+		else {
+			throw new ComponentConfigurationException("Not connected to bus");
+		}
+	}
+
+
+
 	@Override
 	public final TypeInfo getCategoryId() {
-		return categoryID;
+		return category;
 	}
 	
 	
@@ -52,14 +72,10 @@ public abstract class AbstractSystemComputer extends AbstractBusComponent implem
 	
 	public void setSpacecraftBus(Bus spacecraftBus) {
 		this.spacecraftBus = spacecraftBus;
-		this.isOnSpacecraftbus = true;
 	}
 	
 
-	@Override
-	public boolean isOnSpacecraftBus() {
-		return isOnSpacecraftbus;
-	}
+
 
 
 	@Override
@@ -88,19 +104,20 @@ public abstract class AbstractSystemComputer extends AbstractBusComponent implem
 	@Override
 	public SystemStatusMessage requestOperation(SpacecraftBusComponent component, BusRequirement busRequirement) {
 		//Remove current component power and add back the new requested power
-		double newBusPowerRequirement = getCurrentPowerRequirement() 
-				- component.getOperatingPower() + busRequirement.getPowerRequirement();
+		double newBusPowerRequirement = getTotalCurrentPower() 
+				- component.getCurrentPower() + busRequirement.getPowerRequirement();
 		
-		double newBusCPUThroughputRequirement = getCurrentCPUThroughputRequirement() 
-				- component.getOperatingCPUThroughput() + busRequirement.getCPUThroughputRequirement();
+		double newBusCPUThroughputRequirement = getTotalCurrentCPUThroughput() 
+				- component.getCurrentCPUThroughput() + busRequirement.getCPUThroughputRequirement();
 
-		//System.out.println("In request " + newBusPowerRequirement + " " + getTotalPowerAvailable());
-		//System.out.println("In request " + newBusCPUThroughputRequirement + " " + getTotalCPUThroughputAvailable());
+		System.out.println("In request " + newBusPowerRequirement + " " + getTotalPowerAvailable());
+		System.out.println("In request " + newBusCPUThroughputRequirement + " " + getTotalCPUThroughputAvailable());
 
 		if((newBusPowerRequirement > getTotalPowerAvailable()))
 			return new SystemStatusMessage(this, "Not enough bus power to perform operation, " + 
 		newBusPowerRequirement + " needed, " + getTotalPowerAvailable() + " available", 
 		getUniversalTime(), Status.NOT_ENOUGH_POWER);
+		
 		else if((newBusCPUThroughputRequirement > getTotalCPUThroughputAvailable()))
 			return new SystemStatusMessage(this, "Not enough bus CPU throughput to perform operation, " +
 					newBusCPUThroughputRequirement + " needed, " + getTotalCPUThroughputAvailable() + " available", getUniversalTime(), Status.NOT_ENOUGH_CPU);
@@ -154,19 +171,19 @@ public abstract class AbstractSystemComputer extends AbstractBusComponent implem
 	
 	@Override
 	public List<CommunicationComponent> getCommunicationDevices() {
-		return Bus.SpacecraftFirmware.getCommunicationDevices(this.spacecraftBus);
+		return SpacecraftFirmware.getCommunicationDevices(this.spacecraftBus);
 	}
 
 
 	@Override
 	public List<Engine> getEngines() {
-		return Bus.SpacecraftFirmware.getEngines(this.spacecraftBus);
+		return SpacecraftFirmware.getEngines(this.spacecraftBus);
 	}
 
 
 	@Override
 	public List<SystemComputer> getComputers() {
-		return Bus.SpacecraftFirmware.getComputers(this.spacecraftBus);
+		return SpacecraftFirmware.getComputers(this.spacecraftBus);
 	}
 
 
@@ -195,25 +212,37 @@ public abstract class AbstractSystemComputer extends AbstractBusComponent implem
 	
 	@Override
 	public double getTotalPowerAvailable() {
-		return spacecraftBus.getTotalPowerAvailable();
+		return SpacecraftFirmware.getTotalPowerAvailable(spacecraftBus);
+	}
+	
+	
+	@Override
+	public double getTotalPowerAvailable(double unit) {
+		return SpacecraftFirmware.getTotalPowerAvailable(spacecraftBus) / unit;
 	}
 	
 	
 	@Override
 	public double getTotalCPUThroughputAvailable() {
-		return spacecraftBus.getTotalCPUThroughputAvailable();
+		return SpacecraftFirmware.getTotalCPUThroughputAvailable(spacecraftBus);
 	}
 	
 	
 	@Override
-	public double getCurrentPowerRequirement() {
-		return spacecraftBus.getCurrentPowerRequirement();
+	public double getTotalCurrentPower() {
+		return SpacecraftFirmware.getTotalCurrentPower(spacecraftBus);
+	}
+	
+	
+	@Override
+	public double getTotalCurrentPower(double unit) {
+		return SpacecraftFirmware.getTotalCurrentPower(spacecraftBus) / unit;
 	}
 
 	
 	@Override
-	public double getCurrentCPUThroughputRequirement() {
-		return spacecraftBus.getCurrentCPUThroughputRequirement();
+	public double getTotalCurrentCPUThroughput() {
+		return SpacecraftFirmware.getTotalCurrentCPUThroughput(spacecraftBus);
 	}
 
 }

@@ -12,29 +12,22 @@ import org.spacebits.status.SystemStatusMessage;
 
 public interface Bus extends BusCommunicator, ComponentVisitor, Identifiable {
 	
-	TypeInfo categoryID = new TypeInfo("Bus");
-	static SpacecraftFirmware SpacecraftFirmware = new SpacecraftFirmware();
+	TypeInfo category = new TypeInfo("Bus");
 	
 	String getName();
 	void setName(String name);
 
-	List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType);
-	List<SpacecraftBusComponent> getBusComponents();
+	List<SpacecraftBusComponent> findComponent(TypeInfo componentType);
+	List<SpacecraftBusComponent> getComponents();
 	
-	void addBusComponent(SpacecraftBusComponent component);
-	void addBusComponents(List<SpacecraftBusComponent> components);
+	void addComponent(SpacecraftBusComponent component);
+	void addComponents(List<SpacecraftBusComponent> components);
 	
 	SystemStatusMessage registerSystemComputer(SystemComputer computer);
 	
 	SystemComputer getSystemComputer();
 	void setSystemComputer(SystemComputer computer);
-	
-	double getTotalCPUThroughputAvailable();
-	double getTotalPowerAvailable();
-	double getCurrentPowerRequirement();
-    double getCurrentCPUThroughputRequirement();
     
     Spacecraft getSpacecraft();
 	void setSpacecraft(Spacecraft spacecraft);
-	
 }

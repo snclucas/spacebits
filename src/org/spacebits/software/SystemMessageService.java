@@ -8,7 +8,8 @@ import java.util.Map;
 import org.spacebits.components.BusCommunicator;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
-import org.spacebits.components.computers.SystemComputer;
+import org.spacebits.components.comms.Status;
+import org.spacebits.status.SystemStatusMessage;
 
 public class SystemMessageService extends AbstractSoftware implements MessageMediator {
 
@@ -26,14 +27,17 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 		return "System message mediator";
 	}
 	
-	public SystemMessageService(String name, SystemComputer computer) {
-		super(name, computer);
+	public SystemMessageService(String name) {
+		super(name);
 		registeredComponents = new ArrayList<SpacecraftBusComponent>();
 	}
 	
 	@Override
-	public boolean addComponent(SpacecraftBusComponent component) {
-		return registeredComponents.add(component);	
+	public SystemStatusMessage addComponent(SpacecraftBusComponent component) {
+		SystemStatusMessage message = new SystemStatusMessage(this, component.getName() + 
+				" registered with the messaging system", computer.getUniversalTime(), Status.INFO);
+		registeredComponents.add(component);
+		return message;
 	}
 	
 

@@ -9,7 +9,7 @@ import org.spacebits.components.TypeInfo;
 
 public interface Sensor extends SpacecraftBusComponent, Executable, BusCommunicator  {
 	
-	TypeInfo categoryID = new TypeInfo("Sensor");
+	TypeInfo category = new TypeInfo("Sensor");
 	
 	SensorProfile getSensorProfile();
 	

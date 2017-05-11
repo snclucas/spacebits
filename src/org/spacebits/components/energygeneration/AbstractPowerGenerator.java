@@ -9,7 +9,6 @@ public abstract class AbstractPowerGenerator extends AbstractBusComponent implem
 	
 	public AbstractPowerGenerator(String name, BusComponentSpecification busResourceSpecification) {
 		super(name, busResourceSpecification);
-		
 	}
 
 

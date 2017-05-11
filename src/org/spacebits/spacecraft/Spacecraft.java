@@ -11,7 +11,7 @@ import org.spacebits.structures.hulls.Hull;
 
 public interface Spacecraft extends StatusProvider, Onlineable, Diagnosable {
 	
-	TypeInfo categoryID = new TypeInfo("Spacecraft");
+	TypeInfo category = new TypeInfo("Spacecraft");
 	
 	String getName();
 	void setName(String name);
@@ -21,11 +21,10 @@ public interface Spacecraft extends StatusProvider, Onlineable, Diagnosable {
 	double getLength();
 	double getWidth();
 	
-	double getTotalMassOfSpacecraftBusComponents();
-	double getTotalVolumeOfSpacecraftBusComponents();
+	double getTotalMassOfComponents();
+	double getTotalVolumeOfComponents();
 	
 	void addComponent(SpacecraftBusComponent component);
-	void addComponents(List<SpacecraftBusComponent> components);
 	List<SpacecraftBusComponent> getComponents();
 
 	

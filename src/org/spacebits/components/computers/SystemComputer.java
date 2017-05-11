@@ -8,24 +8,14 @@ import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.CommunicationComponent;
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.propulsion.Engine;
+import org.spacebits.exceptions.ComponentConfigurationException;
 import org.spacebits.software.MessageMediator;
-import org.spacebits.software.Software;
-import org.spacebits.spacecraft.Bus;
 import org.spacebits.spacecraft.BusRequirement;
 import org.spacebits.status.SystemStatusMessage;
 
-public interface SystemComputer extends SpacecraftBusComponent, BusCommunicator {
+public interface SystemComputer extends Computer, SpacecraftBusComponent, BusCommunicator {
 	
-	TypeInfo categoryID = new TypeInfo("Computer");
-	
-	// Software handling
-	Software getSoftware(TypeInfo softwareType);
-	boolean hasSoftware(TypeInfo softwareType);
-	SystemStatusMessage loadSoftware(Software software);
-	Bus getSpacecraftBus();
-	double getMaxCPUThroughput();
-	
-	void registerSpacecraftBus(Bus bus);
+	TypeInfo category = new TypeInfo("SystemComputer");
 	
 	double getUniversalTime();
 	
@@ -34,23 +24,22 @@ public interface SystemComputer extends SpacecraftBusComponent, BusCommunicator 
 	MessageMediator getMessagingSystem();
 	void setMessagingSystem(MessageMediator messagingSystem);
 
-	List<SystemStatusMessage> registerSpacecraftComponents();
-
 	SystemStatusMessage addSystemMessage(SpacecraftBusComponent component, String message, Status status);
 
 	List<SystemStatusMessage> getSystemMessages();
 
 	List<SystemStatusMessage> checkSystems();
 
-	List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType);
+	List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType) throws ComponentConfigurationException;
 	
 	double getTotalCPUThroughputAvailable();
 	double getTotalPowerAvailable();
-	double getCurrentPowerRequirement();
-    double getCurrentCPUThroughputRequirement();
+	double getTotalPowerAvailable(double unit);
+	
+	double getTotalCurrentPower();
+	double getTotalCurrentPower(double unit);
+    double getTotalCurrentCPUThroughput();
 
-    boolean isOnSpacecraftBus();
-    
     List<Engine> getEngines();
 	List<SystemComputer> getComputers();
 	List<CommunicationComponent> getCommunicationDevices();

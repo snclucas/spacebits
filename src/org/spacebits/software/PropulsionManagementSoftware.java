@@ -5,7 +5,6 @@ import java.util.List;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
-import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.components.propulsion.Engine;
 import org.spacebits.components.propulsion.EngineVector;
 import org.spacebits.components.propulsion.ThrustDriveInterface;
@@ -19,8 +18,8 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 
 
-	public PropulsionManagementSoftware(String name, SystemComputer computer) {
-		super(name, computer);
+	public PropulsionManagementSoftware(String name) {
+		super(name);
 	}
 
 
@@ -42,6 +41,9 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 
 	public SystemStatusMessage callDrive(double powerLevel, int engineId) {
+		
+
+		
 		ThrustingEngine engine = findEngineByIdent(engineId);
 		if(engine == null)
 			return new SystemStatusMessage(this, "No engine found with ident:"+engineId, 
@@ -109,10 +111,11 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 	private ThrustingEngine findEngineByIdent(int id) {
 		List<SpacecraftBusComponent> engines = computer.findBusComponent(Engine.categoryID);
-		for(SpacecraftBusComponent engine : engines) {
-			if(engine.getId() == id)
-				return (ThrustingEngine) engine;
-		}
+		//TODO LOOK at thisif(engines != null)
+			for(SpacecraftBusComponent engine : engines) {
+				if(engine.getId() == id)
+					return (ThrustingEngine) engine;
+			}
 		return null;
 	}
 

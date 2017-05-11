@@ -44,7 +44,7 @@ public class SpacecraftFactory {
 			
 			Spacecraft spacecraft = new SimpleSpacecraft(SHUTTLE, hull);
 			
-			SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.typeID.toString());	
+			SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type.toString());	
 			spacecraft.addComponent(systemComputer);
 			
 			//PropulsionManagementSoftware engineManagementSoftware = new PropulsionManagementSoftware("Test EngineManagementSoftware", systemComputer);
@@ -53,7 +53,7 @@ public class SpacecraftFactory {
 			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.typeID.toString());
 			spacecraft.addComponent(powerGenerator);
 			
-			Sensor sensor = SensorFactory.getSensor(LinearSensorArray.typeID.toString(), Sensor.RADAR, 1);
+			Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type.toString(), Sensor.RADAR, 1);
 			spacecraft.addComponent(sensor);
 			
 			

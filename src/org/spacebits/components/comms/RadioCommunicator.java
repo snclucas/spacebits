@@ -32,12 +32,12 @@ public class RadioCommunicator extends AbstractCommunicationComponent {
 	}
 
 	@Override
-	public double getOperatingPower() {
+	public double getCurrentPower() {
 		return getNominalPower();
 	}
 	
 	@Override
-	public double getOperatingCPUThroughput() {
+	public double getCurrentCPUThroughput() {
 		// Nominal and operation CPU are the same
 		return getNominalCPUThroughput();
 	}

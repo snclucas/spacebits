@@ -24,7 +24,7 @@ public class TypeInfoTest {
 		assertEquals("", new TypeInfo("CommunicationDevice"), SubSpaceCommunicator.categoryID);
 		
 		
-		assertEquals("", new TypeInfo("Computer"), BasicSystemComputer.categoryID);
+		assertEquals("", new TypeInfo("Computer"), BasicSystemComputer.category);
 		
 		
 		assertEquals("", new TypeInfo("CelestialObject"), Star.categoryID);
@@ -42,7 +42,7 @@ public class TypeInfoTest {
 		assertEquals("", "RadioCommunicator", RadioCommunicator.typeID.typeIdString);
 		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.typeID.typeIdString);
 		
-		assertEquals("", "BasicSystemComputer", BasicSystemComputer.typeID.typeIdString);
+		assertEquals("", "BasicSystemComputer", BasicSystemComputer.type.typeIdString);
 		
 		assertEquals("", "SimpleSolarArray", SimpleSolarArray.typeID.typeIdString);
 		

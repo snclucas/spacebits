@@ -1,6 +1,5 @@
 package org.spacebits.spacecraft;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.spacebits.components.SpacecraftBusComponent;
@@ -16,16 +15,11 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	private String name;
 	private boolean online;
 	
-	private double currentSystemPowerRequirement;
-	private double currentSystemCPUThroughputRequirement;
-	
 	private double spacecraftBusComponentsVolumeRequirement;
 	private double spacecraftBusComponentsMass;
 	
 	protected boolean systemsOnline;
 	protected Hull hull;
-
-	protected List<SpacecraftBusComponent> components;
 	
 	protected Bus bus;
 	
@@ -34,7 +28,6 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	public AbstractSpacecraft(String name, Hull hull) {
 		this.name = name;
 		setHull(hull);
-		components = new ArrayList<SpacecraftBusComponent>();
 		this.bus = new SpacecraftBus("Spacecraft bus", this); ;
 		this.bus.setSpacecraft(this);
 		systemsOnline = false;
@@ -52,7 +45,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 	@Override
 	public TypeInfo getCategoryId() {
-		return Spacecraft.categoryID;
+		return Spacecraft.category;
 	}
 	
 	@Override
@@ -75,9 +68,9 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	public SystemStatus online() {
 		SystemStatus status = new SystemStatus(this);
 		
-		Bus.SpacecraftFirmware.scanSpacecraftComponents(bus);
+		SpacecraftFirmware.scanSpacecraftComponents(bus);
 		
-		if(Bus.SpacecraftFirmware.bootstrapSystemComputer(bus) == false) {
+		if(SpacecraftFirmware.bootstrapSystemComputer(bus) == false) {
 			status.addSystemMessage("No system computer found! Aborting spacecraft onlining.", 11, Status.CRITICAL);
 			systemsOnline = false;
 			online = false;
@@ -108,20 +101,15 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 	private void setHull(Hull hull) {
 		this.hull = hull;
-		//addComponent(hull);
 	}
 
 
 	@Override
 	public void addComponent(SpacecraftBusComponent component) {
-		components.add(component);
+		bus.addComponent(component);
+		component.registerWithBus(bus);
 	}
 	
-	
-	@Override
-	public void addComponents(List<SpacecraftBusComponent> components) {
-		components.addAll(components);
-	}
 
 
 	public void setSystemComputer(SystemComputer systemComputer) {
@@ -130,12 +118,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	
 	
 	public List<SpacecraftBusComponent> getComponents() {
-		return components;
-	}
-
-
-	public void setComponents(List<SpacecraftBusComponent> components) {
-		this.components = components;
+		return bus.getComponents();
 	}
 
 
@@ -157,7 +140,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	
 	@Override
 	public double getMass() {
-		return hull.getMass() + this.components.stream().mapToDouble(f-> f.getMass()).sum();
+		return hull.getMass() + bus.getComponents().stream().mapToDouble(f-> f.getMass()).sum();
 	}
 
 
@@ -182,12 +165,12 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 
 	
-	public double getTotalMassOfSpacecraftBusComponents() {
+	public double getTotalMassOfComponents() {
 		return spacecraftBusComponentsMass;
 	}
 
 
-	public double getTotalVolumeOfSpacecraftBusComponents() {
+	public double getTotalVolumeOfComponents() {
 		//Adjust total volume calculation for the hull as the hull actually provides volume not uses it.
 		spacecraftBusComponentsVolumeRequirement -= this.getHull().getVolume();
 		return spacecraftBusComponentsVolumeRequirement;
@@ -195,12 +178,12 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 
 	public double getTotalPowerRequirementOfSpacecraftBusComponents() {
-		return Bus.SpacecraftFirmware.getTotalPowerAvailable(bus);
+		return SpacecraftFirmware.getTotalPowerAvailable(bus);
 	}
 
 
 	public double getTotalCPURequirementOfSpacecraftBusComponents() {
-		return Bus.SpacecraftFirmware.getTotalCPUThroughputAvailable(bus);
+		return SpacecraftFirmware.getTotalCPUThroughputAvailable(bus);
 	}
 	
 	

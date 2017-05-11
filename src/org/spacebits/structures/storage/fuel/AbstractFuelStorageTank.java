@@ -109,14 +109,14 @@ public abstract class AbstractFuelStorageTank extends AbstractBusComponent imple
 
 
 	@Override
-	public double getOperatingPower() {
+	public double getCurrentPower() {
 		return getNominalPower();
 	}
 
 
 
 	@Override
-	public double getOperatingCPUThroughput() {
+	public double getCurrentCPUThroughput() {
 		return getNominalCPUThroughput();
 	}
 

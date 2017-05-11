@@ -58,13 +58,13 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 
 
 	@Override
-	public double getOperatingPower() {
+	public double getCurrentPower() {
 		return getNominalPower();
 	}
 
 
 	@Override
-	public double getOperatingCPUThroughput() {
+	public double getCurrentCPUThroughput() {
 		return getNominalCPUThroughput();
 	}
 

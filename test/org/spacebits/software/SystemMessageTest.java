@@ -17,7 +17,7 @@ public class SystemMessageTest {
 	@Test
 	public void testEngineManagementSoftwareNoEngine() {
 		
-		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.typeID.toString());	
+		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type.toString());	
 		
 		//Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 		SystemStatus status = systemComputer.online();

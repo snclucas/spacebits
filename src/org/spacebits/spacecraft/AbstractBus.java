@@ -1,5 +1,6 @@
 package org.spacebits.spacecraft;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.spacebits.components.SpacecraftBusComponent;
@@ -14,6 +15,8 @@ public abstract class AbstractBus implements Bus {
 	protected Spacecraft spacecraft;
 	
 	protected SystemComputer systemComputer;
+	
+	protected List<SpacecraftBusComponent> components = new ArrayList<SpacecraftBusComponent>();
 
 	private String name;
 
@@ -30,7 +33,7 @@ public abstract class AbstractBus implements Bus {
 
 	@Override
 	public final TypeInfo getCategoryId() {
-		return categoryID;
+		return category;
 	}
 
 	@Override
@@ -65,14 +68,14 @@ public abstract class AbstractBus implements Bus {
 	}
 
 	@Override
-	public List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType) {
+	public List<SpacecraftBusComponent> findComponent(TypeInfo componentType) {
 		return SpacecraftFirmware.findBusComponent(this, componentType);
 	}
 
 	
 	@Override
-	public List<SpacecraftBusComponent> getBusComponents() {
-		return spacecraft.getComponents();
+	public List<SpacecraftBusComponent> getComponents() {
+		return this.components;
 	}
 
 	@Override
@@ -82,14 +85,17 @@ public abstract class AbstractBus implements Bus {
 	}
 
 	@Override
-	public void addBusComponent(SpacecraftBusComponent component) {
-		spacecraft.addComponent(component);
+	public void addComponent(SpacecraftBusComponent component) {
+		this.components.add(component);
+		component.registerWithBus(this);
+		if(component.getCategoryId() == SystemComputer.category)
+			setSystemComputer((SystemComputer)component);
 	}
 
 
 	@Override
-	public void addBusComponents(List<SpacecraftBusComponent> components) {
-		spacecraft.addComponents(components);
+	public void addComponents(List<SpacecraftBusComponent> components) {
+		this.components.addAll(components);
 	}
 
 
@@ -104,36 +110,6 @@ public abstract class AbstractBus implements Bus {
 	public void setSystemComputer(SystemComputer computer) {
 		this.systemComputer = computer;
 	}
-
-
-
-
-
-
-
-	@Override
-	public double getTotalPowerAvailable() {
-		return SpacecraftFirmware.getTotalPowerAvailable(this);
-	}
-
-
-	@Override
-	public double getTotalCPUThroughputAvailable() {
-		return SpacecraftFirmware.getTotalCPUThroughputAvailable(this);
-	}
-
-
-	@Override
-	public double getCurrentPowerRequirement() {
-		return SpacecraftFirmware.getCurrentSpacecraftBusPowerRequirement(this);
-	}
-
-
-	@Override
-	public double getCurrentCPUThroughputRequirement() {
-		return SpacecraftFirmware.getCurrentSpacecraftBusCPUThroughputRequirement(this);
-	}
-
 
 
 }

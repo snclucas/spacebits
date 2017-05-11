@@ -22,13 +22,13 @@ public class Capacitor extends AbstractEnergyStorageDevice {
 	
 
 	@Override
-	public double getOperatingPower() {
+	public double getCurrentPower() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public double getOperatingCPUThroughput() {
+	public double getCurrentCPUThroughput() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

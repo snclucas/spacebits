@@ -3,6 +3,7 @@ package org.spacebits.software;
 import java.util.Map;
 
 import org.spacebits.components.SpacecraftBusComponent;
+import org.spacebits.status.SystemStatusMessage;
 
 public interface MessageMediator extends Software {
 	
@@ -10,6 +11,6 @@ public interface MessageMediator extends Software {
 	
 	Map<Integer, Message> broadcastMessage(Message message);
 	 
-    boolean addComponent(SpacecraftBusComponent component);
+	SystemStatusMessage addComponent(SpacecraftBusComponent component);
 
 }

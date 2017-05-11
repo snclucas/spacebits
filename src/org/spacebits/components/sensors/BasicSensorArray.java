@@ -41,12 +41,12 @@ public abstract class BasicSensorArray extends AbstractSensor {
 
 
 	@Override
-	public double getOperatingPower() {
+	public double getCurrentPower() {
 		return busResourceSpecification.getNominalPower() * numberOfSensorElements;
 	}
 
 	@Override
-	public double getOperatingCPUThroughput() {
+	public double getCurrentCPUThroughput() {
 		return busResourceSpecification.getNominalCPUThroughout() * numberOfSensorElements;
 	}
 

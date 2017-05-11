@@ -31,7 +31,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	}
 
 	public NavigationSoftware(String name, SystemComputer computer) {
-		super(name, computer);
+		super(name);
 		sensors = new HashMap<Integer, Sensor>();
 		sensorResults = new ArrayList<SensorResult>();
 		populateSensors();
@@ -80,7 +80,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 
 
 	private List<Sensor> getSensors() {
-		List<SpacecraftBusComponent> components = computer.findBusComponent(Sensor.categoryID);
+		List<SpacecraftBusComponent> components = computer.findBusComponent(Sensor.category);
 		List<Sensor> sensors = new ArrayList<Sensor>();
 		for(SpacecraftBusComponent sensor : components)
 			sensors.add((Sensor)sensor);
