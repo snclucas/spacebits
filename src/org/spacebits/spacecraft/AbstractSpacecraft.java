@@ -2,10 +2,13 @@ package org.spacebits.spacecraft;
 
 import java.util.List;
 
+import org.spacebits.components.Component;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
-import org.spacebits.components.computers.SystemComputer;
+import org.spacebits.components.computers.DataRecord;
+import org.spacebits.components.computers.SpacecraftData;
+import org.spacebits.exceptions.ComponentConfigurationException;
 import org.spacebits.status.SystemStatus;
 import org.spacebits.structures.hulls.Hull;
 
@@ -28,7 +31,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	public AbstractSpacecraft(String name, Hull hull) {
 		this.name = name;
 		setHull(hull);
-		this.bus = new SpacecraftBus("Spacecraft bus", this); ;
+		this.bus = new SpacecraftBus("Spacecraft bus", this);
 		this.bus.setSpacecraft(this);
 		systemsOnline = false;
 	}
@@ -38,10 +41,6 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 		return this.name;
 	}
 
-	@Override
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	@Override
 	public TypeInfo getCategoryId() {
@@ -83,6 +82,12 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 			if(status.isOK()) {
 				systemsOnline = true;
 				online = true;
+				
+				DataRecord data = new DataRecord("spaceraft-ident", 
+						SpacecraftData.category, Integer.toString(getSpacecraftBus().getSpacecraft().getIdent()));
+				
+				bus.getSystemComputer().getStorageDevice().saveData(data);
+				
 			}
 		}
 		return status;
@@ -105,15 +110,11 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 
 	@Override
-	public void addComponent(SpacecraftBusComponent component) {
-		bus.addComponent(component);
-		component.registerWithBus(bus);
-	}
-	
-
-
-	public void setSystemComputer(SystemComputer systemComputer) {
-		bus.setSystemComputer(systemComputer);
+	public void addComponent(Component component) {
+		if(component instanceof SpacecraftBusComponent == false)
+			throw new ComponentConfigurationException("Cano only add SpacecraftBusComponents");
+		bus.addComponent((SpacecraftBusComponent)component);
+		((SpacecraftBusComponent)component).registerWithBus(bus);
 	}
 	
 	
@@ -185,6 +186,52 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	public double getTotalCPURequirementOfSpacecraftBusComponents() {
 		return SpacecraftFirmware.getTotalCPUThroughputAvailable(bus);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bus == null) ? 0 : bus.hashCode());
+		result = prime * result + ((hull == null) ? 0 : hull.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractSpacecraft other = (AbstractSpacecraft) obj;
+		if (bus == null) {
+			if (other.bus != null)
+				return false;
+		} else if (!bus.equals(other.bus))
+			return false;
+		if (hull == null) {
+			if (other.hull != null)
+				return false;
+		} else if (!hull.equals(other.hull))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+	
+	
+	@Override
+	public int getIdent() {
+		return hashCode();
+	}
+
+	
+	
 	
 	
 

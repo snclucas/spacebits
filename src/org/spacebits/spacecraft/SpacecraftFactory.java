@@ -66,6 +66,7 @@ public class SpacecraftFactory {
 					FuelSubSystem.BASIC_FUEL_SUBSYSTEM, FuelSubSystem.PROPULSION_FUEL_SUBSYSTEM);
 			fuelDeliverySystem.addFuelTank(tank);
 			spacecraft.addComponent(fuelDeliverySystem);
+			spacecraft.addComponent(tank);
 			
 			FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.typeID.toString(), false);
 			engine.setFuelSubSystem(fuelDeliverySystem);

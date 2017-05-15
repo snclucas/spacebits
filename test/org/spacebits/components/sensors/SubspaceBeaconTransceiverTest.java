@@ -12,6 +12,8 @@ import org.spacebits.navigation.BeaconSignal;
 import org.spacebits.physics.Physics;
 import org.spacebits.physics.Unit;
 import org.spacebits.spacecraft.BusComponentSpecification;
+import org.spacebits.spacecraft.OperationalSpecification;
+import org.spacebits.spacecraft.PhysicalSpecification;
 import org.spacebits.universe.Coordinates;
 import org.spacebits.universe.Location;
 import org.spacebits.universe.SimpleLocation;
@@ -30,8 +32,11 @@ public class SubspaceBeaconTransceiverTest {
 		Location actualLocation = new SimpleLocation(22, "Actual location", 
 				new Coordinates(new BigDecimal(5.0 * Unit.Pc),  new BigDecimal(5.0001000010000000344 * Unit.Pc),  new BigDecimal(5.0 * Unit.Pc)));
 		
+		PhysicalSpecification physicalSpecification1 = new PhysicalSpecification(23, 12, 67, 45, 23);
+		OperationalSpecification operationalSpecification1 = 
+				new OperationalSpecification(23, 34, 45, 67);
 		BusComponentSpecification busComponentSpecification = 
-				new BusComponentSpecification();
+				new BusComponentSpecification(physicalSpecification1, operationalSpecification1);
 		
 		SubspaceBeaconTransceiver subspaceBeaconTransceiver = 
 				new SubspaceBeaconTransceiver("Test", busComponentSpecification, 

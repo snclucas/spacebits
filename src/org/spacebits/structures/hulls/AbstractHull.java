@@ -29,7 +29,7 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 	
 	@Override
 	public TypeInfo getCategoryId() {
-		return categoryID;
+		return category;
 	}
 	
 	

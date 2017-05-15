@@ -11,6 +11,24 @@ import org.spacebits.spacecraft.PhysicalSpecification;
 public class BusRequirementSpecificationTest {
 
 	@Test
+	public void testBusRequirementSpecificationEquality() {
+		PhysicalSpecification physicalSpecification1 = new PhysicalSpecification(23, 12, 67, 45, 23);
+		OperationalSpecification operationalSpecification1 = 
+				new OperationalSpecification(23, 34, 45, 67);
+		BusComponentSpecification busComponentSpecification1 = 
+				new BusComponentSpecification(physicalSpecification1, operationalSpecification1);
+		
+		PhysicalSpecification physicalSpecification2 = new PhysicalSpecification(23, 12, 67, 45, 23);
+		OperationalSpecification operationalSpecification2 = 
+				new OperationalSpecification(23, 34, 45, 67);
+		BusComponentSpecification busComponentSpecification2 = 
+				new BusComponentSpecification(physicalSpecification2, operationalSpecification2);
+		
+		assertEquals("Specifications should be equal", busComponentSpecification1, busComponentSpecification2);
+	}
+	
+	
+	@Test
 	public void testBusRequirementSpecification() {
 		
 		double mass = 1.5 * Unit.kg;
@@ -81,9 +99,6 @@ public class BusRequirementSpecificationTest {
 		assertEquals("Nominal CPU from operationalSpecification incorrect", nominalCPU, busComponentSpecification.getNominalCPUThroughout(), 0.001);
 		assertEquals("Max power from operationalSpecification incorrect", maxPower, busComponentSpecification.getMaximumOperationalPower(), 0.001);
 		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, busComponentSpecification.getMaximumOperationalCPUThroughput(), 0.001);
-	
-		
-		
 	}
 	
 

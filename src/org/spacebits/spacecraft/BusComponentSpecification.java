@@ -6,13 +6,6 @@ public class BusComponentSpecification {
 	private OperationalSpecification operationalSpecification;
 	
 	
-	public BusComponentSpecification() {
-		super();
-		this.physicalSpecification = new PhysicalSpecification(0.0, 0.0);
-		this.operationalSpecification = new OperationalSpecification(0.0, 0.0);
-	}
-	
-	
 	public BusComponentSpecification(PhysicalSpecification physicalSpecification, OperationalSpecification operationalSpecification) {
 		super();
 		this.physicalSpecification = physicalSpecification;

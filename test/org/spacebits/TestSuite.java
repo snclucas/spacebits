@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.spacebits.components.ComponentsTestSuite;
 import org.spacebits.components.computers.ComputerTestSuite;
+import org.spacebits.components.energygeneration.EnergyGenerationTestSuite;
 import org.spacebits.components.energygeneration.SubspacePowerGeneratorTest;
 import org.spacebits.components.engines.thrust.FuelSubSystemTest;
 import org.spacebits.components.propulsion.PropulsionTestSuite;
@@ -25,6 +26,7 @@ import org.spacebits.utils.math.DistanceSolverTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+	EnergyGenerationTestSuite.class,
 	SubspaceBeaconTest.class,
 	SensorTestSuite.class,
 	SubspacePowerGeneratorTest.class,

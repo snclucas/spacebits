@@ -16,9 +16,7 @@ public class SimpleLocationTest {
 
 	@Test
 	public void testLocationConstructors() {	
-		
-		
-		
+
 		Coordinates coordinates1 = new Coordinates(new BigDecimal[]{new BigDecimal(1), new BigDecimal(1),new BigDecimal(1)});
 		Coordinates coordinates3 = new Coordinates(new BigDecimal[]{new BigDecimal(1), new BigDecimal(0),new BigDecimal(1)});
 		

@@ -23,7 +23,8 @@ public interface SystemComputer extends Computer, SpacecraftBusComponent, BusCom
 
 	MessageMediator getMessagingSystem();
 	void setMessagingSystem(MessageMediator messagingSystem);
-
+	Object getSystemData(String id);
+	DataStore getStorageDevice();
 	SystemStatusMessage addSystemMessage(SpacecraftBusComponent component, String message, Status status);
 
 	List<SystemStatusMessage> getSystemMessages();

@@ -3,6 +3,7 @@ package org.spacebits.spacecraft;
 import java.util.List;
 
 import org.spacebits.Diagnosable;
+import org.spacebits.components.Component;
 import org.spacebits.components.Onlineable;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
@@ -14,7 +15,7 @@ public interface Spacecraft extends StatusProvider, Onlineable, Diagnosable {
 	TypeInfo category = new TypeInfo("Spacecraft");
 	
 	String getName();
-	void setName(String name);
+	int getIdent();
 	
 	double getVolume();
 	double getMass();
@@ -24,7 +25,7 @@ public interface Spacecraft extends StatusProvider, Onlineable, Diagnosable {
 	double getTotalMassOfComponents();
 	double getTotalVolumeOfComponents();
 	
-	void addComponent(SpacecraftBusComponent component);
+	void addComponent(Component component);
 	List<SpacecraftBusComponent> getComponents();
 
 	

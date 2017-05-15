@@ -11,14 +11,44 @@ import org.spacebits.status.SystemStatusMessage;
 
 public abstract class AbstractBus implements Bus {
 
-	public static SpacecraftFirmware SpacecraftFirmware = new SpacecraftFirmware();
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractBus other = (AbstractBus) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (spacecraft == null) {
+			if (other.spacecraft != null)
+				return false;
+		} else if (!spacecraft.equals(other.spacecraft))
+			return false;
+		return true;
+	}
+
+
+
+
 	protected Spacecraft spacecraft;
 	
-	protected SystemComputer systemComputer;
-	
-	protected List<SpacecraftBusComponent> components = new ArrayList<SpacecraftBusComponent>();
+	protected final List<SpacecraftBusComponent> components = new ArrayList<SpacecraftBusComponent>();
 
-	private String name;
+	private final String name;
 
 	public AbstractBus(String name, Spacecraft spacecraft) {
 		this.name = name;
@@ -61,12 +91,7 @@ public abstract class AbstractBus implements Bus {
 		return name;
 	}
 
-	@Override
-	public void setName(String name) {
-		this.name = name;
-
-	}
-
+	
 	@Override
 	public List<SpacecraftBusComponent> findComponent(TypeInfo componentType) {
 		return SpacecraftFirmware.findBusComponent(this, componentType);
@@ -86,16 +111,10 @@ public abstract class AbstractBus implements Bus {
 
 	@Override
 	public void addComponent(SpacecraftBusComponent component) {
+		if(component.getCategoryId() == SystemComputer.category)
+			findComponent(SystemComputer.category).clear();
 		this.components.add(component);
 		component.registerWithBus(this);
-		if(component.getCategoryId() == SystemComputer.category)
-			setSystemComputer((SystemComputer)component);
-	}
-
-
-	@Override
-	public void addComponents(List<SpacecraftBusComponent> components) {
-		this.components.addAll(components);
 	}
 
 
@@ -103,13 +122,12 @@ public abstract class AbstractBus implements Bus {
 
 	@Override
 	public SystemComputer getSystemComputer() {
-		return systemComputer;
+		List<SpacecraftBusComponent> components = findComponent(SystemComputer.category);
+		if(components.size() == 0)
+			return null;
+		return (SystemComputer)components.get(0);
 	}
 
-	@Override
-	public void setSystemComputer(SystemComputer computer) {
-		this.systemComputer = computer;
-	}
 
 
 }

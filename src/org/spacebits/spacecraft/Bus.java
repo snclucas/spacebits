@@ -15,18 +15,15 @@ public interface Bus extends BusCommunicator, ComponentVisitor, Identifiable {
 	TypeInfo category = new TypeInfo("Bus");
 	
 	String getName();
-	void setName(String name);
 
 	List<SpacecraftBusComponent> findComponent(TypeInfo componentType);
 	List<SpacecraftBusComponent> getComponents();
 	
 	void addComponent(SpacecraftBusComponent component);
-	void addComponents(List<SpacecraftBusComponent> components);
 	
 	SystemStatusMessage registerSystemComputer(SystemComputer computer);
 	
 	SystemComputer getSystemComputer();
-	void setSystemComputer(SystemComputer computer);
     
     Spacecraft getSpacecraft();
 	void setSpacecraft(Spacecraft spacecraft);

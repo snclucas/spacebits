@@ -1,5 +1,6 @@
 
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.spacebits.algorithm.SimpleRadioFrequencyPropagationModel;
@@ -9,6 +10,10 @@ import org.spacebits.components.computers.DataRecord;
 import org.spacebits.components.computers.DataStore;
 import org.spacebits.components.propulsion.Engine;
 import org.spacebits.components.propulsion.ThrustDriveInterface;
+import org.spacebits.components.sensors.LinearSensorArray;
+import org.spacebits.components.sensors.Sensor;
+import org.spacebits.components.sensors.SensorFactory;
+import org.spacebits.profiles.PowerLawProfile;
 import org.spacebits.software.Message;
 import org.spacebits.software.PropulsionManagementSoftware;
 import org.spacebits.software.SystemMessage;
@@ -30,36 +35,33 @@ public class Driver {
 	public Driver() {
 		
 		
-		Location location = new SimpleLocation(1, "test", new Coordinates());
 		
-		DataRecord dataRecord = new DataRecord("My location", location);
-		System.out.println(dataRecord.getRecordType());
+
 		
 		
-		//DataStore store = new BasicDataStorageUnit(name, busResourceSpecification)
-		//store. 
-//		
-//		BusComponentSpecification busSpec = new BusComponentSpecification();
-//		SimpleRadioFrequencyPropagationModel model = new SimpleRadioFrequencyPropagationModel("ddd");
-//		RadioCommunicator com = new RadioCommunicator("hfghfgh", busSpec, model);
-//		
-//		
-//		
-//		Universe universe = Universe.getUniverse();
-//		
-//		universe.getLocationsByType(Star.typeID);
-//		
-//		Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
-//		SystemStatus status = simpleSpacecraft.online();
-//		
-//		//for(SystemStatusMessage message : status.getMessages())
-//			//System.out.println(message.getStatusProvider() + " : " +  message.getMessage());
-//		
-//		if(status.isOK() == false) {
-//			System.out.println("There was a problem onlining your spacecraft");
-//			System.exit(-1);
-//		}
-//		
+		Universe universe = Universe.getUniverse();
+		
+		universe.getLocationsByType(Star.typeID);
+		
+		//Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
+		//SystemStatus status = simpleSpacecraft.online();
+		
+		
+		Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type.toString(), Sensor.RADAR, 1);
+		
+		System.out.println(sensor.getName());
+	
+		
+		
+		
+		//for(SystemStatusMessage message : status.getMessages())
+			//System.out.println(message.getStatusProvider() + " : " +  message.getMessage());
+		
+		//if(status.isOK() == false) {
+		//	System.out.println("There was a problem onlining your spacecraft");
+		//	System.exit(-1);
+		//}
+		
 //		
 //		List<SystemStatusMessage> statusMessages = simpleSpacecraft.getSystemComputer().getSystemMessages();
 //		

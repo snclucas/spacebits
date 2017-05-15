@@ -16,30 +16,30 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 		super(name, busResourceSpecification);
 	}
 
-	public static TypeInfo typeID = new TypeInfo("BasicDataStorageUnit");
+	public static TypeInfo type = new TypeInfo("BasicDataStorageUnit");
 
 	private final Map<TypeInfo, Archive> dataArchives = new HashMap<TypeInfo, Archive>();
 
 	public TypeInfo getTypeId() {
-		return typeID;
+		return type;
 	}
 
 	@Override
-	public void saveData(String id, ArchivableData data) {
-		if(dataArchives.containsKey(data.getTypeId())) {
-			Archive archive = dataArchives.get(data.getTypeId());
-			archive.put(id, data);
+	public void saveData(DataRecord data) {
+		if(dataArchives.containsKey(data.getRecordType())) {
+			Archive archive = dataArchives.get(data.getRecordType());
+			archive.put(data.getRecordID(), data);
 		}
 		else {
 			Archive archive = new Archive();
-			archive.put(id, data);
-			dataArchives.put(data.getTypeId(), archive);
+			archive.put(data.getRecordID(), data);
+			dataArchives.put(data.getRecordType(), archive);
 		}
 	}
 
 
 	@Override
-	public ArchivableData getData(String id, TypeInfo typeInfo) {
+	public DataRecord getData(String id, TypeInfo typeInfo) {
 		if(dataArchives.containsKey(typeInfo)) {
 			Archive archive = dataArchives.get(typeInfo);
 			return archive.get(id);
@@ -81,6 +81,6 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 
 }
 
-class Archive extends HashMap<String, ArchivableData> {
+class Archive extends HashMap<String, DataRecord> {
 	private static final long serialVersionUID = 925935940538264787L;
 }

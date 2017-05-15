@@ -37,4 +37,6 @@ public class SimpleSpacecraft extends AbstractSpacecraft {
 		return "Simple spacecraft";
 	}
 
+
+
 }

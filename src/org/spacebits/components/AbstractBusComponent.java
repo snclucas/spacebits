@@ -2,18 +2,25 @@ package org.spacebits.components;
 
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.computers.SystemComputer;
+import org.spacebits.exceptions.ComponentConfigurationException;
+import org.spacebits.software.Message;
+import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.Bus;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatus;
+import org.spacebits.status.SystemStatusMessage;
+import org.spacebits.universe.UniverseAware;
 
 
-public abstract class AbstractBusComponent implements SpacecraftBusComponent, PhysicalComponent {
+public abstract class AbstractBusComponent extends UniverseAware implements SpacecraftBusComponent {
 
 	protected boolean online;
 	
 	protected String name;
 
 	protected Bus spacecraftBus;
+	
+	protected SystemComputer systemComputer;
 	
 	protected BusComponentSpecification busResourceSpecification;
 	
@@ -41,7 +48,19 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent, Ph
 	public void registerWithBus(Bus bus) {
 		this.spacecraftBus = bus;
 	}
+	
+	@Override
+	public Message recieveBusMessage(Message message) {
+		String replyMessage = "Message recieved by: " + getName() + ":\n " + message.getMessage();
+		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
+	}
+	
 
+	@Override
+	public SystemStatusMessage registerSystemComputer(SystemComputer systemComputer) {
+		this.systemComputer = systemComputer;
+		return new SystemStatusMessage(this, this.name + " registered with " + systemComputer.getName(), getUniversalTime(), Status.INFO);
+	}
 
 
 
@@ -160,6 +179,9 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent, Ph
 
 
 	public SystemComputer getSystemComputer() {
+		System.out.println(this.describe());
+		if(isRegisteredWithSystemComputer() == false)
+			throw new ComponentConfigurationException(this.name + " is not registered with the computer");
 		return spacecraftBus.getSystemComputer();
 	}
 
@@ -172,7 +194,7 @@ public abstract class AbstractBusComponent implements SpacecraftBusComponent, Ph
 	
 	
 	public boolean isRegisteredWithSystemComputer() {
-		return getSystemComputer() != null;
+		return this.systemComputer != null;
 	}
 
 

@@ -98,7 +98,7 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 
 		for(SpacecraftBusComponent component : components) {
 			//Set this as the registered computer in the component
-			//systemStatusMessages.add(component.registerSystemComputer(this));
+			systemStatusMessages.add(component.registerSystemComputer(this));
 			// Register the component with the messaging system
 			systemStatusMessages.add(getMessagingSystem().addComponent(component));
 		}
@@ -136,11 +136,9 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 	public List<SystemStatusMessage> checkSystems() {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
 
-		SpacecraftData spacecraftData = new SpacecraftData("Spacecraft data");
-
 		double maximumAvailableVolume = getVolume();
 
-		spacecraftData.getData().put("maximumAvailableVolume", maximumAvailableVolume);
+		storageDevice.saveData(new DataRecord("maximumAvailableVolume", SpacecraftData.category, Double.toString(maximumAvailableVolume)));
 
 		Spacecraft spacecraft = spacecraftBus.getSpacecraft();
 
@@ -169,7 +167,6 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 
 
 
-		storageDevice.saveData("maximumAvailableVolume", spacecraftData);
 
 		return systemStatusMessages;
 	}

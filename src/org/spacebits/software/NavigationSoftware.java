@@ -73,7 +73,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 
 	public List<SensorResult> scan(int sensorId){
 		Sensor sensor = sensors.get(sensorId);
-		List<SensorResult> sensorResults = sensor.passiveScan(computer.getSpacecraftBus().getId(), 10.0, sensor.getSensorProfile());
+		List<SensorResult> sensorResults = sensor.passiveScan(10.0, sensor.getSensorProfile());
 		sensorResults.addAll(sensorResults);
 		return sensorResults;
 	}

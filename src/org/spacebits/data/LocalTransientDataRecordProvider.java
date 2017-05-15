@@ -12,15 +12,15 @@ import org.spacebits.components.computers.DataRecord;
 
 public class LocalTransientDataRecordProvider implements DataRecordProvider {
 	
-	private Map<Integer, DataRecord> dataRecords;
+	private Map<String, DataRecord> dataRecords;
 	
 	
 	public LocalTransientDataRecordProvider() {
-		this.dataRecords = new HashMap<Integer, DataRecord>();
+		this.dataRecords = new HashMap<String, DataRecord>();
 	}
 
 	@Override
-	public DataRecord getDataRecordByID(int id) {
+	public DataRecord getDataRecordByID(String id) {
 		DataRecord returnedRecord = dataRecords.get(id);
 		if(returnedRecord == null)
 			return new DataRecord();
@@ -35,7 +35,7 @@ public class LocalTransientDataRecordProvider implements DataRecordProvider {
 	}
 	
 	@Override
-	public DataRecord overwriteDataRecordWithId(int id, DataRecord dataRecord) {
+	public DataRecord overwriteDataRecordWithId(String id, DataRecord dataRecord) {
 		if(dataRecords.containsValue(dataRecord) == true)
 			return dataRecords.put(dataRecord.getRecordID(), dataRecord);
 		return new DataRecord();
@@ -44,7 +44,7 @@ public class LocalTransientDataRecordProvider implements DataRecordProvider {
 	@Override
 	public List<DataRecord> getDataRecordsByType(TypeInfo type) {
 		List<DataRecord> records = new ArrayList<DataRecord>();
-		Iterator<Entry<Integer, DataRecord>> it = dataRecords.entrySet().iterator();
+		Iterator<Entry<String, DataRecord>> it = dataRecords.entrySet().iterator();
 		while (it.hasNext()) {
 			DataRecord record = it.next().getValue();
 			if(type == record.getRecordType())
@@ -54,7 +54,7 @@ public class LocalTransientDataRecordProvider implements DataRecordProvider {
 	}
 
 	@Override
-	public DataRecord deleteDataRecordByID(int id) {
+	public DataRecord deleteDataRecordByID(String id) {
 		DataRecord recordToDelete = getDataRecordByID(id);
 		if(recordToDelete.hasData() == true)
 			return dataRecords.remove(id);

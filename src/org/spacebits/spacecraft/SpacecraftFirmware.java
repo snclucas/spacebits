@@ -2,8 +2,10 @@ package org.spacebits.spacecraft;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
+import org.spacebits.components.Component;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.CommunicationComponent;
@@ -19,7 +21,6 @@ public class SpacecraftFirmware {
 		boolean hasSystemComputer = systemComputerIndex >= 0;
 		if(hasSystemComputer) {
 			SystemComputer systemComputer = (SystemComputer) bus.getComponents().get(systemComputerIndex);
-			bus.setSystemComputer(systemComputer);
 			systemComputer.registerSpacecraftBus(bus);
 		}
 		return hasSystemComputer;
@@ -46,8 +47,8 @@ public class SpacecraftFirmware {
 
 	public static List<SystemStatusMessage> scanSpacecraftComponents(Bus bus) {
 		List<SystemStatusMessage> systemStatusMessages = new ArrayList<SystemStatusMessage>();
-		for(SpacecraftBusComponent component : bus.getComponents())
-			component.accept(bus);
+		for(Component component : bus.getComponents())
+			((SpacecraftBusComponent)component).accept(bus);
 		return systemStatusMessages;
 	}
 
@@ -91,7 +92,7 @@ public class SpacecraftFirmware {
 
 	public static double getTotalPowerAvailable(Bus bus) {
 		double sumOfAvailablePowerFromGenerators = 0.0;
-		for(SpacecraftBusComponent component : bus.getComponents())
+		for(Component component : bus.getComponents())
 			if(component instanceof PowerGenerator)
 				sumOfAvailablePowerFromGenerators += ((PowerGenerator)component).getMaximumPowerOutput();
 		return sumOfAvailablePowerFromGenerators;
@@ -117,12 +118,12 @@ public class SpacecraftFirmware {
 	
 	
 	public static double getTotalCurrentPower(Bus bus) {
-		return bus.getComponents().stream().mapToDouble(d->d.getCurrentPower()).sum();
+		return bus.getComponents().stream().mapToDouble((ToDoubleFunction<? super Component>)d->((SpacecraftBusComponent)d).getCurrentPower()).sum();
 	}
 
 	
 	public static double getTotalCurrentCPUThroughput(Bus bus) {
-		return bus.getComponents().stream().mapToDouble(d->d.getCurrentCPUThroughput()).sum();
+		return bus.getComponents().stream().mapToDouble(d->((SpacecraftBusComponent)d).getCurrentCPUThroughput()).sum();
 	}
 
 }

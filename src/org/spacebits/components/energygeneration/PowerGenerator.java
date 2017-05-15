@@ -1,10 +1,9 @@
 package org.spacebits.components.energygeneration;
 
-import org.spacebits.components.BusCommunicator;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 
-public interface PowerGenerator extends SpacecraftBusComponent, BusCommunicator {
+public interface PowerGenerator extends SpacecraftBusComponent {
 	
 	TypeInfo categoryID = new TypeInfo("PowerGenerator");
 	

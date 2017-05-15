@@ -6,7 +6,7 @@ import org.spacebits.status.SystemStatus;
 
 public class SimpleLinearThrustProfile extends AbstractProfile implements ThrustProfile {
 	
-	public static TypeInfo typeID = new TypeInfo("SimpleLinearThrustProfile");
+	public static TypeInfo type = new TypeInfo("SimpleLinearThrustProfile");
 
 	public SimpleLinearThrustProfile(String name) {
 		super(name);
@@ -15,7 +15,7 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 	
 	@Override
 	public TypeInfo getTypeId() {
-		return typeID;
+		return type;
 	}
 	
 
@@ -82,7 +82,7 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 
 	@Override
 	public final TypeInfo getCategoryId() {
-		return categoryID;
+		return category;
 	}
 
 

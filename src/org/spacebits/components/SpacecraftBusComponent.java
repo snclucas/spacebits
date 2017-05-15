@@ -4,8 +4,9 @@ import org.spacebits.Diagnosable;
 import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.spacecraft.Bus;
 import org.spacebits.status.StatusProvider;
+import org.spacebits.status.SystemStatusMessage;
 
-public interface SpacecraftBusComponent extends PhysicalComponent, Diagnosable, StatusProvider, Identifiable, Onlineable {
+public interface SpacecraftBusComponent extends Component, Diagnosable, StatusProvider,  Onlineable, BusCommunicator   {
 	
 	void registerWithBus(Bus bus);
 	
@@ -26,6 +27,8 @@ public interface SpacecraftBusComponent extends PhysicalComponent, Diagnosable, 
 	double getCurrentCPUThroughput();
 	
 	SystemComputer getSystemComputer();
+	
+	SystemStatusMessage registerSystemComputer(SystemComputer systemComputer);
 
 	boolean isOnSpacecraftBus();
 	void accept(ComponentVisitor componentVisitor);

@@ -6,7 +6,7 @@ import org.spacebits.components.TypeInfo;
 
 public interface Hull extends PhysicalComponent, BusCommunicator {
 	
-	TypeInfo categoryID = new TypeInfo("Hull");
+	TypeInfo category = new TypeInfo("Hull");
 	
 	TypeInfo RECTANGULAR = new TypeInfo("RECTANGULAR");
 	TypeInfo SPHEROID = new TypeInfo("SPHEROID");

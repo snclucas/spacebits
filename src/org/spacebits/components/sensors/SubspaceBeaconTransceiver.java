@@ -44,8 +44,8 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 
 
 	@Override
-	public List<SensorResult> passiveScan(int spacecraftIdent, double duration, SensorProfile sensorProfile) {
-		return super.passiveScan(spacecraftIdent, duration, sensorProfile);
+	public List<SensorResult> passiveScan(double duration, SensorProfile sensorProfile) {
+		return super.passiveScan(duration, sensorProfile);
 	}
 
 

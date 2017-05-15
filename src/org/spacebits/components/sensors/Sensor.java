@@ -2,12 +2,11 @@ package org.spacebits.components.sensors;
 
 import java.util.List;
 
-import org.spacebits.components.BusCommunicator;
+import org.spacebits.components.Component;
 import org.spacebits.components.Executable;
-import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 
-public interface Sensor extends SpacecraftBusComponent, Executable, BusCommunicator  {
+public interface Sensor extends Component, Executable {
 	
 	TypeInfo category = new TypeInfo("Sensor");
 	
@@ -23,8 +22,8 @@ public interface Sensor extends SpacecraftBusComponent, Executable, BusCommunica
 	
 	double getSensorThreshold();
 	
-	List<SensorResult> activeScan(int spacecraftIdent, double duration, double signalPropagationSpeed, 
+	List<SensorResult> activeScan(double duration, double signalPropagationSpeed, 
 			double signalStrength, SignalPropagationModel propagationModel, int sensorType);
 	
-	List<SensorResult> passiveScan(int spacecraftIdent, double duration, SensorProfile sensorProfile);
+	List<SensorResult> passiveScan(double duration, SensorProfile sensorProfile);
 }

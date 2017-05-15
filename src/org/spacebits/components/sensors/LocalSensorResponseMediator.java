@@ -7,7 +7,6 @@ import java.util.List;
 import org.spacebits.Configuration;
 import org.spacebits.physics.Unit;
 import org.spacebits.universe.Coordinates;
-import org.spacebits.universe.Location;
 import org.spacebits.universe.Universe;
 import org.spacebits.universe.UniverseDataProvider;
 import org.spacebits.universe.celestialobjects.CelestialObject;

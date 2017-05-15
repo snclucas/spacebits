@@ -12,7 +12,6 @@ import org.spacebits.components.comms.CommunicationComponent;
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.propulsion.Engine;
 import org.spacebits.exceptions.ComponentConfigurationException;
-import org.spacebits.physics.Unit;
 import org.spacebits.software.Message;
 import org.spacebits.software.Software;
 import org.spacebits.software.SystemMessage;
@@ -39,11 +38,16 @@ public abstract class AbstractSystemComputer extends AbstractBusComponent implem
 		loadedSoftware = new HashMap<TypeInfo, Software>();
 		storageDevice = DataStoreFactory.getDataStore(DataStoreFactory.BASIC_DATASTORE);
 		
+		
+		
 		setMessagingSystem(new SystemMessageService("Default messaging system"));
 	}
 	
 	
-
+	@Override
+	public Object getSystemData(String id) {
+		return storageDevice.getData(id, SpacecraftData.category).getData();
+	}
 	
 	
 
@@ -138,10 +142,17 @@ public abstract class AbstractSystemComputer extends AbstractBusComponent implem
 		if(loadedSoftware.size() == 0)
 			systemStatus.addSystemMessage("No interface software loaded", getUniversalTime(), Status.WARNING);
 		
+		
+		
+		
 		return systemStatus;
 	}
 
 
+	@Override
+	public DataStore getStorageDevice() {
+		return storageDevice;
+	}
 
 
 

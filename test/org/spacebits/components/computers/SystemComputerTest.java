@@ -57,7 +57,7 @@ public class SystemComputerTest {
 		assertEquals("Computer current power should be (not online)", 0.0, computer.getCurrentPower(Unit.kW), 0.00001);
 		SystemStatus systemStatus = computer.online();
 		assertEquals("System computer should not have critical messages", false, systemStatus.hasCriticalMessages());
-		assertEquals("System computer should hav OK status", true, systemStatus.isOK());
+		assertEquals("System computer should have OK status", true, systemStatus.isOK());
 		assertEquals("Computer current power should be " + busSpecs.getNominalPower(Unit.kW) + " (online)", busSpecs.getNominalPower(Unit.kW), computer.getCurrentPower(Unit.kW), 0.00001);
 		
 		

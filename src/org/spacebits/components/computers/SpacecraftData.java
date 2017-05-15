@@ -1,18 +1,16 @@
 package org.spacebits.components.computers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.spacebits.components.TypeInfo;
 
 public class SpacecraftData implements ArchivableData {
-	private TypeInfo typeID = new TypeInfo("SpacecraftData");
+	private TypeInfo type = new TypeInfo("SpacecraftData");
 	private final String dataName;
-	private final Map<String, Double> data = new HashMap<String, Double>();
+	private final String data;
 	
-	public SpacecraftData(String dataName) {
+	public SpacecraftData(String dataName, String data) {
 		super();
 		this.dataName = dataName;
+		this.data = data;
 	}
 	
 
@@ -20,21 +18,21 @@ public class SpacecraftData implements ArchivableData {
 		return dataName;
 	}
 
-	
-	public Map<String, Double> getData() {
+	@Override
+	public String getData() {
 		return data;
 	}
 
 
 	@Override
 	public TypeInfo getTypeId() {
-		return typeID;
+		return type;
 	}
 
 
 	@Override
 	public TypeInfo getCategoryId() {
-		return categoryID;
+		return category;
 	}
 
 

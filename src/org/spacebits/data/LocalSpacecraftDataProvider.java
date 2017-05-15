@@ -42,7 +42,7 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 		// Datastore 
 		
-		if(componentType.equals(BasicDataStorageUnit.typeID.toString()))	
+		if(componentType.equals(BasicDataStorageUnit.type.toString()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.3 * Unit.l), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 

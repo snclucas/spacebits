@@ -6,9 +6,9 @@ import org.spacebits.components.TypeInfo;
 import org.spacebits.components.computers.DataRecord;
 
 public interface DataRecordProvider {
-	DataRecord getDataRecordByID(int id);
+	DataRecord getDataRecordByID(String id);
 	DataRecord addDataRecord(DataRecord dataRecord);
-	DataRecord overwriteDataRecordWithId(int id, DataRecord dataRecord);
+	DataRecord overwriteDataRecordWithId(String id, DataRecord dataRecord);
 	List<DataRecord> getDataRecordsByType(TypeInfo type);
-	DataRecord deleteDataRecordByID(int id);
+	DataRecord deleteDataRecordByID(String id);
 }

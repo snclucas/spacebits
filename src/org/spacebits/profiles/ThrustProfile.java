@@ -6,7 +6,7 @@ import org.spacebits.status.StatusProvider;
 
 public interface ThrustProfile extends Diagnosable, StatusProvider {
 	
-	TypeInfo categoryID = new TypeInfo("ThrustProfile");
+	TypeInfo category = new TypeInfo("ThrustProfile");
 
 	double getNormalizedThrust(double powerLevel);
 	double getNormalizedPower(double powerLevel);
