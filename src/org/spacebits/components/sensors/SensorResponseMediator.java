@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface SensorResponseMediator {
 	
-	List<SensorResult> activeScan(int spacecraftIdent, double duration, double signalPropagationSpeed, 
+	List<SensorResult> activeScan(String spacecraftIdent, double duration, double signalPropagationSpeed, 
 			double signalStrength, SignalPropagationModel propagationModel, SensorProfile sensorProfile);
 	
-	List<SensorResult> passiveScan(int spacecraftIdent, double duration, SensorProfile sensorProfile);
+	List<SensorResult> passiveScan(String spacecraftIdent, double duration, SensorProfile sensorProfile);
 
 }

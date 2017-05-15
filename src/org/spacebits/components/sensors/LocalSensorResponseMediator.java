@@ -18,7 +18,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 	UniverseDataProvider universeDataProvider = Configuration.getUniverseDataProvider();
 
 	@Override
-	public List<SensorResult> activeScan(int spacecraftIdent, double duration, double signalPropagationSpeed,
+	public List<SensorResult> activeScan(String spacecraftIdent, double duration, double signalPropagationSpeed,
 			double signalStrength, SignalPropagationModel propagationModel, SensorProfile sensorProfile) {
 
 		List<SensorResult> results = new ArrayList<SensorResult>();
@@ -34,7 +34,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 	}
 
 
-	public List<SensorResult> passiveScan(int spacecraftIdent, double duration, SensorProfile sensorProfile) {
+	public List<SensorResult> passiveScan(String spacecraftIdent, double duration, SensorProfile sensorProfile) {
 		List<SensorResult> results = new ArrayList<SensorResult>();
 		Coordinates spacecraftLocation = Universe.getSpacecraftLocation(spacecraftIdent);
 		

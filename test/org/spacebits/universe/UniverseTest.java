@@ -31,9 +31,9 @@ public class UniverseTest {
 		Universe.addSpacecraft(spacecraft);
 		
 		Coordinates spacecraftLocation = new Coordinates(new BigDecimal(8*Unit.kPc + 149600000 * Unit.Km),new BigDecimal(0),new BigDecimal(100*Unit.Ly));
-		Universe.updateSpacecraftLocation(spacecraft.getId(), spacecraftLocation);
+		Universe.updateSpacecraftLocation(spacecraft.getIdent(), spacecraftLocation);
 
-		EnvironmentData data = universe.getEnvironmentData(spacecraft.getId());
+		EnvironmentData data = universe.getEnvironmentData(spacecraft.getIdent());
 		
 		System.out.println(data.getSolarFlux());
 		

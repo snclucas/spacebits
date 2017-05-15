@@ -1,6 +1,7 @@
 package org.spacebits.spacecraft;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.spacebits.components.Component;
 import org.spacebits.components.SpacecraftBusComponent;
@@ -25,6 +26,8 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	protected Hull hull;
 	
 	protected Bus bus;
+	
+	private String ident = UUID.randomUUID().toString().replaceAll("-", "");
 	
 	
 	
@@ -84,7 +87,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 				online = true;
 				
 				DataRecord data = new DataRecord("spaceraft-ident", 
-						SpacecraftData.category, Integer.toString(getSpacecraftBus().getSpacecraft().getIdent()));
+						SpacecraftData.category, getSpacecraftBus().getSpacecraft().getIdent());
 				
 				bus.getSystemComputer().getStorageDevice().saveData(data);
 				
@@ -226,8 +229,8 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	
 	
 	@Override
-	public int getIdent() {
-		return hashCode();
+	public String getIdent() {
+		return ident;
 	}
 
 	

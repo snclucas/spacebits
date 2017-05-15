@@ -15,7 +15,7 @@ public interface Spacecraft extends StatusProvider, Onlineable, Diagnosable {
 	TypeInfo category = new TypeInfo("Spacecraft");
 	
 	String getName();
-	int getIdent();
+	String getIdent();
 	
 	double getVolume();
 	double getMass();

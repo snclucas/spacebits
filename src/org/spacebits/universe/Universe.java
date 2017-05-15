@@ -8,6 +8,7 @@ import java.util.Map;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.sensors.Sensor;
 import org.spacebits.components.sensors.SignalResponse;
+import org.spacebits.exceptions.ComponentConfigurationException;
 import org.spacebits.physics.Unit;
 import org.spacebits.spacecraft.Spacecraft;
 import org.spacebits.universe.celestialobjects.CelestialObject;
@@ -22,9 +23,9 @@ public class Universe {
 
 	private UniverseDataProvider dataProvider;
 
-	private static Map<Integer,Spacecraft> spacecraftInUniverse = new HashMap<Integer, Spacecraft>();
+	private static Map<String,Spacecraft> spacecraftInUniverse = new HashMap<String, Spacecraft>();
 
-	private static Map<Integer,Coordinates> spacecraftLocationInUniverse = new HashMap<Integer, Coordinates>();
+	private static Map<String,Coordinates> spacecraftLocationInUniverse = new HashMap<String, Coordinates>();
 
 	public final static CelestialObject galacticCenter 
 	= new Region(0, "Galactic center", new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0)),
@@ -49,19 +50,21 @@ public class Universe {
 
 
 	public static void addSpacecraft(Spacecraft spacecraft) {
-		spacecraftInUniverse.put(spacecraft.getId(), spacecraft);
+		spacecraftInUniverse.put(spacecraft.getIdent(), spacecraft);
 	}
 
-	public static void updateSpacecraftLocation(int spacecraftIdent, Coordinates coordinates) {
+	public static void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates) {
 		spacecraftLocationInUniverse.put(spacecraftIdent, coordinates);
 	}
 
-	public static Coordinates getSpacecraftLocation(int spacecraftIdent) {
+	public static Coordinates getSpacecraftLocation(String spacecraftIdent) {
+		if(spacecraftLocationInUniverse.get(spacecraftIdent) == null)
+			throw new ComponentConfigurationException("Spacecraft location has not been set");
 		return spacecraftLocationInUniverse.get(spacecraftIdent);
 	}
 
 
-	public EnvironmentData getEnvironmentData(int spacecraftIdent) {
+	public EnvironmentData getEnvironmentData(String spacecraftIdent) {
 		Coordinates coordinates = getSpacecraftLocation(spacecraftIdent);
 
 		List<CelestialObject> nearByStars = //Stars within 100 AU
