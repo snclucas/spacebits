@@ -48,7 +48,7 @@ public class Unit {
 	public static double Pc = 3.2615679661840633266036314297735 * Ly;
 	public static double kPc = 1.0e3 * Pc;
 	public static double G_STAR_RADIUS =  695500 * Unit.Km;
-	
+	public static double AU =  1.49597870700e11 * Unit.m;
 	
 	//Units for time
 	public static double s = 1.0;

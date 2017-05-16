@@ -12,6 +12,10 @@ public class SimpleLocation extends AbstractLocation {
 		super(id, name, coordinates );
 	}
 	
+	public SimpleLocation(int id, String name, Coordinates coordinates, Location relativeTo) {
+		super(id, name, coordinates, relativeTo);
+	}
+	
 	public SimpleLocation(int id, String name, BigDecimal ... coordComponents) {
 		this(id, name, new Coordinates(coordComponents));
 	}

@@ -19,16 +19,30 @@ public abstract class AbstractLocation implements Location  {
 		this.coordinates = coordinates;
 	}
 	
+	public AbstractLocation(int id, String name, Coordinates coordinates, Location relativeTo) {
+		this.id = id;
+		this.name = name;
+		this.coordinates = coordinates.add(relativeTo.getCoordinates());
+	}
+	
 	public AbstractLocation(int id, String name, BigDecimal[] coordComponents) {
 		this(id, name, new Coordinates(coordComponents));
+	}
+	
+	public AbstractLocation(int id, String name, BigDecimal[] coordComponents, Location relativeTo) {
+		this(id, name, new Coordinates(coordComponents).add(relativeTo.getCoordinates()));
 	}
 	
 	public AbstractLocation(int id, String name, BigDecimal coordComponents1, BigDecimal coordComponents2, BigDecimal coordComponents3) {
 		this(id, name, new Coordinates(coordComponents1, coordComponents2, coordComponents3));
 	}
 	
-	public AbstractLocation(int id, String name, double coordComponents1, double coordComponents2, double coordComponents3) {
-		this(id, name, new Coordinates(new BigDecimal(coordComponents1), new BigDecimal(coordComponents2), new BigDecimal(coordComponents3)));
+	public AbstractLocation(int id, String name, BigDecimal coordComponents1, BigDecimal coordComponents2, BigDecimal coordComponents3, Location relativeTo) {
+		this(id, name, new Coordinates(coordComponents1, coordComponents2, coordComponents3).add(relativeTo.getCoordinates()));
+	}
+	
+	public AbstractLocation(int id, String name, double coordComponents1, double coordComponents2, double coordComponents3, Location relativeTo) {
+		this(id, name, new Coordinates(new BigDecimal(coordComponents1), new BigDecimal(coordComponents2), new BigDecimal(coordComponents3)).add(relativeTo.getCoordinates()));
 	}
 	
 	

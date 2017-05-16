@@ -11,7 +11,11 @@ import org.spacebits.physics.Unit;
 import org.spacebits.spacecraft.Spacecraft;
 import org.spacebits.spacecraft.SpacecraftFactory;
 import org.spacebits.universe.Coordinates;
+import org.spacebits.universe.Location;
+import org.spacebits.universe.SimpleLocation;
 import org.spacebits.universe.Universe;
+import org.spacebits.universe.celestialobjects.SensorSignalResponseLibrary;
+import org.spacebits.universe.celestialobjects.Star;
 
 
 public class Driver {
@@ -19,14 +23,24 @@ public class Driver {
 	
 	public Driver() {
 		
+		Location sol = new SimpleLocation(1,"Sol", new Coordinates(
+				new BigDecimal(8*Unit.kPc),
+				new BigDecimal(0),
+				new BigDecimal(100*Unit.Ly)));
+		
+		Location initialSpacecraftLocation = new SimpleLocation(1,"Sol", new Coordinates(
+				new BigDecimal(0),
+				new BigDecimal(0),
+				new BigDecimal(-1*Unit.AU)), sol);
+		
+		
 		
 		
 		Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 		
 		Universe.addSpacecraft(simpleSpacecraft);
 		
-		Coordinates spacecraftLocation = new Coordinates(new BigDecimal(8*Unit.kPc + 149600000 * Unit.Km),new BigDecimal(0),new BigDecimal(100*Unit.Ly));
-		Universe.updateSpacecraftLocation(simpleSpacecraft.getIdent(), spacecraftLocation);
+		Universe.updateSpacecraftLocation(simpleSpacecraft.getIdent(), initialSpacecraftLocation);
 		
 		Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type.toString(), Sensor.RADAR, 1);
 		simpleSpacecraft.addComponent(sensor);

@@ -49,7 +49,10 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 			SignalResponse returnedSignalResponse = object.getSignalResponse(sensorProfile.getSensorType(), distance);
 			// TODO maybe set celestial object as UNKNOWN if under a certain threshold?
 
-			System.out.println(object + " " + returnedSignalResponse.getSignalStrength() + " " + returnedSignalResponse.getSignalDispersion() + " " + distance.doubleValue()/Unit.Ly);
+			System.out.println(object + " " + 
+			returnedSignalResponse.getSignalStrength() + " " + 
+					returnedSignalResponse.getSignalDispersion() + " " + 
+			distance.doubleValue()/Unit.Ly);
 			
 			if(returnedSignalResponse.getSignalStrength() > 1.0)
 				object = new UnknownObject(-122, "Unknown object", object.getCoordinates(), object.getSensorSignalResponse());

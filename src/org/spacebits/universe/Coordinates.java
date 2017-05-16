@@ -47,6 +47,14 @@ public class Coordinates {
 				this.location[1].add(coordinates.get(1)), 
 				this.location[2].add(coordinates.get(2)));
 	}
+	
+	
+	public Coordinates add(Coordinates coordinates) {
+		return new Coordinates( 
+				this.location[0].add(coordinates.get(0)), 
+				this.location[1].add(coordinates.get(1)), 
+				this.location[2].add(coordinates.get(2)));
+	}
 
 
 	@Override

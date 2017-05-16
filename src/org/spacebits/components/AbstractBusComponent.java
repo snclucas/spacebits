@@ -179,7 +179,6 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 
 
 	public SystemComputer getSystemComputer() {
-		System.out.println(this.describe());
 		if(isRegisteredWithSystemComputer() == false)
 			throw new ComponentConfigurationException(this.name + " is not registered with the computer");
 		return spacecraftBus.getSystemComputer();

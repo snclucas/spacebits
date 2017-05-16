@@ -114,9 +114,6 @@ public abstract class AbstractSystemComputer extends AbstractBusComponent implem
 		double newBusCPUThroughputRequirement = getTotalCurrentCPUThroughput() 
 				- component.getCurrentCPUThroughput() + busRequirement.getCPUThroughputRequirement();
 
-		System.out.println("In request " + newBusPowerRequirement + " " + getTotalPowerAvailable());
-		System.out.println("In request " + newBusCPUThroughputRequirement + " " + getTotalCPUThroughputAvailable());
-
 		if((newBusPowerRequirement > getTotalPowerAvailable()))
 			return new SystemStatusMessage(this, "Not enough bus power to perform operation, " + 
 		newBusPowerRequirement + " needed, " + getTotalPowerAvailable() + " available", 
