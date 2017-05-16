@@ -31,12 +31,7 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 
 	
 	
-	public TypeInfo getType() {
-		return type();
-	}
-
-
-
+	
 
 
 

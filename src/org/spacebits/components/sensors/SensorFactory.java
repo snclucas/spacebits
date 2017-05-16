@@ -10,7 +10,7 @@ public class SensorFactory {
 	public static Sensor getSensor(TypeInfo sensorType, TypeInfo sensorSensingType, int numberOfSensorElements){
 		SpacecraftDataProvider spacecraftDataProvider =  Configuration.getSpacecraftDataProvider();
 		
-		if(sensorType == LinearSensorArray.type()){
+		if(sensorType.equals(LinearSensorArray.type())){
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(sensorType);
 			
 			double gainPerElement = 10.0;
@@ -20,7 +20,7 @@ public class SensorFactory {
 			return new LinearSensorArray(
 					LinearSensorArray.type().toString(), data.getBusComponentSpecification(), sensorProfile, numberOfSensorElements);
 		}
-		else if(sensorType == FractalSensorArray.type()){
+		else if(sensorType.equals(FractalSensorArray.type())){
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(sensorType);
 			
 			double gainPerElement = 100.0;

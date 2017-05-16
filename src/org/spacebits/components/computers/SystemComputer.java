@@ -15,7 +15,7 @@ import org.spacebits.status.SystemStatusMessage;
 public interface SystemComputer extends Computer {
 	
 	static TypeInfo category() {
-		return new TypeInfo("Computer");
+		return new TypeInfo("SystemComputer");
 	}
 	
 	static TypeInfo type() {

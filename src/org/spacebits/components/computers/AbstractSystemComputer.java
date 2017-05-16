@@ -54,6 +54,16 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	}
 	
 	
+	
+	public TypeInfo getType() {
+		return type();
+	}
+
+	public TypeInfo getCategory() {
+		return category();
+	}
+
+	
 
 	@Override
 	public List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType) throws ComponentConfigurationException {

@@ -17,7 +17,7 @@ public class EngineFactory extends DataFactory {
 	public static ThrustingEngine getEngine(TypeInfo engineType, boolean vectored){
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(engineType);
 
-		if(engineType == SimpleIonEngine.type()){
+		if(engineType.equals(SimpleIonEngine.type())){
 			double maximumThrust = 1 * Unit.N;			
 
 			ThrustProfile thrustAlgorithm = ThrustProfileFactory.getThrustAlgorithm(
@@ -34,7 +34,7 @@ public class EngineFactory extends DataFactory {
 					maximumThrust, 
 					thrustAlgorithm, fuelConsumptionProfile, engineVector, vectored);
 		}
-		else if(engineType == SimpleThruster.type()){
+		else if(engineType.equals(SimpleThruster.type())){
 			double maximumThrust = 1 * Unit.kN; // N	
 
 			ThrustProfile thrustAlgorithm = ThrustProfileFactory.getThrustAlgorithm(
