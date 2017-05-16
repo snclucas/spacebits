@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spacebits.Configuration;
+import org.spacebits.data.EnvironmentDataProvider;
 import org.spacebits.physics.Unit;
 import org.spacebits.universe.Coordinates;
 import org.spacebits.universe.Universe;
@@ -16,10 +17,13 @@ import org.spacebits.utils.Utils;
 public class LocalSensorResponseMediator implements SensorResponseMediator {
 
 	UniverseDataProvider universeDataProvider = Configuration.getUniverseDataProvider();
+	EnvironmentDataProvider environmentDataProvider = Configuration.getEnvironmentDataProvider();
 
 	@Override
-	public List<SensorResult> activeScan(String spacecraftIdent, double duration, double signalPropagationSpeed,
+	public List<SensorResult> activeScan(String spacecraftIdent, double duration,
 			double signalStrength, SignalPropagationModel propagationModel, SensorProfile sensorProfile) {
+		
+		double signalPropagationSpeed = universeDataProvider.getSignalPropagationSpeed(sensorProfile);
 
 		List<SensorResult> results = new ArrayList<SensorResult>();
 		Coordinates spacecraftLocation = Universe.getSpacecraftLocation(spacecraftIdent);
@@ -27,7 +31,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 		BigDecimal maximumDistanceScanned = new BigDecimal((duration * signalPropagationSpeed) / 2.0); // There and back
 		
 		List<CelestialObject> objects = 
-				universeDataProvider.getLocationsCloserThan(Universe.getSpacecraftLocation(spacecraftIdent), maximumDistanceScanned);
+				universeDataProvider.getLocationsCloserThan(spacecraftLocation, maximumDistanceScanned);
 
 
 		return results; 
@@ -41,7 +45,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 		BigDecimal maximumDistanceScanned = new BigDecimal(1000000 * Unit.Ly); 
 		
 		List<CelestialObject> objectsWithin1000Ly = 
-				universeDataProvider.getLocationsCloserThan(Universe.getSpacecraftLocation(spacecraftIdent), maximumDistanceScanned);
+				universeDataProvider.getLocationsCloserThan(spacecraftLocation, maximumDistanceScanned);
 
 		for(CelestialObject object : objectsWithin1000Ly) {
 			BigDecimal distance = Utils.distanceToLocation(object.getCoordinates(), spacecraftLocation, Unit.Unity);

@@ -13,7 +13,7 @@ public abstract class AbstractPowerGenerator extends AbstractBusComponent implem
 
 
 	@Override
-	public final TypeInfo getCategoryId() {
+	public final TypeInfo getCategory() {
 		return categoryID;
 	}
 	

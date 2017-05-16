@@ -21,7 +21,7 @@ public class FuelSubSystemTest {
 	@Test
 	public void testFuelSubSystem() {
 		double tankCapacity = 100 * Unit.l;
-		FuelStorageTank hydrazineTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.typeID.toString(), tankCapacity);
+		FuelStorageTank hydrazineTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type(), tankCapacity);
 
 		assertEquals("Expected capacity of tank not correct", tankCapacity, hydrazineTank.getCapacity(), 0.001);
 
@@ -71,7 +71,7 @@ public class FuelSubSystemTest {
 
 		// Add a liquid Xenon tank
 		
-		FuelStorageTank xenonTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.typeID.toString(), tankCapacity);
+		FuelStorageTank xenonTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type(), tankCapacity);
 		Fuel liquidXenon = spacecraftDataProvider.getFuel(Fuel.LIQUID_XENON);
 		// Fill it up with liquid Xenon
 		xenonTank.setFuel(liquidXenon, tankCapacity);

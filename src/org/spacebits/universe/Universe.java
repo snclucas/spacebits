@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.spacebits.components.TypeInfo;
-import org.spacebits.components.sensors.Sensor;
-import org.spacebits.components.sensors.SignalResponse;
 import org.spacebits.exceptions.ComponentConfigurationException;
 import org.spacebits.physics.Unit;
 import org.spacebits.spacecraft.Spacecraft;
@@ -17,13 +15,9 @@ import org.spacebits.universe.celestialobjects.SensorSignalResponseLibrary;
 import org.spacebits.universe.celestialobjects.SensorSignalResponseProfile;
 import org.spacebits.universe.celestialobjects.Star;
 import org.spacebits.universe.structures.SubspaceBeacon;
-import org.spacebits.utils.Utils;
 
 public class Universe {
-
-	{
-		setupSimpleUniverse();
-	}
+	
 	private UniverseDataProvider dataProvider;
 
 	private static Map<String,Spacecraft> spacecraftInUniverse = new HashMap<String, Spacecraft>();
@@ -34,15 +28,10 @@ public class Universe {
 	= new Region("Galactic center", new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0)),
 			new SensorSignalResponseProfile(1000.0, 1000.0, 1000.0, 1000.0, 1000.0), 10.0 * Unit.Pc);
 
-	public static double SUBSPACE_SIGNAL_PROPAGATION = 100000*Unit.c;
-
-
 
 	public Universe(UniverseDataProvider dataProvider) {
 		super();
 		this.dataProvider = dataProvider;
-		//this.spacecraftInUniverse = new HashMap<Integer, Spacecraft>();
-		//this.spacecraftLocationInUniverse = new HashMap<Integer, Location>();
 	}
 
 
@@ -51,19 +40,21 @@ public class Universe {
 	}
 
 
-
 	public static void addSpacecraft(Spacecraft spacecraft) {
 		spacecraftInUniverse.put(spacecraft.getIdent(), spacecraft);
 	}
 
+	
 	public static void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates) {
 		spacecraftLocationInUniverse.put(spacecraftIdent, coordinates);
 	}
+	
 	
 	public static void updateSpacecraftLocation(String spacecraftIdent, Location location) {
 		spacecraftLocationInUniverse.put(spacecraftIdent, location.getCoordinates());
 	}
 
+	
 	public static Coordinates getSpacecraftLocation(String spacecraftIdent) {
 		if(spacecraftLocationInUniverse.get(spacecraftIdent) == null)
 			throw new ComponentConfigurationException("Spacecraft location has not been set");
@@ -71,28 +62,6 @@ public class Universe {
 	}
 
 
-	public EnvironmentData getEnvironmentData(String spacecraftIdent) {
-		Coordinates coordinates = getSpacecraftLocation(spacecraftIdent);
-
-		List<CelestialObject> nearByStars = //Stars within 100 AU
-				dataProvider.getLocationsByTypeCloserThan(Star.type(), coordinates, new BigDecimal(100 * 1.496e8 * Unit.Km));
-
-		if(nearByStars.size() == 0)
-			return new EnvironmentData(0.0, 0.0);
-
-		double luminosity = 0.0;
-		for(CelestialObject celestial : nearByStars) {
-			if(celestial instanceof Star) {
-				Star star = ((Star)celestial);
-				BigDecimal d = Utils.distanceToLocation(coordinates, star.getCoordinates(), Unit.Unity);
-				SignalResponse response = star.getSensorSignalResponse().getSignalResponse(Sensor.OPTICAL, BigDecimal.ZERO);
-				d = d.max(new BigDecimal(Unit.G_STAR_RADIUS));
-				luminosity += response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() );
-			}
-		} 
-
-		return new EnvironmentData(luminosity, 0.0);
-	}
 
 
 	private static Universe setupSimpleUniverse() {
@@ -100,19 +69,19 @@ public class Universe {
 		UniverseDataProvider dataProvider = new LocalUniverseDataProvider();
 		Universe universe = new Universe(dataProvider);
 
-		Star sol = new Star("Sol", new Coordinates(
+		Star sol = new Star("Sol", Star.G_CLASS_STAR,  new Coordinates(
 				new BigDecimal(8*Unit.kPc),
 				new BigDecimal(0),
 				new BigDecimal(100*Unit.Ly)),
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.G_CLASS_STAR));
+				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
 		universe.addLocation(sol);
 
-		Star alphaCenturi = new Star("Alpha centuri", 
+		Star alphaCenturi = new Star("Alpha centuri", Star.G_CLASS_STAR,  
 				new Coordinates(
 						new BigDecimal(8*Unit.kPc + 2.98*Unit.Ly),
 						new BigDecimal(2.83* Unit.Ly),
 						new BigDecimal(101.34*Unit.Ly)),
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.M_CLASS_STAR));
+				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.M_CLASS_STAR));
 		universe.addLocation(alphaCenturi);
 
 
@@ -156,12 +125,12 @@ public class Universe {
 		return dataProvider.addLocation(location);
 	}
 
-	public CelestialObject getLocation(int locationID) {
-		return dataProvider.getLocation(locationID);
+	public CelestialObject getLocationById(String locationID) {
+		return dataProvider.getLocationById(locationID);
 	}
 
-	public CelestialObject getLocation(String locationProperName) {
-		return dataProvider.getLocation(locationProperName);
+	public CelestialObject getLocationByName(String locationProperName) {
+		return dataProvider.getLocationByName(locationProperName);
 	}
 
 

@@ -29,8 +29,8 @@ public class SpacecraftFirmware {
 	
 	public static List<SpacecraftBusComponent> findBusComponent(Bus bus, TypeInfo componentType) {
 		return bus.getComponents().stream()
-				 .filter(x->x.getCategoryId() == componentType ||
-						 x.getTypeId() == componentType)
+				 .filter(x->x.getCategory() == componentType ||
+						 x.getType() == componentType)
 				 .collect(Collectors.toList());
 	}
 

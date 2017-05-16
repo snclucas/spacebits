@@ -24,7 +24,7 @@ public class SpacecraftTest {
 
 	@Test
 	public void testSpacecraft() {
-		assertEquals(Spacecraft.category, spacecraft.getCategoryId());
+		assertEquals(Spacecraft.category, spacecraft.getCategory());
 		
 		SystemStatus systemStatus = spacecraft.online();
 		
@@ -33,7 +33,7 @@ public class SpacecraftTest {
 		assertEquals(true, systemStatus.hasCriticalMessages());
 		assertEquals(false, systemStatus.hasWarningMessages());
 		
-		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type.toString());	
+		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());	
 		spacecraft.addComponent(systemComputer);
 		
 		

@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.spacebits.components.TypeInfo;
+import org.spacebits.components.sensors.Sensor;
+import org.spacebits.components.sensors.SensorProfile;
 import org.spacebits.physics.Unit;
 import org.spacebits.universe.celestialobjects.CelestialObject;
 import org.spacebits.universe.celestialobjects.SensorSignalResponseLibrary;
@@ -37,13 +39,13 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 
 
 	@Override
-	public CelestialObject getLocation(int locationID) {
+	public CelestialObject getLocationById(String locationID) {
 		return galacticLocations.get(locationID);
 	}
 	
 
 	@Override
-	public CelestialObject getLocation(String locationProperName) {
+	public CelestialObject getLocationByName(String locationProperName) {
 		Iterator<Entry<Integer, CelestialObject>> it = galacticLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
@@ -61,7 +63,7 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 		Iterator<Entry<Integer, CelestialObject>> it = galacticLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
-			if(type == (((CelestialObject)loc).getCategoryId()))
+			if(type == (((CelestialObject)loc).getCategory()))
 				locations.add(loc);
 		}
 		return locations;
@@ -75,7 +77,7 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 		Iterator<Entry<Integer, CelestialObject>> it = galacticLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
-			if(type == (((CelestialObject)loc).getTypeId()))
+			if(type == (((CelestialObject)loc).getType()))
 				if( Utils.distanceToLocation(loc.getCoordinates(), coordinates, Unit.Unity).compareTo(distance) <= 0)
 					locations.add(loc);
 		}
@@ -99,13 +101,13 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 
 
 	private void populate() {
-		Star sol = new Star("Sol", new Coordinates(new BigDecimal(8*Unit.kPc),new BigDecimal(0),new BigDecimal(100*Unit.Ly)),
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.G_CLASS_STAR));
+		Star sol = new Star("Sol", Star.G_CLASS_STAR, new Coordinates(new BigDecimal(8*Unit.kPc),new BigDecimal(0),new BigDecimal(100*Unit.Ly)),
+				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
 		addLocation(sol);
 
-		Star alphaCenturi = new Star("Alpha centuri", 
+		Star alphaCenturi = new Star("Alpha centuri", Star.G_CLASS_STAR,  
 				new Coordinates(new BigDecimal(8*Unit.kPc + 2.98*Unit.Ly),new BigDecimal(2.83* Unit.Ly),new BigDecimal(101.34*Unit.Ly)),
-				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.O_CLASS_STAR));
+				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.O_CLASS_STAR));
 		addLocation(alphaCenturi);
 		
 		
@@ -122,5 +124,33 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 	}
 
 
+	
+	public double getSignalPropagationSpeed(SensorProfile sensorProfile) {
+		TypeInfo sensorType = sensorProfile.getSensorType();
+		if(sensorType == Sensor.OPTICAL) {
+			return 1.0 * Unit.c;
+		}
+		else if(sensorType == Sensor.RADAR) {
+			return 1.0 * Unit.c;
+		}
+		else if(sensorType == Sensor.GRAVIMETRIC) {
+			return 1.0 * Unit.c;
+		}
+		else if(sensorType == Sensor.MAGNETOMETRIC) {
+			return 1.0 * Unit.c;
+		}
+		else if(sensorType == Sensor.GRAVIMETRIC) {
+			return 1.0 * Unit.c;
+		}
+		else if(sensorType == Sensor.SUBSPACE_RESONANCE) {
+			return 100000.0 * Unit.c;
+		}
+		else
+			return 0.0;
+	}
+	
+	
+	
+	
 
 }

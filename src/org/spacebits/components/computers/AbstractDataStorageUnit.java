@@ -27,7 +27,7 @@ public abstract class AbstractDataStorageUnit extends AbstractBusComponent imple
 
 
 	@Override
-	public final TypeInfo getCategoryId() {
+	public final TypeInfo getCategory() {
 		return categoryID;
 	}
 

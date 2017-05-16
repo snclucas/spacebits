@@ -19,7 +19,7 @@ public class SubspaceBeacon extends AbstractCelestialObject {
 	}
 
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return typeInfo;
 	}
 

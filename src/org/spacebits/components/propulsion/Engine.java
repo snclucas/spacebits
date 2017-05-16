@@ -6,7 +6,10 @@ import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 
 public interface Engine extends SpacecraftBusComponent, Executable, BusCommunicator {
-	TypeInfo categoryID = new TypeInfo("Engine");
+	
+	public static TypeInfo category() {
+		return new TypeInfo("Engine");
+	}
 		
 	EngineVector getEngineVector();
 	

@@ -47,7 +47,7 @@ public class Driver {
 		
 		Universe.updateSpacecraftLocation(simpleSpacecraft.getIdent(), initialSpacecraftLocation);
 		
-		Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type.toString(), Sensor.RADAR, 1);
+		Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type(), Sensor.RADAR, 1);
 		simpleSpacecraft.addComponent(sensor);
 		
 		simpleSpacecraft.online();

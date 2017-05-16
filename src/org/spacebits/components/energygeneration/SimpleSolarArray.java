@@ -9,7 +9,9 @@ import org.spacebits.status.SystemStatus;
 
 public class SimpleSolarArray extends AbstractPowerGenerator {
 	
-	public static TypeInfo typeID = new TypeInfo("SimpleSolarArray");
+	public static TypeInfo type() {
+		return new TypeInfo("SimpleSolarArray");
+	}
 
 	private double arrayArea;
 	private double efficiency;
@@ -25,8 +27,8 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	
 	
 	@Override
-	public TypeInfo getTypeId() {
-		return typeID;
+	public TypeInfo getType() {
+		return type();
 	}
 
 

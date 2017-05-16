@@ -1,13 +1,13 @@
 package org.spacebits.software;
 
 import org.spacebits.components.TypeInfo;
-import org.spacebits.components.computers.SystemComputer;
+import org.spacebits.components.computers.Computer;
 
 public abstract class AbstractSoftware implements Software {
 	
 	private String name;
 	
-	protected SystemComputer computer;
+	protected Computer computer;
 
 	
 	public AbstractSoftware(String name) {
@@ -16,7 +16,7 @@ public abstract class AbstractSoftware implements Software {
 
 	
 	@Override
-	public final TypeInfo getCategoryId() {
+	public final TypeInfo getCategory() {
 		return categoryID;
 	}
 	
@@ -26,7 +26,7 @@ public abstract class AbstractSoftware implements Software {
 	}
 	
 	@Override
-	public void setComputer(SystemComputer computer) {
+	public void setComputer(Computer computer) {
 		this.computer = computer;
 	}
 

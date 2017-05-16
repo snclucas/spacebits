@@ -1,5 +1,6 @@
 package org.spacebits.components.propulsion;
 
+import org.spacebits.components.TypeInfo;
 import org.spacebits.components.propulsion.thrust.SimpleIonEngine;
 import org.spacebits.components.propulsion.thrust.SimpleThruster;
 import org.spacebits.components.propulsion.thrust.ThrustingEngine;
@@ -13,10 +14,10 @@ import org.spacebits.profiles.ThrustProfileFactory;
 
 public class EngineFactory extends DataFactory {
 
-	public static ThrustingEngine getEngine(String engineType, boolean vectored){
+	public static ThrustingEngine getEngine(TypeInfo engineType, boolean vectored){
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(engineType);
 
-		if(engineType.equals(SimpleIonEngine.typeID.toString())){
+		if(engineType == SimpleIonEngine.type()){
 			double maximumThrust = 1 * Unit.N;			
 
 			ThrustProfile thrustAlgorithm = ThrustProfileFactory.getThrustAlgorithm(
@@ -29,11 +30,11 @@ public class EngineFactory extends DataFactory {
 			EngineVector engineVector = new EngineVector(1,0,0);
 
 			return new SimpleIonEngine(
-					SimpleIonEngine.typeID.typeIdString, data.getBusComponentSpecification(), 
+					SimpleIonEngine.type().toString(), data.getBusComponentSpecification(), 
 					maximumThrust, 
 					thrustAlgorithm, fuelConsumptionProfile, engineVector, vectored);
 		}
-		else if(engineType.equals(SimpleThruster.typeID.toString())){
+		else if(engineType == SimpleThruster.type()){
 			double maximumThrust = 1 * Unit.kN; // N	
 
 			ThrustProfile thrustAlgorithm = ThrustProfileFactory.getThrustAlgorithm(
@@ -46,7 +47,7 @@ public class EngineFactory extends DataFactory {
 			EngineVector engineVector = new EngineVector(1,0,0);
 
 			return new SimpleThruster(
-					SimpleThruster.typeID.typeIdString, data.getBusComponentSpecification(), 
+					SimpleThruster.type().toString(), data.getBusComponentSpecification(), 
 					maximumThrust, 
 					thrustAlgorithm, fuelConsumptionProfile, engineVector, vectored);
 		}

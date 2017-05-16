@@ -33,12 +33,12 @@ public class FuelSubSystem extends AbstractBusComponent implements SpacecraftBus
 	
 	
 	@Override
-	public final TypeInfo getCategoryId() {
+	public final TypeInfo getCategory() {
 		return categoryID;
 	}
 	
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return typeID;
 	}
 	

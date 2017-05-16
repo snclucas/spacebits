@@ -13,13 +13,13 @@ import org.spacebits.universe.SimpleLocation;
 
 public abstract class AbstractCelestialObject extends AbstractLocation implements CelestialObject {
 
+	public static TypeInfo category() {
+		return new TypeInfo("CelestialObject ");
+	}
+	
 	protected Location location;
 	protected List<CelestialObject> celestialObjects;
 	protected SensorSignalResponseProfile sensorSignalResponseProfile;
-	
-	public static TypeInfo category() {
-		return new TypeInfo("CelestialObject");
-	}
 	
 	
 	public AbstractCelestialObject(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
@@ -42,7 +42,7 @@ public abstract class AbstractCelestialObject extends AbstractLocation implement
 	}
 	
 	@Override
-	public final TypeInfo getCategoryId() {
+	public final TypeInfo getCategory() {
 		return CelestialObject.categoryID;
 	}
 	

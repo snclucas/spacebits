@@ -7,7 +7,9 @@ import org.spacebits.status.SystemStatus;
 
 public class SubSpaceCommunicator extends AbstractCommunicationComponent {
 	
-	public static TypeInfo typeID = new TypeInfo("SubSpaceCommunicator");
+	public static TypeInfo type() {
+		return new TypeInfo("SubSpaceCommunicator");
+	}
 
 	public SubSpaceCommunicator(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
 		super(name, busResourceSpecification, propagationModel);
@@ -25,8 +27,8 @@ public class SubSpaceCommunicator extends AbstractCommunicationComponent {
 		return systemStatus; 
 	}
 	
-	public TypeInfo getTypeId() {
-		return typeID;
+	public TypeInfo getType() {
+		return type();
 	}
 
 	

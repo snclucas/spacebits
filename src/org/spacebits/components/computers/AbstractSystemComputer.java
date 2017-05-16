@@ -3,9 +3,7 @@ package org.spacebits.components.computers;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.spacebits.components.AbstractBusComponent;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.CommunicationComponent;
@@ -23,9 +21,15 @@ import org.spacebits.spacecraft.SpacecraftFirmware;
 import org.spacebits.status.SystemStatus;
 import org.spacebits.status.SystemStatusMessage;
 
-public abstract class AbstractSystemComputer extends AbstractBusComponent implements SystemComputer {
+public abstract class AbstractSystemComputer extends AbstractComputer implements SystemComputer {
 	
-	protected Map<TypeInfo, Software> loadedSoftware;
+	public static TypeInfo category() {
+		return new TypeInfo("SystemComputer");
+	}
+	
+	public static TypeInfo type() {
+		return new TypeInfo("SystemComputer");
+	}
 	
 	protected double maxCPUThroughput;
 	
@@ -61,48 +65,9 @@ public abstract class AbstractSystemComputer extends AbstractBusComponent implem
 		}
 	}
 
-
-
-	@Override
-	public final TypeInfo getCategoryId() {
-		return category;
-	}
 	
 	
-	public Bus getSpacecraftBus() {
-		return spacecraftBus;
-	}
-
 	
-	public void setSpacecraftBus(Bus spacecraftBus) {
-		this.spacecraftBus = spacecraftBus;
-	}
-	
-
-
-
-
-	@Override
-	public SystemStatusMessage loadSoftware(Software software) {
-		software.setComputer(this);
-		if(loadedSoftware.put(software.getTypeId(), software) != null)
-			return new SystemStatusMessage(this, software.getDescription() + " software loaded", getUniversalTime(), Status.OK);
-		else 
-			return new SystemStatusMessage(this, software.getDescription() + " software replaced exisiting software", getUniversalTime(), Status.OK);
-	}
-
-	
-	@Override
-	public Software getSoftware(TypeInfo softwareType) {
-		return loadedSoftware.get(softwareType);
-	}
-
-	
-	@Override
-	public boolean hasSoftware(TypeInfo softwareType) {
-		return loadedSoftware.get(softwareType) != null;
-	}
-
 	
 	
 	@Override

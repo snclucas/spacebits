@@ -15,7 +15,9 @@ import org.spacebits.spacecraft.BusComponentSpecification;
 
 public abstract class AbstractCommunicationComponent extends AbstractBusComponent implements CommunicationComponent {
 	
-	public static TypeInfo categoryID = new TypeInfo("CommunicationDevice");
+	public static TypeInfo category() {
+		return new TypeInfo("CommunicationDevice");
+	}
 	
 	private static double MAX_POWER_LEVEL = 100;
 	
@@ -39,7 +41,7 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 	
 	
 	@Override
-	public TypeInfo getCategoryId() {
+	public TypeInfo getCategory() {
 		return categoryID;
 	}
 

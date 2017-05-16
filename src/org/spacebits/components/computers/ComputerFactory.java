@@ -1,5 +1,6 @@
 package org.spacebits.components.computers;
 
+import org.spacebits.components.TypeInfo;
 import org.spacebits.data.DataFactory;
 import org.spacebits.data.SpacecraftComponentData;
 import org.spacebits.exceptions.ItemNotFoundException;
@@ -10,9 +11,9 @@ import org.spacebits.software.SystemMessageService;
 
 public class ComputerFactory extends DataFactory {
 
-	public static SystemComputer getComputer(String computerType){
+	public static SystemComputer getComputer(TypeInfo computerType){
 		
-		if(computerType.equals(BasicSystemComputer.type.toString())){
+		if(computerType.equals(BasicSystemComputer.type())){
 			SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(computerType);
 
 			double maxCPUThroughput = 1000; //GFLOP

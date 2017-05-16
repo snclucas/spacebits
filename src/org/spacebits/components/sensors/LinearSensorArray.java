@@ -5,7 +5,9 @@ import org.spacebits.spacecraft.BusComponentSpecification;
 
 public class LinearSensorArray extends BasicSensorArray {
 	
-	public static TypeInfo type = new TypeInfo("LinearSensorArray");
+	public static TypeInfo type() {
+		return new TypeInfo("LinearSensorArray");
+	}
 
 	public LinearSensorArray(String name,
 			BusComponentSpecification busResourceSpecification,
@@ -14,8 +16,8 @@ public class LinearSensorArray extends BasicSensorArray {
 				numberOfSensorElements);
 	}
 	
-	public TypeInfo getTypeId() {
-		return type;
+	public TypeInfo getType() {
+		return type();
 	}
 	
 	@Override

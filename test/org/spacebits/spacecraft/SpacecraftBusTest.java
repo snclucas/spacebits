@@ -37,7 +37,7 @@ public class SpacecraftBusTest {
 	@Test
 	public void testSpacecraftBus() {
 		assertEquals("Spacecraft bus name incorrect", "spacecraftBus", spacecraftBus.getName());
-		assertEquals("Category for bus incorrect", Bus.category, spacecraftBus.getCategoryId());
+		assertEquals("Category for bus incorrect", Bus.category, spacecraftBus.getCategory());
 		assertEquals("Spacecraft for bus incorrect", spacecraft, spacecraftBus.getSpacecraft());
 		
 		assertEquals("There should be no bus components", 0, spacecraftBus.getComponents().size());
@@ -45,21 +45,21 @@ public class SpacecraftBusTest {
 		
 		assertEquals("Spacecraft for bus incorrect", spacecraft, spacecraftBus.getSpacecraft());
 		
-		SystemComputer computer = ComputerFactory.getComputer(BasicSystemComputer.type.toString());
+		SystemComputer computer = ComputerFactory.getComputer(BasicSystemComputer.type());
 		spacecraftBus.addComponent(computer);
 		assertNotNull(spacecraftBus.getSystemComputer());
 		
-		Sensor fractalSensor = SensorFactory.getSensor(FractalSensorArray.type.toString(), Sensor.OPTICAL, 1);
+		Sensor fractalSensor = SensorFactory.getSensor(FractalSensorArray.type(), Sensor.OPTICAL, 1);
 		spacecraftBus.addComponent((SpacecraftBusComponent)fractalSensor);
 
 		assertEquals("There should be 2 bus components", 2, spacecraftBus.getComponents().size());
 		
-		assertEquals("There should be 1 Sensor.category component", 1, spacecraftBus.findComponent(Sensor.category).size());
-		assertEquals("There should be 1 FractalSensorArray.type component", 1, spacecraftBus.findComponent(FractalSensorArray.type).size());
-		assertEquals("There should be 1 FractalSensorArray.category component", 1, spacecraftBus.findComponent(FractalSensorArray.category).size());
-		assertEquals("There should be 1 LinearSensorArray.type component", 0, spacecraftBus.findComponent(LinearSensorArray.type).size());
-		assertEquals("There should be 1 SystemComputer.category component", 1, spacecraftBus.findComponent(SystemComputer.category).size());
-		assertEquals("There should be 1 BasicSystemComputer.type component", 1, spacecraftBus.findComponent(BasicSystemComputer.type).size());
+		assertEquals("There should be 1 Sensor.category component", 1, spacecraftBus.findComponent(Sensor.category()).size());
+		assertEquals("There should be 1 FractalSensorArray.type component", 1, spacecraftBus.findComponent(FractalSensorArray.type()).size());
+		assertEquals("There should be 1 FractalSensorArray.category component", 1, spacecraftBus.findComponent(FractalSensorArray.category()).size());
+		assertEquals("There should be 1 LinearSensorArray.type component", 0, spacecraftBus.findComponent(LinearSensorArray.type()).size());
+		assertEquals("There should be 1 SystemComputer.category component", 1, spacecraftBus.findComponent(SystemComputer.category()).size());
+		assertEquals("There should be 1 BasicSystemComputer.type component", 1, spacecraftBus.findComponent(BasicSystemComputer.type()).size());
 	}
 	
 	

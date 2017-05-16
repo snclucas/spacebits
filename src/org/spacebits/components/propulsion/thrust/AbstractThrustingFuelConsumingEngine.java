@@ -3,6 +3,7 @@ package org.spacebits.components.propulsion.thrust;
 import java.util.List;
 
 import org.spacebits.components.SpacecraftBusComponent;
+import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.propulsion.EngineVector;
 import org.spacebits.profiles.FuelConsumptionProfile;
@@ -32,6 +33,16 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 		this.fuelConsumptionProfile = new SimpleLinearFuelConsumptionProfile("Linear model");
 	}
 	
+	
+
+	public static TypeInfo category() {
+		return new TypeInfo("Engine");
+	}
+	
+	@Override
+	public TypeInfo getCategory() {
+		return category();
+	}
 	
 	@Override
 	public SystemStatus online() {

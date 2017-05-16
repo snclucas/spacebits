@@ -15,6 +15,7 @@ import org.spacebits.data.LocalSpacecraftDataProvider;
 import org.spacebits.data.MaterialDataProvider;
 import org.spacebits.data.PhysicsDataProvider;
 import org.spacebits.data.SpacecraftDataProvider;
+import org.spacebits.physics.Unit;
 import org.spacebits.universe.LocalUniverseDataProvider;
 import org.spacebits.universe.Universe;
 import org.spacebits.universe.UniverseDataProvider;
@@ -24,6 +25,8 @@ public class Configuration {
 	public static int precision = 20;
 	public static int ROUNDING_MODE = BigDecimal.ROUND_HALF_UP;
 	public static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
+	
+	public static double distanceForEnvironmentData = 100.0 * Unit.Ly;
 	
 	public static String getUUID() {
 		return UUID.randomUUID().toString().replaceAll("-", "");

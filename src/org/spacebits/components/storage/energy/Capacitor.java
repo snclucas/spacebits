@@ -16,7 +16,7 @@ public class Capacitor extends AbstractEnergyStorageDevice {
 
 	
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return typeID;
 	}
 	

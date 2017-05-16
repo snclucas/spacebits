@@ -41,7 +41,7 @@ public class SpacecraftFirmwareTest {
 		assertEquals("Number of computers should be 0", 0, computers.size());
 		
 		
-		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type.toString());	
+		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());	
 		spacecraftBus.addComponent(systemComputer);
 		
 		hasComputer = SpacecraftFirmware.bootstrapSystemComputer(spacecraftBus);
@@ -52,8 +52,8 @@ public class SpacecraftFirmwareTest {
 		assertEquals("Number of computers should be 1", 1, computers.size());
 		
 		
-		
-		SpacecraftBusComponent component = SpacecraftFirmware.findBusComponent(spacecraftBus, SystemComputer.category).get(0);
+		List<SpacecraftBusComponent> components = SpacecraftFirmware.findBusComponent(spacecraftBus, SystemComputer.type());
+		SpacecraftBusComponent component = components.get(0);
 		assertEquals("", component, systemComputer);
 		
 		

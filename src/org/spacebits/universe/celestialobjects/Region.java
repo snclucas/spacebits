@@ -23,8 +23,8 @@ public class Region extends AbstractCelestialObject {
 	
 	
 	@Override
-	public TypeInfo getTypeId() {
-		return type();
+	public TypeInfo getType() {
+		return getType();
 	}
 
 
@@ -32,9 +32,6 @@ public class Region extends AbstractCelestialObject {
 		return sizeOfRegion;
 	}
 
-	public void setRegionSize(double sizeOfRegion) {
-		this.sizeOfRegion = sizeOfRegion;
-	}
 
 	@Override
 	public String describe() {

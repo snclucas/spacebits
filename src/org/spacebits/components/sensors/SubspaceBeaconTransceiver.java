@@ -38,7 +38,7 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 	}
 
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return typeID;
 	}
 

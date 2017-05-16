@@ -14,8 +14,8 @@ public class SystemMessageTest {
 	@Test
 	public void testSystemMessage() {
 		
-		MockIdentifiableObject reciever = new MockIdentifiableObject(12, "Test reciever", RadioCommunicator.categoryID, RadioCommunicator.typeID);
-		MockIdentifiableObject sender = new MockIdentifiableObject(123, "Test sender", SimpleIonEngine.categoryID, SimpleIonEngine.typeID);
+		MockIdentifiableObject reciever = new MockIdentifiableObject(12, "Test reciever", RadioCommunicator.categoryID, RadioCommunicator.type());
+		MockIdentifiableObject sender = new MockIdentifiableObject(123, "Test sender", SimpleIonEngine.category(), SimpleIonEngine.type());
 	
 		SystemMessage systemMessage = new SystemMessage(reciever, sender, "This is a test message", 1273);
 		
@@ -45,13 +45,13 @@ class MockIdentifiableObject implements Identifiable {
 	
 
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return type;
 	}
 	
 
 	@Override
-	public TypeInfo getCategoryId() {
+	public TypeInfo getCategory() {
 		return category;
 	}
 	

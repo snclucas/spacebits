@@ -36,7 +36,7 @@ public abstract class AbstractLocation implements Location {
 	
 	
 	@Override
-	public TypeInfo getCategoryId() {
+	public TypeInfo getCategory() {
 		return categoryID;
 	}
 	

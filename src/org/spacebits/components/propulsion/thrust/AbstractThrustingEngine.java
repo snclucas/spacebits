@@ -1,5 +1,6 @@
 package org.spacebits.components.propulsion.thrust;
 
+import org.spacebits.components.TypeInfo;
 import org.spacebits.components.propulsion.AbstractEngine;
 import org.spacebits.components.propulsion.EngineVector;
 import org.spacebits.profiles.SimpleLinearThrustProfile;
@@ -37,6 +38,12 @@ public abstract class AbstractThrustingEngine extends AbstractEngine implements 
 		double requiredPower = getRequiredPower(requestedPowerLevel);
 		double requiredCPUThroughput = getRequiredCPUThroughput(requestedPowerLevel);
 		return new BusRequirement(requiredPower, requiredCPUThroughput);
+	}
+	
+	
+	@Override
+	public TypeInfo getCategory() {
+		return new TypeInfo("Engine");
 	}
 	
 	

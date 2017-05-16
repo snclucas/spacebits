@@ -42,9 +42,11 @@ public class Coordinates {
 	
 	public Coordinates add(Coordinates coordinates) {
 		return new Coordinates( 
-				new BigDecimal[]{this.location[0].add(coordinates.get(0)), 
-				this.location[1].add(coordinates.get(1)), 
-				this.location[2].add(coordinates.get(2))});
+				new BigDecimal[]{
+						this.location[0].add(coordinates.get(0)), 
+						this.location[1].add(coordinates.get(1)), 
+						this.location[2].add(coordinates.get(2))
+						});
 	}
 	
 

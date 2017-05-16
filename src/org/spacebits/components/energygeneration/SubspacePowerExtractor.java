@@ -9,7 +9,9 @@ import org.spacebits.status.SystemStatus;
 
 public class SubspacePowerExtractor extends AbstractPowerGenerator {
 	
-	public static TypeInfo typeID = new TypeInfo("SubEtherPowerExtractor");
+	public static TypeInfo type() {
+		return new TypeInfo("SubspacePowerExtractor");
+	}
 	
 	private double maximumPowerOutput;
 	
@@ -20,8 +22,8 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 	
 	
 	@Override
-	public TypeInfo getTypeId() {
-		return typeID;
+	public TypeInfo getType() {
+		return type();
 	}
 	
 	

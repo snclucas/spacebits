@@ -17,7 +17,7 @@ public class SystemMessageTest {
 	@Test
 	public void testEngineManagementSoftwareNoEngine() {
 		
-		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type.toString());	
+		SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());	
 		
 		//Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 		SystemStatus status = systemComputer.online();
@@ -36,7 +36,7 @@ public class SystemMessageTest {
 			System.out.println(msg.getMessage());
 		}
 		
-		List<SpacecraftBusComponent> components = systemComputer.findBusComponent(Engine.categoryID);
+		List<SpacecraftBusComponent> components = systemComputer.findBusComponent(Engine.category());
 		
 		Message targetedMessage = new SystemMessage(null, null,"Test targeted message", 34.3);
 		Message mess = systemComputer.getMessagingSystem().sendMessageTo(targetedMessage, components.get(0));

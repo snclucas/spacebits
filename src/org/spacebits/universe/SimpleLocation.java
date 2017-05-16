@@ -22,7 +22,7 @@ public class SimpleLocation extends AbstractLocation {
 	
 	
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return typeID;
 	}
 

@@ -20,7 +20,7 @@ public class SimpleSpacecraft extends AbstractSpacecraft {
 	
 	
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return typeID;
 	}
 	

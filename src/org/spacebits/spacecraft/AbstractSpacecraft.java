@@ -46,7 +46,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 
 
 	@Override
-	public TypeInfo getCategoryId() {
+	public TypeInfo getCategory() {
 		return Spacecraft.category;
 	}
 	

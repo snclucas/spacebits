@@ -2,7 +2,6 @@ package org.spacebits.components.computers;
 
 import java.util.List;
 
-import org.spacebits.components.BusCommunicator;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.CommunicationComponent;
@@ -13,9 +12,15 @@ import org.spacebits.software.MessageMediator;
 import org.spacebits.spacecraft.BusRequirement;
 import org.spacebits.status.SystemStatusMessage;
 
-public interface SystemComputer extends Computer, SpacecraftBusComponent, BusCommunicator {
+public interface SystemComputer extends Computer {
 	
-	TypeInfo category = new TypeInfo("SystemComputer");
+	static TypeInfo category() {
+		return new TypeInfo("Computer");
+	}
+	
+	static TypeInfo type() {
+		return new TypeInfo("SystemComputer");
+	}
 	
 	double getUniversalTime();
 	

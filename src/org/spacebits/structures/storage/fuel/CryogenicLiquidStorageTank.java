@@ -5,7 +5,9 @@ import org.spacebits.spacecraft.BusComponentSpecification;
 
 public class CryogenicLiquidStorageTank extends LiquidStorageTank {
 	
-	public static TypeInfo typeID = new TypeInfo("CryogenicLiquidStorageTank");
+	public static TypeInfo type() {
+		return new TypeInfo("CryogenicLiquidStorageTank");
+	}
 
 	public CryogenicLiquidStorageTank(String name, BusComponentSpecification busResourceSpecification, double capacity) {
 		super(name, busResourceSpecification, capacity);
@@ -15,8 +17,8 @@ public class CryogenicLiquidStorageTank extends LiquidStorageTank {
 	
 	
 	@Override
-	public TypeInfo getTypeId() {
-		return typeID;
+	public TypeInfo getType() {
+		return type();
 	}
 	
 	

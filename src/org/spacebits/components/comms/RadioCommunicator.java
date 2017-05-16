@@ -7,7 +7,9 @@ import org.spacebits.status.SystemStatus;
 
 public class RadioCommunicator extends AbstractCommunicationComponent {
 	
-	public static TypeInfo typeID = new TypeInfo("RadioCommunicator");
+	public static TypeInfo type() {
+		return new TypeInfo("RadioCommunicator");
+	}
 
 	public RadioCommunicator(String name, BusComponentSpecification busResourceSpecification, Model propagationModel) {
 		super(name, busResourceSpecification, propagationModel);
@@ -19,8 +21,8 @@ public class RadioCommunicator extends AbstractCommunicationComponent {
 	}
 
 	
-	public TypeInfo getTypeId() {
-		return typeID;
+	public TypeInfo getType() {
+		return type();
 	}
 	
 	

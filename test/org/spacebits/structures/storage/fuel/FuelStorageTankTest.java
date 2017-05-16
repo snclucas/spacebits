@@ -28,15 +28,15 @@ public class FuelStorageTankTest {
 		
 		
 		
-		FuelStorageTank testLiquidTank = FuelStorageTankFactory.getFuelStorageTank(LiquidStorageTank.typeID.toString(), capacity);
-		assertEquals("LiquidStorageTank category ID incorrect", FuelStorageTank.categoryID, testLiquidTank.getCategoryId());
-		assertEquals("LiquidStorageTank type ID incorrect", LiquidStorageTank.typeID, testLiquidTank.getTypeId());
+		FuelStorageTank testLiquidTank = FuelStorageTankFactory.getFuelStorageTank(LiquidStorageTank.type(), capacity);
+		assertEquals("LiquidStorageTank category ID incorrect", FuelStorageTank.categoryID, testLiquidTank.getCategory());
+		assertEquals("LiquidStorageTank type ID incorrect", LiquidStorageTank.type(), testLiquidTank.getType());
 		
 		
-		FuelStorageTank testCryoTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.typeID.toString(), capacity);
+		FuelStorageTank testCryoTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type(), capacity);
 		
-		assertEquals("CryogenicLiquidStorageTank category ID incorrect", FuelStorageTank.categoryID, testCryoTank.getCategoryId());
-		assertEquals("CryogenicLiquidStorageTank type ID incorrect", CryogenicLiquidStorageTank.typeID, testCryoTank.getTypeId());
+		assertEquals("CryogenicLiquidStorageTank category ID incorrect", FuelStorageTank.categoryID, testCryoTank.getCategory());
+		assertEquals("CryogenicLiquidStorageTank type ID incorrect", CryogenicLiquidStorageTank.type(), testCryoTank.getType());
 
 		assertEquals("Tank capacity should be 1000L", capacity, testCryoTank.getCapacity(), 0.001);
 		assertEquals("Fuel tank should be empty on creation", 0.0, testCryoTank.getAmountOfFuelInTank(), 0.001);
@@ -80,15 +80,10 @@ public class FuelStorageTankTest {
 	@Test(expected=NoFuelInTankException.class)
 	public void testTankThrowsErrorIfNoFuel() {
 		// Try to get the fuel, should throw NoFuelInTankException
-		FuelStorageTank testTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.typeID.toString(), capacity);
+		FuelStorageTank testTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type(), capacity);
 		testTank.getFuel();
 	}
 
-	
-	@Test(expected=ItemNotFoundException.class)
-	public void testNoSuchTank() {
-		FuelStorageTank noSuchTank = FuelStorageTankFactory.getFuelStorageTank("ThisTankDoesNotExisit", capacity);
-	}
 
 
 

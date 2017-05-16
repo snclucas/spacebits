@@ -62,7 +62,7 @@ public abstract class AbstractBus implements Bus {
 	
 
 	@Override
-	public final TypeInfo getCategoryId() {
+	public final TypeInfo getCategory() {
 		return category;
 	}
 
@@ -111,8 +111,8 @@ public abstract class AbstractBus implements Bus {
 
 	@Override
 	public void addComponent(SpacecraftBusComponent component) {
-		if(component.getCategoryId() == SystemComputer.category)
-			findComponent(SystemComputer.category).clear();
+		if(component.getType() == SystemComputer.type())
+			findComponent(SystemComputer.type()).clear();
 		this.components.add(component);
 		component.registerWithBus(this);
 	}
@@ -122,7 +122,7 @@ public abstract class AbstractBus implements Bus {
 
 	@Override
 	public SystemComputer getSystemComputer() {
-		List<SpacecraftBusComponent> components = findComponent(SystemComputer.category);
+		List<SpacecraftBusComponent> components = findComponent(SystemComputer.type());
 		if(components.size() == 0)
 			return null;
 		return (SystemComputer)components.get(0);

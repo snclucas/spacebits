@@ -25,7 +25,7 @@ public abstract class AbstractFuelStorageTank extends AbstractBusComponent imple
 
 
 	@Override
-	public TypeInfo getCategoryId() {
+	public TypeInfo getCategory() {
 		return categoryID;
 	}
 

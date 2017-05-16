@@ -11,7 +11,7 @@ public class LocalBus extends AbstractBus {
 	}
 
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return typeID;
 	}
 

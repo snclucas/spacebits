@@ -19,7 +19,7 @@ public class ThrustProfileTest {
 		
 		profile.describe();
 		
-		profile.getCategoryId();
+		profile.getCategory();
 		
 		profile.getName();
 		
@@ -36,7 +36,7 @@ public class ThrustProfileTest {
 		profile.getNormalizedThrust(50.0);
 		profile.getNormalizedThrust(100.0);
 		
-		profile.getTypeId();
+		profile.getType();
 		
 	}
 

@@ -69,12 +69,12 @@ public class SystemStatusTest {
 class MockStatusProvider implements StatusProvider{
 
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return new TypeInfo("MockStatusProvider");
 	}
 
 	@Override
-	public TypeInfo getCategoryId() {
+	public TypeInfo getCategory() {
 		return new TypeInfo("MockStatusProviderCategory");
 	}
 

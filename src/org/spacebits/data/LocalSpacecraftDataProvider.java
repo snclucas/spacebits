@@ -1,5 +1,6 @@
 package org.spacebits.data;
 
+import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.RadioCommunicator;
 import org.spacebits.components.comms.SubSpaceCommunicator;
 import org.spacebits.components.computers.BasicDataStorageUnit;
@@ -21,28 +22,28 @@ import org.spacebits.structures.storage.fuel.LiquidStorageTank;
 public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 	@Override
-	public SpacecraftComponentData getComponentParameters(String componentType) {
+	public SpacecraftComponentData getComponentParameters(TypeInfo componentType) {
 
 		// mass volume power cpu 
 
 		// computers 
 		
-		if(componentType.equals(BasicSystemComputer.type.toString()))
+		if(componentType.equals(BasicSystemComputer.type()))
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 20 * Unit.m3), new OperationalSpecification(10 * Unit.kW, 0 * Unit.MFLOP)));
 
 
-		if(componentType.equals(LiquidStorageTank.typeID.toString()))	
+		if(componentType.equals(LiquidStorageTank.type()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.1 * Unit.l), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 
-		if(componentType.equals(CryogenicLiquidStorageTank.typeID.toString()))	
+		if(componentType.equals(CryogenicLiquidStorageTank.type()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.3 * Unit.l), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 
 		// Datastore 
 		
-		if(componentType.equals(BasicDataStorageUnit.type.toString()))	
+		if(componentType.equals(BasicDataStorageUnit.type()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.3 * Unit.l), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 
@@ -50,23 +51,23 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 		// Energy generators
 
-		if(componentType.equals(SimpleSolarArray.typeID.toString()))	
+		if(componentType.equals(SimpleSolarArray.type()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(1000 * Unit.kg, 100 * Unit.m3), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 
 
-		if(componentType.equals(SubspacePowerExtractor.typeID.toString()))	
+		if(componentType.equals(SubspacePowerExtractor.type()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(1000 * Unit.kg, 100 * Unit.m3), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 
 		
 		// Engines
 		
-		if(componentType.equals(SimpleIonEngine.typeID.toString()))	
+		if(componentType.equals(SimpleIonEngine.type()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.0 * Unit.m3), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP, 1000 * Unit.kW, 1 * Unit.kFLOP)));
 
-		if(componentType.equals(SimpleThruster.typeID.toString()))	
+		if(componentType.equals(SimpleThruster.type()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.0 * Unit.m3), new OperationalSpecification(100 * Unit.W, 1 * Unit.kFLOP, 1 * Unit.kW, 1 * Unit.kFLOP)));
 
@@ -74,22 +75,22 @@ public class LocalSpacecraftDataProvider implements SpacecraftDataProvider {
 
 		// Communication devices
 
-		if(componentType.equals(RadioCommunicator.typeID.toString()))	
+		if(componentType.equals(RadioCommunicator.type()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.1 * Unit.l), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 
-		if(componentType.equals(SubSpaceCommunicator.typeID.toString()))	
+		if(componentType.equals(SubSpaceCommunicator.type()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.3 * Unit.l), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 
 
 		//Sensors
 
-		if(componentType.equals(LinearSensorArray.type.toString()))	
+		if(componentType.equals(LinearSensorArray.type()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.1 * Unit.l), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 
-		if(componentType.equals(FractalSensorArray.type.toString()))	
+		if(componentType.equals(FractalSensorArray.type()))	
 			return new SpacecraftComponentData(new BusComponentSpecification(
 					new PhysicalSpecification(100 * Unit.kg, 1.3 * Unit.l), new OperationalSpecification(1 * Unit.kW, 1 * Unit.kFLOP)));
 

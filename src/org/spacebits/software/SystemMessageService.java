@@ -18,7 +18,7 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 	private List<SpacecraftBusComponent> registeredComponents;
 	
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return typeID;
 	}
 	

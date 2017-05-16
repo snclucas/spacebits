@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.math.BigDecimal;
 
 import org.junit.Test;
+import org.spacebits.data.EnvironmentDataProvider;
+import org.spacebits.data.LocalEnvironmentDataProvider;
 import org.spacebits.physics.Unit;
 import org.spacebits.spacecraft.Spacecraft;
 import org.spacebits.spacecraft.SpacecraftFactory;
@@ -23,9 +25,7 @@ public class UniverseTest {
 
 	@Test
 	public void testEnvronmentalData() {
-		//Setup the universe
-		UniverseDataProvider dataProvider = new LocalUniverseDataProvider();
-		Universe universe = new Universe(dataProvider);
+		EnvironmentDataProvider environmentDataProvider = new LocalEnvironmentDataProvider();
 		
 		Spacecraft spacecraft = SpacecraftFactory.getSpacecraft("Shuttle");
 		Universe.addSpacecraft(spacecraft);
@@ -33,7 +33,7 @@ public class UniverseTest {
 		Coordinates spacecraftLocation = new Coordinates(new BigDecimal(8*Unit.kPc + 149600000 * Unit.Km),new BigDecimal(0),new BigDecimal(100*Unit.Ly));
 		Universe.updateSpacecraftLocation(spacecraft.getIdent(), spacecraftLocation);
 
-		EnvironmentData data = universe.getEnvironmentData(spacecraft.getIdent());
+		EnvironmentData data = environmentDataProvider.getEnvironmentData(spacecraft.getIdent());
 		
 		System.out.println(data.getSolarFlux());
 		
@@ -50,7 +50,7 @@ public class UniverseTest {
 		BigDecimal coord2 = new BigDecimal(10000000000000000.0); // 2.3 Ly
 		BigDecimal coord3 = new BigDecimal(10000000000000000.0); // 100 Ly above galactic plane
 
-		Star sol = new Star("Sol", new Coordinates(coord1, coord2, coord3),
+		Star sol = new Star("Sol", Star.G_CLASS_STAR, new Coordinates(coord1, coord2, coord3),
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
 		universe.addLocation(sol);
 
@@ -65,7 +65,7 @@ public class UniverseTest {
 		BigDecimal coordOffset2 = new BigDecimal(20000000000000000000.0); // 2.3 Ly
 		BigDecimal coordOffset3 = new BigDecimal(20000000000000000000.0); // 100 Ly above galactic plane
 
-		Star nemesis = new Star("Nemesis", new Coordinates(coordOffset1, coordOffset2, coordOffset3), sol,
+		Star nemesis = new Star("Nemesis", Star.G_CLASS_STAR,  new Coordinates(coordOffset1, coordOffset2, coordOffset3), sol,
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
 
 		assertEquals("Nemesis coord1 incorrectly set", coord1.doubleValue()+coordOffset1.doubleValue(), nemesis.getCoordinates().get(0).doubleValue(), 0.001);

@@ -14,7 +14,7 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 	
 	
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return type;
 	}
 	
@@ -81,7 +81,7 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 
 
 	@Override
-	public final TypeInfo getCategoryId() {
+	public final TypeInfo getCategory() {
 		return category;
 	}
 

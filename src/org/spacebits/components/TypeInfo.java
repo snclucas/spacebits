@@ -1,12 +1,11 @@
 package org.spacebits.components;
 
 public class TypeInfo { 
-    public final int typeId;
+	
     public final String typeIdString;
 
     public TypeInfo(String typeId) {
     	this.typeIdString = typeId;
-        this.typeId = typeId.hashCode();
     }
     
     
@@ -32,8 +31,6 @@ public class TypeInfo {
 		if (this == obj)
 			return true;
 		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
 			return false;
 		TypeInfo other = (TypeInfo) obj;
 		if (typeIdString == null) {

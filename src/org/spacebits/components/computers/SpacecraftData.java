@@ -25,13 +25,13 @@ public class SpacecraftData implements ArchivableData {
 
 
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return type;
 	}
 
 
 	@Override
-	public TypeInfo getCategoryId() {
+	public TypeInfo getCategory() {
 		return category;
 	}
 

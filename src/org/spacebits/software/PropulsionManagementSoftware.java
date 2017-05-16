@@ -24,14 +24,14 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return typeID;
 	}
 
 
 	public SystemStatusMessage callDrive(double powerLevel) {
 		SystemStatusMessage message = null;
-		List<SpacecraftBusComponent> engines = computer.findBusComponent(Engine.categoryID);
+		List<SpacecraftBusComponent> engines = computer.getSystemComputer().findBusComponent(Engine.category());
 		for(SpacecraftBusComponent engine : engines)
 			if(engine instanceof ThrustingEngine) {
 				message =    ((ThrustDriveInterface) engine).callDrive(powerLevel);
@@ -50,7 +50,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 					computer.getUniversalTime(), Status.CRITICAL);
 
 		BusRequirement busRequirement = engine.callDrive(powerLevel);
-		SystemStatusMessage operationPermittedMessage = computer.requestOperation(engine, busRequirement);
+		SystemStatusMessage operationPermittedMessage = computer.getSystemComputer().requestOperation(engine, busRequirement);
 
 		if(operationPermittedMessage.getStatus() == Status.PERMITTED) {
 			engine.execute();
@@ -77,7 +77,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 			return new SystemStatusMessage(null, "No engine found with id: "+engineId, computer.getUniversalTime(), Status.CRITICAL);
 
 		BusRequirement busRequirement = engine.callVector(engineVector);
-		SystemStatusMessage operationPermittedMessage = computer.requestOperation(engine, busRequirement);
+		SystemStatusMessage operationPermittedMessage = computer.getSystemComputer().requestOperation(engine, busRequirement);
 
 		if(operationPermittedMessage.getStatus() == Status.PERMITTED) {
 			if(engine.isVectored()) {
@@ -110,7 +110,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 
 	private ThrustingEngine findEngineByIdent(int id) {
-		List<SpacecraftBusComponent> engines = computer.findBusComponent(Engine.categoryID);
+		List<SpacecraftBusComponent> engines = computer.getSystemComputer().findBusComponent(Engine.category());
 		//TODO LOOK at thisif(engines != null)
 			for(SpacecraftBusComponent engine : engines) {
 				if(engine.getId() == id)

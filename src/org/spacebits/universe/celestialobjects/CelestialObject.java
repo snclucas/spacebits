@@ -8,12 +8,13 @@ import org.spacebits.universe.Location;
 
 public interface CelestialObject extends Location{
 	
-	TypeInfo categoryID = new TypeInfo("CelestialObject");
+	static TypeInfo category() {
+		return new TypeInfo("CelestialObject");
+	}
 
 	SensorSignalResponseProfile getSensorSignalResponse();
 	SignalResponse getSignalResponse(TypeInfo sensorType, BigDecimal distance);
 	Location getLocation();
-	static TypeInfo category() {
-		return new TypeInfo("CelestialObject");
-	}
+	
+	
 }

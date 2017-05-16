@@ -30,16 +30,6 @@ public abstract class AbstractEngine extends AbstractBusComponent implements Eng
 		this.requestedPowerLevel = 0;
 	}
 
-	
-
-	@Override
-	public final TypeInfo getCategoryId() {
-		return categoryID;
-	}
-
-
-
-
 
 	@Override
 	public SystemStatus online() {

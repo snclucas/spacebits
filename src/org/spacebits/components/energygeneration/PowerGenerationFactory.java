@@ -1,15 +1,16 @@
 package org.spacebits.components.energygeneration;
 
+import org.spacebits.components.TypeInfo;
 import org.spacebits.data.DataFactory;
 import org.spacebits.data.SpacecraftComponentData;
 import org.spacebits.physics.Unit;
 
 public class PowerGenerationFactory extends DataFactory {
 
-	public static PowerGenerator getPowerGenerator(String powerGenerationType){
+	public static PowerGenerator getPowerGenerator(TypeInfo powerGenerationType){
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(powerGenerationType);
 		
-		if(powerGenerationType.equals(SimpleSolarArray.typeID.toString())){
+		if(powerGenerationType == SimpleSolarArray.type()){
 			double arrayArea = 1.0* Unit.m * 15 * Unit.m;	
 			
 			double efficiency = 75 * Unit.percent;
@@ -19,7 +20,7 @@ public class PowerGenerationFactory extends DataFactory {
 
 			return solarArray;
 		}
-		else if(powerGenerationType.equals(SubspacePowerExtractor.typeID.toString())){
+		else if(powerGenerationType == SubspacePowerExtractor.type()){
 			double maximumPowerOutputFromEther = 100 * Unit.kW;
 			
 			PowerGenerator solarArray = 

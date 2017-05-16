@@ -8,7 +8,9 @@ import org.spacebits.components.TypeInfo;
 
 public interface Sensor extends Component, Executable {
 	
-	TypeInfo category = new TypeInfo("Sensor");
+	public static TypeInfo category() {
+		return new TypeInfo("Sensor");
+	}
 	
 	SensorProfile getSensorProfile();
 	
@@ -22,8 +24,7 @@ public interface Sensor extends Component, Executable {
 	
 	double getSensorThreshold();
 	
-	List<SensorResult> activeScan(double duration, double signalPropagationSpeed, 
-			double signalStrength, SignalPropagationModel propagationModel, int sensorType);
+	List<SensorResult> activeScan(double duration, double signalStrength, SignalPropagationModel propagationModel, int sensorType);
 	
 	List<SensorResult> passiveScan(double duration, SensorProfile sensorProfile);
 }

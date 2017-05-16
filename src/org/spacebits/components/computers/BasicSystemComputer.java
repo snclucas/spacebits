@@ -16,7 +16,9 @@ import org.spacebits.status.SystemStatusMessage;
 
 public class BasicSystemComputer extends AbstractSystemComputer implements SystemComputer {
 
-	public static TypeInfo type = new TypeInfo("BasicSystemComputer");
+	public static TypeInfo type() {
+		return new TypeInfo("BasicSystemComputer");
+	}
 
 	private List<SystemStatusMessage> systemMessages;
 
@@ -27,8 +29,10 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 		systemMessages = new ArrayList<SystemStatusMessage>();
 	}
 
-	public TypeInfo getTypeId() {
-		return type;
+	
+	
+	public TypeInfo getType() {
+		return type();
 	}
 
 

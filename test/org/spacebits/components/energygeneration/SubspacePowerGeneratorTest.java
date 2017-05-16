@@ -29,8 +29,8 @@ public class SubspacePowerGeneratorTest {
 		assertEquals("Max output power of sunether generator incorrect", maxOutputPower, subspacePowerGenerator.getMaximumPowerOutput(), 0.001);
 		
 		
-		assertEquals("SubspacePowerExtractor category incorrect", SubspacePowerExtractor.categoryID, subspacePowerGenerator.getCategoryId());	
-		assertEquals("SubspacePowerExtractor type incorrect", SubspacePowerExtractor.typeID, subspacePowerGenerator.getTypeId());
+		assertEquals("SubspacePowerExtractor category incorrect", SubspacePowerExtractor.categoryID, subspacePowerGenerator.getCategory());	
+		assertEquals("SubspacePowerExtractor type incorrect", SubspacePowerExtractor.type(), subspacePowerGenerator.getType());
 		
 		
 		

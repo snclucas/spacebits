@@ -14,7 +14,7 @@ public class SimpleLinearFuelConsumptionProfile extends AbstractProfile implemen
 	
 	
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return typeID;
 	}
 	
@@ -65,7 +65,7 @@ public class SimpleLinearFuelConsumptionProfile extends AbstractProfile implemen
 
 
 	@Override
-	public final TypeInfo getCategoryId() {
+	public final TypeInfo getCategory() {
 		return categoryID;
 	}
 

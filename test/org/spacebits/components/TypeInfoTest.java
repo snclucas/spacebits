@@ -22,12 +22,12 @@ public class TypeInfoTest {
 	@Test
 	public void testTypeInfoInAllComponents() {
 		// Test categories
-		assertEquals("", new TypeInfo("CommunicationDevice"), RadioCommunicator.categoryID);
-		assertEquals("", new TypeInfo("CommunicationDevice"), SubSpaceCommunicator.categoryID);
+		assertEquals("", new TypeInfo("CommunicationDevice"), RadioCommunicator.category());
+		assertEquals("", new TypeInfo("CommunicationDevice"), SubSpaceCommunicator.category());
 		
 		
-		assertEquals("", new TypeInfo("Computer"), Computer.category);
-		assertEquals("", new TypeInfo("SystemComputer"), SystemComputer.category);
+		assertEquals("", new TypeInfo("Computer"), Computer.category());
+		assertEquals("", new TypeInfo("SystemComputer"), SystemComputer.category());
 		
 		assertEquals("", new TypeInfo("CelestialObject"), Star.category());
 		assertEquals("", new TypeInfo("CelestialObject"), Planet.category());
@@ -41,16 +41,16 @@ public class TypeInfoTest {
 		assertEquals("", "SubspaceBeacon", SubspaceBeacon.typeInfo.toString());
 		
 		
-		assertEquals("", "RadioCommunicator", RadioCommunicator.typeID.typeIdString);
-		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.typeID.typeIdString);
+		assertEquals("", "RadioCommunicator", RadioCommunicator.type().toString());
+		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type().toString());
 		
-		assertEquals("", "BasicSystemComputer", BasicSystemComputer.type.typeIdString);
+		assertEquals("", "BasicSystemComputer", BasicSystemComputer.type().toString());
 		
-		assertEquals("", "SimpleSolarArray", SimpleSolarArray.typeID.typeIdString);
+		assertEquals("", "SimpleSolarArray", SimpleSolarArray.type().toString());
 		
-		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.typeID.typeIdString);
-		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.typeID.typeIdString);
-		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.typeID.typeIdString);
+		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type().toString());
+		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type().toString());
+		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type().toString());
 		
 	}
 

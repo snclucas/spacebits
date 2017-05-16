@@ -11,17 +11,20 @@ import org.spacebits.status.SystemStatus;
 
 public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 
+	public static TypeInfo type() {
+		return new TypeInfo("BasicDataStorageUnit");
+	}
+	
 	public BasicDataStorageUnit(String name,
 			BusComponentSpecification busResourceSpecification) {
 		super(name, busResourceSpecification);
 	}
 
-	public static TypeInfo type = new TypeInfo("BasicDataStorageUnit");
-
 	private final Map<TypeInfo, Archive> dataArchives = new HashMap<TypeInfo, Archive>();
 
-	public TypeInfo getTypeId() {
-		return type;
+	
+	public TypeInfo getType() {
+		return type();
 	}
 
 	@Override

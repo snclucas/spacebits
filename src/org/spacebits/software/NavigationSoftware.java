@@ -11,6 +11,7 @@ import java.util.Map;
 import org.spacebits.Configuration;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
+import org.spacebits.components.computers.Computer;
 import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.components.sensors.PositioningSensor;
 import org.spacebits.components.sensors.Sensor;
@@ -21,7 +22,9 @@ import org.spacebits.universe.Coordinates;
 public class NavigationSoftware extends AbstractSoftware implements Software, NavigationInterface {
 	private static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
 	
-	public static TypeInfo typeID = new TypeInfo("NavigationSoftware");
+	public static TypeInfo type() {
+		return new TypeInfo("NavigationSoftware");
+	}
 
 	Map<Integer, Sensor> sensors;
 	List<SensorResult> sensorResults;
@@ -30,7 +33,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 		super(name);
 	}
 
-	public NavigationSoftware(String name, SystemComputer computer) {
+	public NavigationSoftware(String name, Computer computer) {
 		super(name);
 		sensors = new HashMap<Integer, Sensor>();
 		sensorResults = new ArrayList<SensorResult>();
@@ -39,8 +42,8 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	
 	
 	@Override
-	public TypeInfo getTypeId() {
-		return typeID;
+	public TypeInfo getType() {
+		return type();
 	}
 
 
@@ -80,7 +83,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 
 
 	private List<Sensor> getSensors() {
-		List<SpacecraftBusComponent> components = computer.findBusComponent(Sensor.category);
+		List<SpacecraftBusComponent> components = computer.getSystemComputer().findBusComponent(Sensor.category());
 		List<Sensor> sensors = new ArrayList<Sensor>();
 		for(SpacecraftBusComponent sensor : components)
 			sensors.add((Sensor)sensor);

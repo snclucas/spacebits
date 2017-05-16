@@ -8,7 +8,9 @@ import org.spacebits.spacecraft.BusComponentSpecification;
 
 public class SimpleThruster extends AbstractThrustingFuelConsumingEngine {
 	
-	public static TypeInfo typeID = new TypeInfo("SimpleThruster");
+	public static TypeInfo type() {
+		return new TypeInfo("SimpleThruster");
+	}
 
 	public SimpleThruster(String name, BusComponentSpecification busResourceSpecification, double maximumThrust, 
 			ThrustProfile thrustModel, FuelConsumptionProfile fuelConsumptionModel, EngineVector engineVector, 
@@ -26,9 +28,11 @@ public class SimpleThruster extends AbstractThrustingFuelConsumingEngine {
 	
 	
 	@Override
-	public TypeInfo getTypeId() {
-		return typeID;
+	public TypeInfo getType() {
+		return type();
 	}
+
+	
 
 
 	

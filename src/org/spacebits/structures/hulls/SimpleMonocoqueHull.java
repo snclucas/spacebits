@@ -15,7 +15,7 @@ public class SimpleMonocoqueHull extends AbstractHull {
 	
 
 	@Override
-	public TypeInfo getTypeId() {
+	public TypeInfo getType() {
 		return typeID;
 	}
 

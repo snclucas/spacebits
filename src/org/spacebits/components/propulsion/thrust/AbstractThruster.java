@@ -1,5 +1,6 @@
 package org.spacebits.components.propulsion.thrust;
 
+import org.spacebits.components.TypeInfo;
 import org.spacebits.components.propulsion.EngineVector;
 import org.spacebits.spacecraft.BusComponentSpecification;
 
@@ -12,7 +13,10 @@ public abstract class AbstractThruster extends AbstractThrustingFuelConsumingEng
 	}
 
 
-	
+	@Override
+	public TypeInfo getCategory() {
+		return new TypeInfo("Engine");
+	}
 	
 	
 	

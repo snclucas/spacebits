@@ -44,22 +44,22 @@ public class SpacecraftFactory {
 			
 			Spacecraft spacecraft = new SimpleSpacecraft(SHUTTLE, hull);
 			
-			SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type.toString());	
+			SystemComputer systemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());	
 			spacecraft.addComponent(systemComputer);
 			
 			//PropulsionManagementSoftware engineManagementSoftware = new PropulsionManagementSoftware("Test EngineManagementSoftware", systemComputer);
 			//systemComputer.loadSoftware(engineManagementSoftware);
 			
-			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.typeID.toString());
+			PowerGenerator powerGenerator = PowerGenerationFactory.getPowerGenerator(SubspacePowerExtractor.type());
 			spacecraft.addComponent(powerGenerator);
 			
-			Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type.toString(), Sensor.RADAR, 1);
+			Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type(), Sensor.RADAR, 1);
 			spacecraft.addComponent(sensor);
 			
 			
 			double tankCapacity = 100 * Unit.l;
 			Fuel fuel = spacecraftDataProvider.getFuel(Fuel.HYDRAZINE);
-			FuelStorageTank tank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.typeID.toString(), tankCapacity);
+			FuelStorageTank tank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type(), tankCapacity);
 			tank.setFuel(fuel, tankCapacity);
 			
 			FuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(
@@ -68,11 +68,11 @@ public class SpacecraftFactory {
 			spacecraft.addComponent(fuelDeliverySystem);
 			spacecraft.addComponent(tank);
 			
-			FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.typeID.toString(), false);
+			FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.type(), false);
 			engine.setFuelSubSystem(fuelDeliverySystem);
 			spacecraft.addComponent((SpacecraftBusComponent)engine);
 			
-			CommunicationComponent commDevice = CommunicatorDeviceFactory.getCommunicator(RadioCommunicator.typeID.toString());
+			CommunicationComponent commDevice = CommunicatorDeviceFactory.getCommunicator(RadioCommunicator.type());
 			spacecraft.addComponent(commDevice);
 			
 			return spacecraft;
