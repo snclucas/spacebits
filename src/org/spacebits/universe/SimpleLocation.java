@@ -8,16 +8,16 @@ public class SimpleLocation extends AbstractLocation {
 	
 	public static TypeInfo typeID = new TypeInfo("SimpleLocation");
 
-	public SimpleLocation(int id, String name, Coordinates coordinates) {
-		super(id, name, coordinates );
+	public SimpleLocation(String name, Coordinates coordinates) {
+		super(name, coordinates );
 	}
 	
-	public SimpleLocation(int id, String name, Coordinates coordinates, Location relativeTo) {
-		super(id, name, coordinates, relativeTo);
+	public SimpleLocation(String name, Coordinates coordinates, Location relativeTo) {
+		super(name, coordinates, relativeTo);
 	}
 	
-	public SimpleLocation(int id, String name, BigDecimal ... coordComponents) {
-		this(id, name, new Coordinates(coordComponents));
+	public SimpleLocation(String name, BigDecimal ... coordComponents) {
+		this(name, new Coordinates(coordComponents));
 	}
 	
 	
@@ -30,5 +30,12 @@ public class SimpleLocation extends AbstractLocation {
 	public String describe() {
 		return "Location";
 	}
+
+	@Override
+	public String toString() {
+		return name + ": ["+coordinates.toString() + "]";
+	}
+	
+	
 	
 }

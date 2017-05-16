@@ -17,18 +17,18 @@ public abstract class AbstractCelestialObject implements CelestialObject {
 	protected SensorSignalResponseProfile sensorSignalResponseProfile;
 	
 	
-	public AbstractCelestialObject(int id, String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
+	public AbstractCelestialObject(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
 		//super(id, name, coordinates);
 		celestialObjects = new ArrayList<CelestialObject>();
 		this.sensorSignalResponseProfile = sensorSignalResponseProfile;
-		this.location = new SimpleLocation(id, name, coordinates);
+		this.location = new SimpleLocation(name, coordinates);
 	}
 	
-	public AbstractCelestialObject(int id, String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile) {
+	public AbstractCelestialObject(String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile) {
 		//super(id, name, coordinates);
 		celestialObjects = new ArrayList<CelestialObject>();
 		this.sensorSignalResponseProfile = sensorSignalResponseProfile;
-		this.location = new SimpleLocation(id, name, coordinates.set(relativeTo.getLocation().getCoordinates()));
+		this.location = new SimpleLocation(name, coordinates.set(relativeTo.getLocation().getCoordinates()));
 	}
 	
 	@Override

@@ -20,9 +20,9 @@ public class SimpleLocationTest {
 		Coordinates coordinates1 = new Coordinates(new BigDecimal[]{new BigDecimal(1), new BigDecimal(1),new BigDecimal(1)});
 		Coordinates coordinates3 = new Coordinates(new BigDecimal[]{new BigDecimal(1), new BigDecimal(0),new BigDecimal(1)});
 		
-		SimpleLocation simpleLocation1 =  new SimpleLocation(2, "Simple test location 1", coordinates1);
-		SimpleLocation simpleLocation2 =  new SimpleLocation(3, "Simple test location 2", new BigDecimal[]{new BigDecimal(1), new BigDecimal(1),new BigDecimal(1)});
-		SimpleLocation simpleLocation3 =  new SimpleLocation(3, "Simple test location 3", coordinates3);
+		SimpleLocation simpleLocation1 =  new SimpleLocation("Simple test location 1", coordinates1);
+		SimpleLocation simpleLocation2 =  new SimpleLocation("Simple test location 2", new BigDecimal[]{new BigDecimal(1), new BigDecimal(1),new BigDecimal(1)});
+		SimpleLocation simpleLocation3 =  new SimpleLocation("Simple test location 3", coordinates3);
 		
 		assertEquals("SimpleLocation category incorrect", Location.categoryID, simpleLocation1.getCategoryId());
 		assertEquals("SimpleLocation type incorrect", SimpleLocation.typeID, simpleLocation1.getTypeId());

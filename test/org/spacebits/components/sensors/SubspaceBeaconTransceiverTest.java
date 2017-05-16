@@ -29,7 +29,7 @@ public class SubspaceBeaconTransceiverTest {
 	@Test
 	public void testDataRecord() {
 
-		Location actualLocation = new SimpleLocation(22, "Actual location", 
+		Location actualLocation = new SimpleLocation("Actual location", 
 				new Coordinates(new BigDecimal(5.0 * Unit.Pc),  new BigDecimal(5.0001000010000000344 * Unit.Pc),  new BigDecimal(5.0 * Unit.Pc)));
 		
 		PhysicalSpecification physicalSpecification1 = new PhysicalSpecification(23, 12, 67, 45, 23);
@@ -49,10 +49,10 @@ public class SubspaceBeaconTransceiverTest {
 		BigDecimal b4x = new BigDecimal(10 * Unit.Pc); BigDecimal b4y = new BigDecimal(-10 * Unit.Pc); BigDecimal b4z = new BigDecimal(10 * Unit.Pc); 
 		
 		SensorSignalResponseProfile sensorSignalResponseProfile = SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON);
-		SubspaceBeacon subspaceBeacon1 = new SubspaceBeacon(1, "Test beacon 1", new Coordinates(b1x, b1y, b1z), sensorSignalResponseProfile);
-		SubspaceBeacon subspaceBeacon2 = new SubspaceBeacon(2, "Test beacon 2", new Coordinates(b2x, b2y, b2z), sensorSignalResponseProfile);
-		SubspaceBeacon subspaceBeacon3 = new SubspaceBeacon(3, "Test beacon 3", new Coordinates(b3x, b3y, b3z), sensorSignalResponseProfile);
-		SubspaceBeacon subspaceBeacon4 = new SubspaceBeacon(4, "Test beacon 4", new Coordinates(b4x, b4y, b4z), sensorSignalResponseProfile);
+		SubspaceBeacon subspaceBeacon1 = new SubspaceBeacon("Test beacon 1", new Coordinates(b1x, b1y, b1z), sensorSignalResponseProfile);
+		SubspaceBeacon subspaceBeacon2 = new SubspaceBeacon("Test beacon 2", new Coordinates(b2x, b2y, b2z), sensorSignalResponseProfile);
+		SubspaceBeacon subspaceBeacon3 = new SubspaceBeacon("Test beacon 3", new Coordinates(b3x, b3y, b3z), sensorSignalResponseProfile);
+		SubspaceBeacon subspaceBeacon4 = new SubspaceBeacon("Test beacon 4", new Coordinates(b4x, b4y, b4z), sensorSignalResponseProfile);
 		
 		assertEquals("X coordinate of beacon 1 incorrect", b1x.doubleValue(), subspaceBeacon1.getCoordinates().get(0).doubleValue(), 0.001);
 		assertEquals("Y coordinate of beacon 1 incorrect", b1y.doubleValue(), subspaceBeacon1.getCoordinates().get(1).doubleValue(), 0.001);

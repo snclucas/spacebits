@@ -50,7 +50,7 @@ public class UniverseTest {
 		BigDecimal coord2 = new BigDecimal(10000000000000000.0); // 2.3 Ly
 		BigDecimal coord3 = new BigDecimal(10000000000000000.0); // 100 Ly above galactic plane
 
-		Star sol = new Star(1,"Sol", new Coordinates(coord1, coord2, coord3),
+		Star sol = new Star("Sol", new Coordinates(coord1, coord2, coord3),
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
 		universe.addLocation(sol);
 
@@ -65,7 +65,7 @@ public class UniverseTest {
 		BigDecimal coordOffset2 = new BigDecimal(20000000000000000000.0); // 2.3 Ly
 		BigDecimal coordOffset3 = new BigDecimal(20000000000000000000.0); // 100 Ly above galactic plane
 
-		Star nemesis = new Star(2,"Nemesis", new Coordinates(coordOffset1, coordOffset2, coordOffset3), sol,
+		Star nemesis = new Star("Nemesis", new Coordinates(coordOffset1, coordOffset2, coordOffset3), sol,
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
 
 		assertEquals("Nemesis coord1 incorrectly set", coord1.doubleValue()+coordOffset1.doubleValue(), nemesis.getCoordinates().get(0).doubleValue(), 0.001);

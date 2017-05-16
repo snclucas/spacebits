@@ -12,16 +12,16 @@ public class Planet extends AbstractCelestialObject {
 	private double radius;
 	private String habitatClass;
 
-	public Planet(int id, String name, Coordinates coordinates, 
+	public Planet(String name, Coordinates coordinates, 
 			SensorSignalResponseProfile sensorSignalResponseProfile, double radius, String habitatClass) {
-		super(id, name, coordinates, sensorSignalResponseProfile);
+		super(name, coordinates, sensorSignalResponseProfile);
 		this.radius = radius;
 		this.habitatClass = habitatClass;
 	}
 
-	public Planet(int id, String name, Coordinates coordinates, 
+	public Planet(String name, Coordinates coordinates, 
 			CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile, double radius, String habitatClass) {
-		super(id, name, coordinates, relativeTo, sensorSignalResponseProfile);
+		super(name, coordinates, relativeTo, sensorSignalResponseProfile);
 		this.radius = radius;
 		this.habitatClass = habitatClass;
 	}

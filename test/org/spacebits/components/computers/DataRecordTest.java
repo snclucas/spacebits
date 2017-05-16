@@ -15,7 +15,7 @@ public class DataRecordTest {
 	@Test
 	public void testDataRecord() {
 		
-		Star sol = new Star(1,"Sol", new Coordinates(),
+		Star sol = new Star("Sol", new Coordinates(),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.G_CLASS_STAR));
 		
 		DataRecord record = new DataRecord("sol", CelestialObject.categoryID, sol);

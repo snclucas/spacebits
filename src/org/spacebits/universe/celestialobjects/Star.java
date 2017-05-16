@@ -12,12 +12,12 @@ public class Star extends AbstractCelestialObject {
 	protected List<Asteroid> asteroids;
 	protected List<Planet> planets;
 
-	public Star(int id, String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(id, name, coordinates, sensorSignalResponseProfile);
+	public Star(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
+		super(name, coordinates, sensorSignalResponseProfile);
 	}
 	
-	public Star(int id, String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile) {
-		super(id, name, coordinates, relativeTo, sensorSignalResponseProfile);
+	public Star(String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile) {
+		super(name, coordinates, relativeTo, sensorSignalResponseProfile);
 	}
 	
 	@Override

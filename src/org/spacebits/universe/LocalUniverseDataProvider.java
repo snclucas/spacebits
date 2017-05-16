@@ -99,11 +99,11 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 
 
 	private void populate() {
-		Star sol = new Star(1,"Sol", new Coordinates(new BigDecimal(8*Unit.kPc),new BigDecimal(0),new BigDecimal(100*Unit.Ly)),
+		Star sol = new Star("Sol", new Coordinates(new BigDecimal(8*Unit.kPc),new BigDecimal(0),new BigDecimal(100*Unit.Ly)),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.G_CLASS_STAR));
 		addLocation(sol);
 
-		Star alphaCenturi = new Star(2,"Alpha centuri", 
+		Star alphaCenturi = new Star("Alpha centuri", 
 				new Coordinates(new BigDecimal(8*Unit.kPc + 2.98*Unit.Ly),new BigDecimal(2.83* Unit.Ly),new BigDecimal(101.34*Unit.Ly)),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.O_CLASS_STAR));
 		addLocation(alphaCenturi);
@@ -113,10 +113,10 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 		//Setup subspace beacons
 		
 		//Above Sol north pole, 1e8 Km
-		addLocation(new SubspaceBeacon(3,"SolBeacon", new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km)), sol,
+		addLocation(new SubspaceBeacon("SolBeacon", new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km)), sol,
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
 		
-		addLocation(new SubspaceBeacon(4,"ACBeacon", 
+		addLocation(new SubspaceBeacon("ACBeacon", 
 				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km)), alphaCenturi,
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
 	}

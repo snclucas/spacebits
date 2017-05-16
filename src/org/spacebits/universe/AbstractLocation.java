@@ -2,6 +2,7 @@ package org.spacebits.universe;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.UUID;
 
 import org.spacebits.components.TypeInfo;
 import org.spacebits.utils.math.MathUtils;
@@ -9,40 +10,39 @@ import org.spacebits.utils.math.MathUtils;
 public abstract class AbstractLocation implements Location  {
 	
 	protected String name;
-	protected int id;
-	protected Coordinates coordinates;
+	protected String id;
+	protected Coordinates coordinates;	
 	
-	
-	public AbstractLocation(int id, String name, Coordinates coordinates) {
-		this.id = id;
+	public AbstractLocation(String name, Coordinates coordinates) {
+		this.id = UUID.randomUUID().toString().replaceAll("-", "");
 		this.name = name;
 		this.coordinates = coordinates;
 	}
 	
-	public AbstractLocation(int id, String name, Coordinates coordinates, Location relativeTo) {
-		this.id = id;
+	public AbstractLocation(String name, Coordinates coordinates, Location relativeTo) {
+		this.id = UUID.randomUUID().toString().replaceAll("-", "");
 		this.name = name;
 		this.coordinates = coordinates.add(relativeTo.getCoordinates());
 	}
 	
-	public AbstractLocation(int id, String name, BigDecimal[] coordComponents) {
-		this(id, name, new Coordinates(coordComponents));
+	public AbstractLocation(String name, BigDecimal[] coordComponents) {
+		this(name, new Coordinates(coordComponents));
 	}
 	
 	public AbstractLocation(int id, String name, BigDecimal[] coordComponents, Location relativeTo) {
-		this(id, name, new Coordinates(coordComponents).add(relativeTo.getCoordinates()));
+		this(name, new Coordinates(coordComponents).add(relativeTo.getCoordinates()));
 	}
 	
 	public AbstractLocation(int id, String name, BigDecimal coordComponents1, BigDecimal coordComponents2, BigDecimal coordComponents3) {
-		this(id, name, new Coordinates(coordComponents1, coordComponents2, coordComponents3));
+		this(name, new Coordinates(coordComponents1, coordComponents2, coordComponents3));
 	}
 	
 	public AbstractLocation(int id, String name, BigDecimal coordComponents1, BigDecimal coordComponents2, BigDecimal coordComponents3, Location relativeTo) {
-		this(id, name, new Coordinates(coordComponents1, coordComponents2, coordComponents3).add(relativeTo.getCoordinates()));
+		this(name, new Coordinates(coordComponents1, coordComponents2, coordComponents3).add(relativeTo.getCoordinates()));
 	}
 	
 	public AbstractLocation(int id, String name, double coordComponents1, double coordComponents2, double coordComponents3, Location relativeTo) {
-		this(id, name, new Coordinates(new BigDecimal(coordComponents1), new BigDecimal(coordComponents2), new BigDecimal(coordComponents3)).add(relativeTo.getCoordinates()));
+		this(name, new Coordinates(new BigDecimal(coordComponents1), new BigDecimal(coordComponents2), new BigDecimal(coordComponents3)).add(relativeTo.getCoordinates()));
 	}
 	
 	

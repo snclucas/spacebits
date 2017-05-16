@@ -9,13 +9,13 @@ public class Region extends AbstractCelestialObject {
 
 	private double sizeOfRegion;
 
-	public Region(int id, String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile, double sizeOfRegion) {
-		super(id, name, coordinates, sensorSignalResponseProfile);
+	public Region(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile, double sizeOfRegion) {
+		super(name, coordinates, sensorSignalResponseProfile);
 		this.sizeOfRegion = sizeOfRegion;
 	}
 
-	public Region(int id, String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile, double sizeOfRegion) {
-		super(id, name, coordinates, relativeTo, sensorSignalResponseProfile);
+	public Region(String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile, double sizeOfRegion) {
+		super(name, coordinates, relativeTo, sensorSignalResponseProfile);
 		this.sizeOfRegion = sizeOfRegion;
 	}
 	

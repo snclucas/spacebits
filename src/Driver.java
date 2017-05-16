@@ -23,18 +23,19 @@ public class Driver {
 	
 	public Driver() {
 		
-		Location sol = new SimpleLocation(1,"Sol", new Coordinates(
+		Location sol = new SimpleLocation("Sol", new Coordinates(
 				new BigDecimal(8*Unit.kPc),
 				new BigDecimal(0),
 				new BigDecimal(100*Unit.Ly)));
 		
-		Location initialSpacecraftLocation = new SimpleLocation(1,"Sol", new Coordinates(
+		Location initialSpacecraftLocation = new SimpleLocation("Spacecraft", new Coordinates(
 				new BigDecimal(0),
 				new BigDecimal(0),
-				new BigDecimal(-1*Unit.AU)), sol);
+				new BigDecimal(-10000*Unit.AU)), sol);
 		
 		
-		
+		System.out.println(sol);
+		System.out.println(initialSpacecraftLocation);
 		
 		Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 		

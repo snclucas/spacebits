@@ -31,7 +31,7 @@ public class Universe {
 	private static Map<String,Coordinates> spacecraftLocationInUniverse = new HashMap<String, Coordinates>();
 
 	public final static CelestialObject galacticCenter 
-	= new Region(0, "Galactic center", new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0)),
+	= new Region("Galactic center", new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0)),
 			new SensorSignalResponseProfile(1000.0, 1000.0, 1000.0, 1000.0, 1000.0), 10.0 * Unit.Pc);
 
 	public static double SUBSPACE_SIGNAL_PROPAGATION = 100000*Unit.c;
@@ -100,14 +100,14 @@ public class Universe {
 		UniverseDataProvider dataProvider = new LocalUniverseDataProvider();
 		Universe universe = new Universe(dataProvider);
 
-		Star sol = new Star(1,"Sol", new Coordinates(
+		Star sol = new Star("Sol", new Coordinates(
 				new BigDecimal(8*Unit.kPc),
 				new BigDecimal(0),
 				new BigDecimal(100*Unit.Ly)),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.G_CLASS_STAR));
 		universe.addLocation(sol);
 
-		Star alphaCenturi = new Star(2,"Alpha centuri", 
+		Star alphaCenturi = new Star("Alpha centuri", 
 				new Coordinates(
 						new BigDecimal(8*Unit.kPc + 2.98*Unit.Ly),
 						new BigDecimal(2.83* Unit.Ly),
@@ -120,12 +120,12 @@ public class Universe {
 		//Setup subspace beacons
 
 		//Above Sol north pole, 1e8 Km
-		universe.addLocation(new SubspaceBeacon(3,"SolBeacon", 
+		universe.addLocation(new SubspaceBeacon("SolBeacon", 
 				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1*Unit.AU)), sol,
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
 
 
-		universe.addLocation(new SubspaceBeacon(4,"ACBeacon", 
+		universe.addLocation(new SubspaceBeacon("ACBeacon", 
 				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1*Unit.AU)), alphaCenturi,
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
 

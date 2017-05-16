@@ -55,7 +55,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 			distance.doubleValue()/Unit.Ly);
 			
 			if(returnedSignalResponse.getSignalStrength() > 1.0)
-				object = new UnknownObject(-122, "Unknown object", object.getCoordinates(), object.getSensorSignalResponse());
+				object = new UnknownObject("Unknown object", object.getCoordinates(), object.getSensorSignalResponse());
 
 			SensorResult result = new SensorResult(object, Utils.distanceToLocation(object.getCoordinates(), spacecraftLocation), 
 					Utils.vectorToLocation(object.getCoordinates(), spacecraftLocation, false), returnedSignalResponse);

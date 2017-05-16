@@ -6,6 +6,7 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 
 import org.spacebits.Configuration;
+import org.spacebits.physics.Unit;
 
 public class Coordinates {
 	private static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
@@ -77,6 +78,22 @@ public class Coordinates {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		String location0 = location[0].toString();
+		if(location[0].compareTo(new BigDecimal(1* Unit.Ly))>0)
+			location0 = (location[0].divide(new BigDecimal(1.0*Unit.Ly), 2, RoundingMode.HALF_UP)).toString() + "Ly";
+		String location1 = location[1].toString();
+		if(location[1].compareTo(new BigDecimal(1* Unit.Ly))>0)
+			location1 = (location[1].divide(new BigDecimal(1.0*Unit.Ly), 2, RoundingMode.HALF_UP)).toString() + "Ly";
+		String location2 = location[2].toString();
+		if(location[2].compareTo(new BigDecimal(1* Unit.Ly))>0)
+			location2 = (location[2].divide(new BigDecimal(1.0*Unit.Ly), 2, RoundingMode.HALF_UP)).toString() + "Ly";
+		
+		return location0 + ", " + location1 + ", " + location2;
+	}
+	
 	
 	
 	
