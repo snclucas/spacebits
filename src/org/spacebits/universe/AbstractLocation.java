@@ -1,48 +1,31 @@
 package org.spacebits.universe;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.UUID;
 
+import org.spacebits.Configuration;
 import org.spacebits.components.TypeInfo;
-import org.spacebits.utils.math.MathUtils;
+import org.spacebits.utils.Utils;
 
-public abstract class AbstractLocation implements Location  {
+public abstract class AbstractLocation implements Location {
 	
 	protected String name;
 	protected String id;
 	protected Coordinates coordinates;	
 	
 	public AbstractLocation(String name, Coordinates coordinates) {
-		this.id = UUID.randomUUID().toString().replaceAll("-", "");
+		this.id = Configuration.getUUID();
 		this.name = name;
 		this.coordinates = coordinates;
 	}
 	
+	
 	public AbstractLocation(String name, Coordinates coordinates, Location relativeTo) {
-		this.id = UUID.randomUUID().toString().replaceAll("-", "");
-		this.name = name;
-		this.coordinates = coordinates.add(relativeTo.getCoordinates());
+		this(name, coordinates.add(relativeTo.getCoordinates()));
 	}
+	
 	
 	public AbstractLocation(String name, BigDecimal[] coordComponents) {
 		this(name, new Coordinates(coordComponents));
-	}
-	
-	public AbstractLocation(int id, String name, BigDecimal[] coordComponents, Location relativeTo) {
-		this(name, new Coordinates(coordComponents).add(relativeTo.getCoordinates()));
-	}
-	
-	public AbstractLocation(int id, String name, BigDecimal coordComponents1, BigDecimal coordComponents2, BigDecimal coordComponents3) {
-		this(name, new Coordinates(coordComponents1, coordComponents2, coordComponents3));
-	}
-	
-	public AbstractLocation(int id, String name, BigDecimal coordComponents1, BigDecimal coordComponents2, BigDecimal coordComponents3, Location relativeTo) {
-		this(name, new Coordinates(coordComponents1, coordComponents2, coordComponents3).add(relativeTo.getCoordinates()));
-	}
-	
-	public AbstractLocation(int id, String name, double coordComponents1, double coordComponents2, double coordComponents3, Location relativeTo) {
-		this(name, new Coordinates(new BigDecimal(coordComponents1), new BigDecimal(coordComponents2), new BigDecimal(coordComponents3)).add(relativeTo.getCoordinates()));
 	}
 	
 	
@@ -51,55 +34,41 @@ public abstract class AbstractLocation implements Location  {
 		return this.hashCode();
 	}
 	
+	
 	@Override
 	public TypeInfo getCategoryId() {
 		return categoryID;
 	}
 	
 
-
+	@Override
 	public String getName() {
 		return name;
 	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 	
+	
+	@Override
 	public Coordinates getCoordinates() {
 		return coordinates;
 	}
-
-	public void setCoordinates(Coordinates coordinates) {
-		this.coordinates = coordinates;
-	}
 	
 	
+	@Override
 	public BigDecimal getCoordinate(int index) {
 		return this.coordinates.get(index);
 	}
 
 
-	public BigDecimal adistanceToLocation(Location location)
+	@Override
+	public BigDecimal distanceToLocation(Location location, double unit)
 	{
-		BigDecimal dx = location.getCoordinates().get(0).subtract(this.getCoordinates().get(0));
-		BigDecimal dy = location.getCoordinates().get(1).subtract(this.getCoordinates().get(1));
-		BigDecimal dz = location.getCoordinates().get(2).subtract(this.getCoordinates().get(2));
-		return MathUtils.bigSqrt(dx.multiply(dx).add(dy.multiply(dy)).add(dz.multiply(dz)));
+		return Utils.distanceToLocation(this.getCoordinates(), location.getCoordinates(), unit);
 	}
 
 
-	public NavigationVector avectorToLocation(Location location, boolean normalized) {
-		BigDecimal dx = location.getCoordinates().get(0).subtract(this.getCoordinates().get(0));
-		BigDecimal dy = location.getCoordinates().get(1).subtract(this.getCoordinates().get(1));
-		BigDecimal dz = location.getCoordinates().get(2).subtract(this.getCoordinates().get(2));
-		
-		BigDecimal length = MathUtils.bigSqrt(dx.multiply(dx).add(dy.multiply(dy)).add(dz.multiply(dz)));
-		
-		if(normalized)
-			return new NavigationVector(dx.divide(length, RoundingMode.HALF_UP), dy.divide(length, RoundingMode.HALF_UP), dz.divide(length, RoundingMode.HALF_UP));
-		else 
-			return new NavigationVector(dx, dy, dz);
+	@Override
+	public NavigationVector vectorToLocation(Location location, boolean normalized) {
+		return Utils.vectorToLocation(this.getCoordinates(), location.getCoordinates(), normalized);
 	}
 
 	

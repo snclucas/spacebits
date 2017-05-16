@@ -5,7 +5,9 @@ import org.spacebits.universe.Coordinates;
 
 public class Region extends AbstractCelestialObject {
 	
-	public static TypeInfo typeID = new TypeInfo("Region");
+	public static TypeInfo type() {
+		return new TypeInfo("Region");
+	}
 
 	private double sizeOfRegion;
 
@@ -22,7 +24,7 @@ public class Region extends AbstractCelestialObject {
 	
 	@Override
 	public TypeInfo getTypeId() {
-		return typeID;
+		return type();
 	}
 
 

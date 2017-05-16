@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import java.math.BigDecimal;
 
 import org.junit.Test;
+import org.spacebits.physics.Unit;
 import org.spacebits.universe.Coordinates;
 import org.spacebits.universe.Location;
 import org.spacebits.universe.NavigationVector;
@@ -30,8 +31,8 @@ public class SimpleLocationTest {
 		assertEquals("Location 1 not equal to location 2", simpleLocation1, simpleLocation2);
 		assertNotEquals("Location 1 equal to location 3", simpleLocation1, simpleLocation3);
 		
-		assertEquals("Distance from location 1 to location 1 should be 0", 0.0, Utils.distanceToLocation(simpleLocation1.getCoordinates(), simpleLocation1.getCoordinates()).doubleValue(), 0.0001);
-		assertEquals("Distance from location 1 to location 3 should be 0", 1.0, Utils.distanceToLocation(simpleLocation1.getCoordinates(), simpleLocation3.getCoordinates()).doubleValue(), 0.0001);
+		assertEquals("Distance from location 1 to location 1 should be 0", 0.0, Utils.distanceToLocation(simpleLocation1.getCoordinates(), simpleLocation1.getCoordinates(), Unit.Unity).doubleValue(), 0.0001);
+		assertEquals("Distance from location 1 to location 3 should be 0", 1.0, Utils.distanceToLocation(simpleLocation1.getCoordinates(), simpleLocation3.getCoordinates(), Unit.Unity).doubleValue(), 0.0001);
 		
 		
 		NavigationVector navVec1 = new NavigationVector(new BigDecimal(0.0), new BigDecimal(0.0), new BigDecimal(0.0));
@@ -40,6 +41,36 @@ public class SimpleLocationTest {
 		assertEquals("Navigation vector from location 1 to location 1 should be 0,0,0", navVec1, Utils.vectorToLocation(simpleLocation1.getCoordinates(), simpleLocation2.getCoordinates(), true));
 		assertEquals("Normalized navigation vector from location 1 to location 3 should be 0,-1,0", navVec2, Utils.vectorToLocation(simpleLocation1.getCoordinates(), simpleLocation3.getCoordinates(), true));
 		assertEquals("Un-normalized navigation vector from location 1 to location 3 should be 0,-1,0", navVec2, Utils.vectorToLocation(simpleLocation1.getCoordinates(), simpleLocation3.getCoordinates(), false));
+	}
+	
+	
+	@Test
+	public void testLocationVectorTo() {
+		Location sol = new SimpleLocation("Sol", new Coordinates(
+				new BigDecimal(8*Unit.kPc),
+				new BigDecimal(0),
+				new BigDecimal(100*Unit.Ly)));
+		
+		Location initialSpacecraftLocation = new SimpleLocation("Spacecraft", new Coordinates(
+				new BigDecimal(0),
+				new BigDecimal(0),
+				new BigDecimal(-1*Unit.AU)), sol);
+		
+		
+		
+		Location loc1 = new SimpleLocation("Sol", new Coordinates(
+				new BigDecimal(1),
+				new BigDecimal(0),
+				new BigDecimal(0)));
+		
+		Location loc2 = new SimpleLocation("Spacecraft", new Coordinates(
+				new BigDecimal(10),
+				new BigDecimal(0),
+				new BigDecimal(0)), sol);
+		
+		
+		System.out.println(loc1.vectorToLocation(loc2, false));
+		//System.out.println(sol.vectorToLocation(initialSpacecraftLocation, true));
 	}
 
 }

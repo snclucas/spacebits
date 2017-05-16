@@ -7,7 +7,9 @@ import org.spacebits.universe.Coordinates;
 
 public class Star extends AbstractCelestialObject {
 	
-	public static TypeInfo typeID = new TypeInfo("Star");
+	public static TypeInfo type() {
+		return new TypeInfo("Star");
+	}
 	
 	protected List<Asteroid> asteroids;
 	protected List<Planet> planets;
@@ -22,7 +24,7 @@ public class Star extends AbstractCelestialObject {
 	
 	@Override
 	public TypeInfo getTypeId() {
-		return typeID;
+		return new TypeInfo("Star");
 	}
 
 	@Override

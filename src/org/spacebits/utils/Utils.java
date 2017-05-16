@@ -1,8 +1,6 @@
 package org.spacebits.utils;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.security.InvalidParameterException;
 
 import org.spacebits.Configuration;
@@ -13,23 +11,21 @@ import org.spacebits.utils.math.BigDecimalMath;
 import org.spacebits.utils.math.MathUtils;
 
 public class Utils {
-	
-	private static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
 
 	public static BigDecimal[] doubleArrayToBigDecimalArray(double[] doubleArray) {
 		BigDecimal[] bigDecimalArray = new BigDecimal[doubleArray.length];
 		for(int i = 0;i<doubleArray.length;i++)
-			bigDecimalArray[i] = new BigDecimal(doubleArray[i], mc);
+			bigDecimalArray[i] = new BigDecimal(doubleArray[i], Configuration.mc);
 		return bigDecimalArray;
 	}
 	
 	
 	
-	public static BigDecimal distanceToLocation(Coordinates coordinates1, Coordinates coordinates2)
+	public static BigDecimal distanceToLocation(Coordinates coordinates1, Coordinates coordinates2, double unit)
 	{
-		BigDecimal dx = coordinates1.get(0).subtract(coordinates2.get(0));
-		BigDecimal dy = coordinates1.get(1).subtract(coordinates2.get(1));
-		BigDecimal dz = coordinates1.get(2).subtract(coordinates2.get(2));
+		BigDecimal dx = (coordinates1.get(0).subtract(coordinates2.get(0))).divide(new BigDecimal(unit), Configuration.mc);
+		BigDecimal dy = (coordinates1.get(1).subtract(coordinates2.get(1))).divide(new BigDecimal(unit), Configuration.mc);
+		BigDecimal dz = (coordinates1.get(2).subtract(coordinates2.get(2))).divide(new BigDecimal(unit), Configuration.mc);
 		return MathUtils.bigSqrt(dx.multiply(dx).add(dy.multiply(dy)).add(dz.multiply(dz)));
 	}
 
@@ -41,8 +37,13 @@ public class Utils {
 		
 		BigDecimal length = MathUtils.bigSqrt(dx.multiply(dx).add(dy.multiply(dy)).add(dz.multiply(dz)));
 		
+		System.out.println(length);
+		
 		if(normalized)
-			return new NavigationVector(dx.divide(length, RoundingMode.HALF_UP), dy.divide(length, RoundingMode.HALF_UP), dz.divide(length, RoundingMode.HALF_UP));
+			return new NavigationVector(
+					dx.divide(length, Configuration.mc), 
+					dy.divide(length, Configuration.mc), 
+					dz.divide(length, Configuration.mc));
 		else 
 			return new NavigationVector(dx, dy, dz);
 	}
@@ -50,20 +51,20 @@ public class Utils {
 	
 	
 	public static Coordinates galacticCoordinatesToAbsoluteCoordinates(double rightAscension, double declination, BigDecimal distance) {
-		BigDecimal xSol = new BigDecimal(0.0, mc).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
+		BigDecimal xSol = new BigDecimal(0.0, Configuration.mc).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
 		
-		BigDecimal ySol = new BigDecimal(-8 * Unit.kPc, mc).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
+		BigDecimal ySol = new BigDecimal(-8 * Unit.kPc, Configuration.mc).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
 		
-		BigDecimal zSol = new BigDecimal(100 * Unit.Ly, mc).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
+		BigDecimal zSol = new BigDecimal(100 * Unit.Ly, Configuration.mc).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
 		
 		BigDecimal RA = new BigDecimal(rightAscension).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
 		BigDecimal dec = new BigDecimal(declination).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
 		
 		BigDecimalMath.toRadians(RA);
 		
-		BigDecimal x = distance.multiply(BigDecimalMath.sin(BigDecimalMath.toRadians(RA))).add(xSol, mc);
-		BigDecimal y = distance.multiply(BigDecimalMath.cos(BigDecimalMath.toRadians(RA))).add(ySol, mc);	
-		BigDecimal z = distance.multiply(BigDecimalMath.sin(BigDecimalMath.toRadians(dec))).add(zSol, mc);
+		BigDecimal x = distance.multiply(BigDecimalMath.sin(BigDecimalMath.toRadians(RA))).add(xSol, Configuration.mc);
+		BigDecimal y = distance.multiply(BigDecimalMath.cos(BigDecimalMath.toRadians(RA))).add(ySol, Configuration.mc);	
+		BigDecimal z = distance.multiply(BigDecimalMath.sin(BigDecimalMath.toRadians(dec))).add(zSol, Configuration.mc);
 		return new Coordinates(x, y, z);
 		
 	}

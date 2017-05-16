@@ -11,4 +11,6 @@ public interface Location extends Identifiable {
 	
 	Coordinates getCoordinates();
 	BigDecimal getCoordinate(int index);
+	NavigationVector vectorToLocation(Location location, boolean normalized);
+	BigDecimal distanceToLocation(Location location, double unit);
 }

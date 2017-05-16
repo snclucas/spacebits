@@ -75,7 +75,7 @@ public class Universe {
 		Coordinates coordinates = getSpacecraftLocation(spacecraftIdent);
 
 		List<CelestialObject> nearByStars = //Stars within 100 AU
-				dataProvider.getLocationsByTypeCloserThan(Star.typeID, coordinates, new BigDecimal(100 * 1.496e8 * Unit.Km));
+				dataProvider.getLocationsByTypeCloserThan(Star.type(), coordinates, new BigDecimal(100 * 1.496e8 * Unit.Km));
 
 		if(nearByStars.size() == 0)
 			return new EnvironmentData(0.0, 0.0);
@@ -84,7 +84,7 @@ public class Universe {
 		for(CelestialObject celestial : nearByStars) {
 			if(celestial instanceof Star) {
 				Star star = ((Star)celestial);
-				BigDecimal d = Utils.distanceToLocation(coordinates, star.getCoordinates());
+				BigDecimal d = Utils.distanceToLocation(coordinates, star.getCoordinates(), Unit.Unity);
 				SignalResponse response = star.getSensorSignalResponse().getSignalResponse(Sensor.OPTICAL, BigDecimal.ZERO);
 				d = d.max(new BigDecimal(Unit.G_STAR_RADIUS));
 				luminosity += response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() );

@@ -29,12 +29,12 @@ public class TypeInfoTest {
 		assertEquals("", new TypeInfo("Computer"), Computer.category);
 		assertEquals("", new TypeInfo("SystemComputer"), SystemComputer.category);
 		
-		assertEquals("", new TypeInfo("CelestialObject"), Star.categoryID);
-		assertEquals("", new TypeInfo("CelestialObject"), Planet.categoryID);
-		assertEquals("", new TypeInfo("CelestialObject"), Region.categoryID);
-		assertEquals("", new TypeInfo("CelestialObject"), Asteroid.categoryID);
-		assertEquals("", new TypeInfo("CelestialObject"), UnknownObject.categoryID);
-		assertEquals("", new TypeInfo("CelestialObject"), SubspaceBeacon.categoryID);
+		assertEquals("", new TypeInfo("CelestialObject"), Star.category());
+		assertEquals("", new TypeInfo("CelestialObject"), Planet.category());
+		assertEquals("", new TypeInfo("CelestialObject"), Region.category());
+		assertEquals("", new TypeInfo("CelestialObject"), Asteroid.category());
+		assertEquals("", new TypeInfo("CelestialObject"), UnknownObject.category());
+		assertEquals("", new TypeInfo("CelestialObject"), SubspaceBeacon.category());
 		
 		
 		

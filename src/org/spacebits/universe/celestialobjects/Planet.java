@@ -5,7 +5,9 @@ import org.spacebits.universe.Coordinates;
 
 public class Planet extends AbstractCelestialObject {
 	
-	public static TypeInfo typeID = new TypeInfo("Planet");
+	public static TypeInfo type() {
+		return new TypeInfo("Planet");
+	}
 
 	public static String HABITABLE_CLASS_M = "M";
 
@@ -29,7 +31,7 @@ public class Planet extends AbstractCelestialObject {
 	
 	@Override
 	public TypeInfo getTypeId() {
-		return typeID;
+		return type();
 	}
 
 	public double getRadius() {

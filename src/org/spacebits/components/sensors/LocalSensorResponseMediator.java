@@ -44,7 +44,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 				universeDataProvider.getLocationsCloserThan(Universe.getSpacecraftLocation(spacecraftIdent), maximumDistanceScanned);
 
 		for(CelestialObject object : objectsWithin1000Ly) {
-			BigDecimal distance = Utils.distanceToLocation(object.getCoordinates(), spacecraftLocation);
+			BigDecimal distance = Utils.distanceToLocation(object.getCoordinates(), spacecraftLocation, Unit.Unity);
 			
 			SignalResponse returnedSignalResponse = object.getSignalResponse(sensorProfile.getSensorType(), distance);
 			// TODO maybe set celestial object as UNKNOWN if under a certain threshold?
@@ -57,7 +57,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 			if(returnedSignalResponse.getSignalStrength() > 1.0)
 				object = new UnknownObject("Unknown object", object.getCoordinates(), object.getSensorSignalResponse());
 
-			SensorResult result = new SensorResult(object, Utils.distanceToLocation(object.getCoordinates(), spacecraftLocation), 
+			SensorResult result = new SensorResult(object, Utils.distanceToLocation(object.getCoordinates(), spacecraftLocation, Unit.Unity), 
 					Utils.vectorToLocation(object.getCoordinates(), spacecraftLocation, false), returnedSignalResponse);
 			results.add(result);
 		}

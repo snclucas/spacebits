@@ -1,6 +1,9 @@
 package org.spacebits;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.UUID;
 
 import org.spacebits.components.sensors.LocalSensorResponseMediator;
 import org.spacebits.components.sensors.SensorResponseMediator;
@@ -18,8 +21,13 @@ import org.spacebits.universe.UniverseDataProvider;
 
 public class Configuration {
 
-	public static int precision = 100;
+	public static int precision = 20;
 	public static int ROUNDING_MODE = BigDecimal.ROUND_HALF_UP;
+	public static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
+	
+	public static String getUUID() {
+		return UUID.randomUUID().toString().replaceAll("-", "");
+	}
 	
 	
 	public static Universe getUniverse() {

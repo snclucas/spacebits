@@ -36,6 +36,10 @@ public class Driver {
 		
 		System.out.println(sol);
 		System.out.println(initialSpacecraftLocation);
+		System.out.println(sol.vectorToLocation(initialSpacecraftLocation, true));
+		System.out.println(sol.distanceToLocation(initialSpacecraftLocation, Unit.AU));
+		System.out.println("----------------------------------------");
+		
 		
 		Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 		
@@ -50,6 +54,9 @@ public class Driver {
 		
 		List<SensorResult> results = sensor.passiveScan(10, sensor.getSensorProfile());
 
+		for(SensorResult result : results) {
+			System.out.println(result.getNavigationVector());
+		}
 		
 	
 		

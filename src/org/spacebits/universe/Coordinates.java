@@ -1,16 +1,13 @@
 package org.spacebits.universe;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.Arrays;
 
 import org.spacebits.Configuration;
 import org.spacebits.physics.Unit;
 
 public class Coordinates {
-	private static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
-	
+
 	public static BigDecimal[] NOT_KNOWN = new BigDecimal[]{new BigDecimal(-1), new BigDecimal(-1), new BigDecimal(-1)};
 	
 	private BigDecimal[] location;
@@ -21,6 +18,7 @@ public class Coordinates {
 		this.location = new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
 	}
 
+	
 	public Coordinates(BigDecimal ... coords) {
 		super();
 		this.location = coords;
@@ -38,25 +36,17 @@ public class Coordinates {
 	
 
 	public BigDecimal get(int index, double unit) {
-		return location[index].divide(new BigDecimal(unit), mc);
-	}
-	
-	
-	public Coordinates set(Coordinates coordinates) {
-		return new Coordinates( 
-				this.location[0].add(coordinates.get(0)), 
-				this.location[1].add(coordinates.get(1)), 
-				this.location[2].add(coordinates.get(2)));
+		return location[index].divide(new BigDecimal(unit), Configuration.mc);
 	}
 	
 	
 	public Coordinates add(Coordinates coordinates) {
 		return new Coordinates( 
-				this.location[0].add(coordinates.get(0)), 
+				new BigDecimal[]{this.location[0].add(coordinates.get(0)), 
 				this.location[1].add(coordinates.get(1)), 
-				this.location[2].add(coordinates.get(2)));
+				this.location[2].add(coordinates.get(2))});
 	}
-
+	
 
 	@Override
 	public int hashCode() {
@@ -83,18 +73,16 @@ public class Coordinates {
 	public String toString() {
 		String location0 = location[0].toString();
 		if(location[0].compareTo(new BigDecimal(1* Unit.Ly))>0)
-			location0 = (location[0].divide(new BigDecimal(1.0*Unit.Ly), 2, RoundingMode.HALF_UP)).toString() + "Ly";
+			location0 = (location[0].divide(new BigDecimal(1.0*Unit.Ly), Configuration.mc)).toString() + "Ly";
 		String location1 = location[1].toString();
 		if(location[1].compareTo(new BigDecimal(1* Unit.Ly))>0)
-			location1 = (location[1].divide(new BigDecimal(1.0*Unit.Ly), 2, RoundingMode.HALF_UP)).toString() + "Ly";
+			location1 = (location[1].divide(new BigDecimal(1.0*Unit.Ly), Configuration.mc)).toString() + "Ly";
 		String location2 = location[2].toString();
 		if(location[2].compareTo(new BigDecimal(1* Unit.Ly))>0)
-			location2 = (location[2].divide(new BigDecimal(1.0*Unit.Ly), 2, RoundingMode.HALF_UP)).toString() + "Ly";
+			location2 = (location[2].divide(new BigDecimal(1.0*Unit.Ly), Configuration.mc)).toString() + "Ly";
 		
 		return location0 + ", " + location1 + ", " + location2;
 	}
 	
-	
-	
-	
+
 }

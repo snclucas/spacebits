@@ -3,6 +3,8 @@ package org.spacebits.physics;
 
 public class Unit {
 	
+	public static double Unity = 1.0;
+	
 	//Units for mass
 	public static double g = 1.0e-3;
 	public static double kg = 1.0;

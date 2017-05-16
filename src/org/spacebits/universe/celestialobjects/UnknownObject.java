@@ -5,7 +5,9 @@ import org.spacebits.universe.Coordinates;
 
 public class UnknownObject extends AbstractCelestialObject {
 	
-	public static TypeInfo typeID = new TypeInfo("UnknownObject");
+	public static TypeInfo type() {
+		return new TypeInfo("UnkownObject");
+	}
 
 	public UnknownObject(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
 		super(name, coordinates, sensorSignalResponseProfile);
@@ -17,7 +19,7 @@ public class UnknownObject extends AbstractCelestialObject {
 	
 	@Override
 	public TypeInfo getTypeId() {
-		return typeID;
+		return type();
 	}
 
 	@Override

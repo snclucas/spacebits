@@ -70,10 +70,10 @@ public class SubspaceBeaconTransceiverTest {
 		assertEquals("Y coordinate of beacon 4 incorrect", b4y.doubleValue(), subspaceBeacon4.getCoordinates().get(1).doubleValue(), 0.001);
 		
 		
-		BigDecimal distanceToBeacon1 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon1.getCoordinates());
-		BigDecimal distanceToBeacon2 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon2.getCoordinates());
-		BigDecimal distanceToBeacon3 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon3.getCoordinates());
-		BigDecimal distanceToBeacon4 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon4.getCoordinates());
+		BigDecimal distanceToBeacon1 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon1.getCoordinates(), Unit.Unity);
+		BigDecimal distanceToBeacon2 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon2.getCoordinates(), Unit.Unity);
+		BigDecimal distanceToBeacon3 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon3.getCoordinates(), Unit.Unity);
+		BigDecimal distanceToBeacon4 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon4.getCoordinates(), Unit.Unity);
 		
 		
 		BigDecimal beaconSignalDispersion1 = Physics.distanceToSubspaceSignalDispersion(distanceToBeacon1);

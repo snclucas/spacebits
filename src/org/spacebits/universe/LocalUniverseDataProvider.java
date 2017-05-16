@@ -76,7 +76,7 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
 			if(type == (((CelestialObject)loc).getTypeId()))
-				if( Utils.distanceToLocation(loc.getCoordinates(), coordinates).compareTo(distance) <= 0)
+				if( Utils.distanceToLocation(loc.getCoordinates(), coordinates, Unit.Unity).compareTo(distance) <= 0)
 					locations.add(loc);
 		}
 		return locations;
@@ -90,7 +90,7 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 		Iterator<Entry<Integer, CelestialObject>> it = galacticLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
-			if( Utils.distanceToLocation(loc.getCoordinates(), coordinates).compareTo(distance) <= 0)
+			if( Utils.distanceToLocation(loc.getCoordinates(), coordinates, Unit.Unity).compareTo(distance) <= 0)
 				locations.add(loc);
 		}
 		return locations;
