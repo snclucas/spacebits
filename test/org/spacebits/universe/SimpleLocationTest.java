@@ -70,7 +70,7 @@ public class SimpleLocationTest {
 		
 		
 		System.out.println(loc1.vectorToLocation(loc2, false));
-		//System.out.println(sol.vectorToLocation(initialSpacecraftLocation, true));
+		System.out.println(sol.vectorToLocation(initialSpacecraftLocation, true));
 	}
 
 }

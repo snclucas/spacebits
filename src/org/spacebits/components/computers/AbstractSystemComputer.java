@@ -24,13 +24,7 @@ import org.spacebits.status.SystemStatusMessage;
 
 public abstract class AbstractSystemComputer extends AbstractComputer implements SystemComputer {
 	
-	public static TypeInfo category() {
-		return new TypeInfo("SystemComputer");
-	}
 	
-	public static TypeInfo type() {
-		return new TypeInfo("SystemComputer");
-	}
 	
 	protected double maxCPUThroughput;
 	
@@ -56,20 +50,13 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	
 	
 	
-	public TypeInfo getType() {
-		return type();
-	}
-
-	public TypeInfo getCategory() {
-		return category();
-	}
-
+	
 	
 
 	@Override
-	public List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType) throws ComponentConfigurationException {
+	public List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType) throws ComponentConfigurationException {
 		if(isOnSpacecraftBus()) {
-			return spacecraftBus.findComponent(componentType);
+			return spacecraftBus.findComponentByType(componentType);
 		}
 		else {
 			throw new ComponentConfigurationException("Not connected to bus");
@@ -78,7 +65,15 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 
 	
 	
-	
+	@Override
+	public List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory) throws ComponentConfigurationException {
+		if(isOnSpacecraftBus()) {
+			return spacecraftBus.findComponentByCategory(componentCategory);
+		}
+		else {
+			throw new ComponentConfigurationException("Not connected to bus");
+		}
+	}
 	
 	
 	@Override
@@ -228,5 +223,26 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	public double getTotalCurrentCPUThroughput() {
 		return SpacecraftFirmware.getTotalCurrentCPUThroughput(spacecraftBus);
 	}
+	
+	
+	
+	
+	public static TypeInfo category() {
+		return new TypeInfo("Computer");
+	}
+	
+	public static TypeInfo type() {
+		return new TypeInfo("SystemComputer");
+	}
+	
+	
+	public TypeInfo getType() {
+		return type();
+	}
+
+	public TypeInfo getCategory() {
+		return category();
+	}
+
 
 }

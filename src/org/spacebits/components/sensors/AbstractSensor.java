@@ -22,6 +22,7 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 		return new TypeInfo("Sensor");
 	}
 	
+	
 	@Override
 	public final TypeInfo getCategory() {
 		return category();

@@ -1,7 +1,6 @@
 package org.spacebits.components.propulsion;
 
 import org.spacebits.components.AbstractBusComponent;
-import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.software.Message;
 import org.spacebits.software.PropulsionManagementSoftware;

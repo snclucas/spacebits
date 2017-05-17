@@ -24,7 +24,7 @@ public class Region extends AbstractCelestialObject {
 	
 	@Override
 	public TypeInfo getType() {
-		return getType();
+		return type();
 	}
 
 

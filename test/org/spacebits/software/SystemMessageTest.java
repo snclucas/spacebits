@@ -30,13 +30,13 @@ public class SystemMessageTest {
 		
 		
 		Message message = new SystemMessage(null, null,"{cmd:callVector,params:[1,0,0]}", 34.3);
-		Map<Integer, Message> messages = systemComputer.getMessagingSystem().broadcastMessage(message);
+		Map<String, Message> messages = systemComputer.getMessagingSystem().broadcastMessage(message);
 		
 		for(Message msg : messages.values()) {
 			System.out.println(msg.getMessage());
 		}
 		
-		List<SpacecraftBusComponent> components = systemComputer.findBusComponent(Engine.category());
+		List<SpacecraftBusComponent> components = systemComputer.findComponentByCategory(Engine.category());
 		
 		Message targetedMessage = new SystemMessage(null, null,"Test targeted message", 34.3);
 		Message mess = systemComputer.getMessagingSystem().sendMessageTo(targetedMessage, components.get(0));

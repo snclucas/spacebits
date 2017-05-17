@@ -70,6 +70,7 @@ public class Unit {
 	public Unit(double value, Type type, String symbol) {
 		this.value = value;
 		this.type = type;
+		this.symbol = symbol;
 	}
 	
 	public double value() {

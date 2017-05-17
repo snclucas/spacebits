@@ -12,6 +12,10 @@ public interface Sensor extends Component, Executable {
 		return new TypeInfo("Sensor");
 	}
 	
+	public static TypeInfo type() {
+		return new TypeInfo("Sensor");
+	}
+	
 	SensorProfile getSensorProfile();
 	
 	final TypeInfo OPTICAL = new TypeInfo("Optical");

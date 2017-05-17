@@ -32,12 +32,5 @@ public class SimpleThruster extends AbstractThrustingFuelConsumingEngine {
 		return type();
 	}
 
-	
-
-
-	
-
-
-	
 
 }

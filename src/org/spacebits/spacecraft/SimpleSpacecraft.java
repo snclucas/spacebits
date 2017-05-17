@@ -14,12 +14,6 @@ public class SimpleSpacecraft extends AbstractSpacecraft {
 	
 	
 	@Override
-	public int getId() {
-		return this.hashCode();
-	}
-	
-	
-	@Override
 	public TypeInfo getType() {
 		return typeID;
 	}

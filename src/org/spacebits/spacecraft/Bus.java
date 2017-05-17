@@ -16,7 +16,8 @@ public interface Bus extends BusCommunicator, ComponentVisitor, Identifiable {
 	
 	String getName();
 
-	List<SpacecraftBusComponent> findComponent(TypeInfo componentType);
+	List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType);
+	List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory);
 	List<SpacecraftBusComponent> getComponents();
 	
 	void addComponent(SpacecraftBusComponent component);

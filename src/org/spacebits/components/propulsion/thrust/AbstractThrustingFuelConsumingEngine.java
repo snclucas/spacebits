@@ -48,7 +48,7 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 	public SystemStatus online() {
 		SystemStatus systemStatus = super.online();
 		
-		List<SpacecraftBusComponent> busComponents = getSystemComputer().findBusComponent(FuelSubSystem.typeID);
+		List<SpacecraftBusComponent> busComponents = getSystemComputer().findComponentByType(FuelSubSystem.typeID);
 
 		if(busComponents.size() > 0) {
 			for(SpacecraftBusComponent component : busComponents) {	

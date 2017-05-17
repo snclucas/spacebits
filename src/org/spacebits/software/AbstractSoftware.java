@@ -1,5 +1,6 @@
 package org.spacebits.software;
 
+import org.spacebits.Configuration;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.computers.Computer;
 
@@ -8,10 +9,11 @@ public abstract class AbstractSoftware implements Software {
 	private String name;
 	
 	protected Computer computer;
-
+	protected final String ident;
 	
 	public AbstractSoftware(String name) {
 		this.name = name;
+		this.ident = Configuration.getUUID();
 	}
 
 	
@@ -21,8 +23,8 @@ public abstract class AbstractSoftware implements Software {
 	}
 	
 	@Override
-	public int getId() {
-		return this.hashCode();
+	public String getIdent() {
+		return ident;
 	}
 	
 	@Override

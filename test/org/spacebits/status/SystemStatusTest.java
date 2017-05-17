@@ -84,8 +84,8 @@ class MockStatusProvider implements StatusProvider{
 	}
 
 	@Override
-	public int getId() {
-		return 100;
+	public String getIdent() {
+		return "100";
 	}
 
 	@Override

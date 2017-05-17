@@ -74,10 +74,7 @@ public class SimpleLinearThrustProfile extends AbstractProfile implements Thrust
 	}
 	
 	
-	@Override
-	public int getId() {
-		return this.hashCode();
-	}
+	
 
 
 	@Override

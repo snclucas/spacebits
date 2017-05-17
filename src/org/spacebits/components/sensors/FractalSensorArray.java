@@ -6,10 +6,7 @@ import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.BusComponentSpecification;
 
 public class FractalSensorArray extends BasicSensorArray {
-	
-	public static TypeInfo type() {
-		return new TypeInfo("FractalSensorArray");
-	}
+
 
 	public FractalSensorArray(String name,
 			BusComponentSpecification busResourceSpecification,
@@ -18,9 +15,6 @@ public class FractalSensorArray extends BasicSensorArray {
 				numberOfSensorElements);
 	}
 	
-	public TypeInfo getType() {
-		return type();
-	}
 
 	@Override
 	public String describe() {
@@ -31,6 +25,19 @@ public class FractalSensorArray extends BasicSensorArray {
 	public Message recieveBusMessage(Message message) {
 		String replyMessage = "Message recieved by: " + getName() + "\n " + message.getMessage();
 		return new SystemMessage(null, this, replyMessage, getSystemComputer().getUniversalTime());
+	}
+	
+	
+	
+	
+	
+	public static TypeInfo type() {
+		return new TypeInfo("FractalSensorArray");
+	}
+	
+	@Override
+	public final TypeInfo getType() {
+		return type();
 	}
 
 }

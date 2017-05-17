@@ -9,7 +9,7 @@ public interface MessageMediator extends Software {
 	
 	Message sendMessageTo(Message message, SpacecraftBusComponent component);
 	
-	Map<Integer, Message> broadcastMessage(Message message);
+	Map<String, Message> broadcastMessage(Message message);
 	 
 	SystemStatusMessage addComponent(SpacecraftBusComponent component);
 

@@ -12,13 +12,13 @@ import org.spacebits.status.SystemStatusMessage;
 
 public abstract class AbstractComputer extends AbstractBusComponent implements Computer {
 	
-	public static TypeInfo category() {
-		return new TypeInfo("Computer");
-	}
+	//public static TypeInfo category() {
+	//	return new TypeInfo("Computer");
+	//}
 	
-	public static TypeInfo type() {
-		return new TypeInfo("Computer");
-	}
+	//public static TypeInfo type() {
+	//	return new TypeInfo("Computer");
+	//}
 	
 
 	
@@ -75,14 +75,23 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 		
 	}
 
-	@Override
-	public TypeInfo getCategory() {
-		return category();
+	
+	
+	public static TypeInfo category() {
+		return new TypeInfo("Computer");
+	}
+	
+	public static TypeInfo type() {
+		return new TypeInfo("Computer");
 	}
 	
 	
-	@Override
 	public TypeInfo getType() {
 		return type();
 	}
+
+	public TypeInfo getCategory() {
+		return category();
+	}
+
 }

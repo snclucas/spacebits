@@ -27,7 +27,7 @@ public class TypeInfoTest {
 		
 		
 		assertEquals("", new TypeInfo("Computer"), Computer.category());
-		assertEquals("", new TypeInfo("SystemComputer"), SystemComputer.category());
+		assertEquals("", new TypeInfo("Computer"), SystemComputer.category());
 		
 		assertEquals("", new TypeInfo("CelestialObject"), Star.category());
 		assertEquals("", new TypeInfo("CelestialObject"), Planet.category());
@@ -44,7 +44,7 @@ public class TypeInfoTest {
 		assertEquals("", "RadioCommunicator", RadioCommunicator.type().toString());
 		assertEquals("", "SubSpaceCommunicator", SubSpaceCommunicator.type().toString());
 		
-		assertEquals("", "BasicSystemComputer", BasicSystemComputer.type().toString());
+		assertEquals("", "SystemComputer", BasicSystemComputer.type().toString());
 		
 		assertEquals("", "SimpleSolarArray", SimpleSolarArray.type().toString());
 		

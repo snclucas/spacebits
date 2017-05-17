@@ -3,6 +3,7 @@ package org.spacebits.spacecraft;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.spacebits.Configuration;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.computers.SystemComputer;
@@ -10,6 +11,8 @@ import org.spacebits.software.Message;
 import org.spacebits.status.SystemStatusMessage;
 
 public abstract class AbstractBus implements Bus {
+	
+	protected final String ident;
 
 	@Override
 	public int hashCode() {
@@ -41,7 +44,10 @@ public abstract class AbstractBus implements Bus {
 		return true;
 	}
 
-
+	@Override
+	public String getIdent() {
+		return this.ident;
+	}
 
 
 	protected Spacecraft spacecraft;
@@ -53,11 +59,7 @@ public abstract class AbstractBus implements Bus {
 	public AbstractBus(String name, Spacecraft spacecraft) {
 		this.name = name;
 		this.spacecraft = spacecraft;
-	}
-	
-	@Override
-	public int getId() {
-		return this.hashCode();
+		this.ident = Configuration.getUUID();
 	}
 	
 
@@ -93,8 +95,14 @@ public abstract class AbstractBus implements Bus {
 
 	
 	@Override
-	public List<SpacecraftBusComponent> findComponent(TypeInfo componentType) {
-		return SpacecraftFirmware.findBusComponent(this, componentType);
+	public List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType) {
+		return SpacecraftFirmware.findBusComponentByType(this, componentType);
+	}
+	
+	
+	@Override
+	public List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory) {
+		return SpacecraftFirmware.findBusComponentByCategory(this, componentCategory);
 	}
 
 	
@@ -112,7 +120,7 @@ public abstract class AbstractBus implements Bus {
 	@Override
 	public void addComponent(SpacecraftBusComponent component) {
 		if(component.getType() == SystemComputer.type())
-			findComponent(SystemComputer.type()).clear();
+			findComponentByType(SystemComputer.type()).clear();
 		this.components.add(component);
 		component.registerWithBus(this);
 	}
@@ -122,7 +130,7 @@ public abstract class AbstractBus implements Bus {
 
 	@Override
 	public SystemComputer getSystemComputer() {
-		List<SpacecraftBusComponent> components = findComponent(SystemComputer.type());
+		List<SpacecraftBusComponent> components = findComponentByType(SystemComputer.type());
 		if(components.size() == 0)
 			return null;
 		return (SystemComputer)components.get(0);

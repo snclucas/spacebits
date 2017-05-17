@@ -1,16 +1,19 @@
 package org.spacebits.components.computers;
 
+import org.spacebits.Configuration;
 import org.spacebits.components.TypeInfo;
 
 public class SpacecraftData implements ArchivableData {
 	private TypeInfo type = new TypeInfo("SpacecraftData");
 	private final String dataName;
 	private final String data;
+	private final String ident;
 	
 	public SpacecraftData(String dataName, String data) {
 		super();
 		this.dataName = dataName;
 		this.data = data;
+		this.ident = Configuration.getUUID();
 	}
 	
 
@@ -43,8 +46,8 @@ public class SpacecraftData implements ArchivableData {
 
 
 	@Override
-	public int getId() {
-		return this.hashCode();
+	public String getIdent() {
+		return this.ident;
 	}
 
 

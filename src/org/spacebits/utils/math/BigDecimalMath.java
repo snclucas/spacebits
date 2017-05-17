@@ -14,7 +14,7 @@ public class BigDecimalMath {
  /** The base of the natural logarithm in a predefined accuracy.
   * \protect\vrule width0pt\protect\href{http://www.cs.arizona.edu/icon/oddsends/e.htm}{http://www.cs.arizona.edu/icon/oddsends/e.htm}
   * The precision of the predefined constant is one less than
-  * the string’s length, taking into account the decimal dot.
+  * the stringï¿½s length, taking into account the decimal dot.
   * static int E_PRECISION = E.length()-1 ;
   */
  public static BigDecimal E = new BigDecimal("2.71828182845904523536028747135266249775724709369995957496696762772407663035354"
@@ -36,7 +36,7 @@ public class BigDecimalMath {
          + "251644507818244235294863637214174023889344124796357437026375529444833799801612"
          + "549227850925778256209262264832627793338656648162772516401910590049164499828931");
  
- /** Euler’s constant Pi.
+ /** Eulerï¿½s constant Pi.
   * \protect\vrule width0pt\protect\href{http://www.cs.arizona.edu/icon/oddsends/pi.htm}{http://www.cs.arizona.edu/icon/oddsends/pi.htm}
   */
  public static BigDecimal PI = new BigDecimal("3.14159265358979323846264338327950288419716939937510582097494459230781640628620"
@@ -109,7 +109,7 @@ public class BigDecimalMath {
          + "667519339312890431641370681397776498176974868903887789991296503619270710889264105"
          + "230924783917373501229842420499568935992206602204654941510613");
 
- /** Euler’s constant.
+ /** Eulerï¿½s constant.
   * @param mc The required precision of the result.
   * @return 3.14159...
   */
@@ -215,7 +215,7 @@ public class BigDecimalMath {
       */
      final BigDecimal nth = new BigDecimal(n);
      /* Specify an internal accuracy within the loop which is
-      * slightly larger than what is demanded by ’eps’ below.
+      * slightly larger than what is demanded by ï¿½epsï¿½ below.
       */
      final BigDecimal xhighpr = scalePrec(x, 2);
      MathContext mc = new MathContext(2 + x.precision());
@@ -249,7 +249,7 @@ public class BigDecimalMath {
       */
      BigDecimal z = x.pow(2).add(y.pow(2));
      /* truncate to the precision set by x and y. Absolute error = 2*x*xerr+2*y*yerr,
-      * where the two errors are 1/2 of the ulp’s. Two intermediate protectio digits.
+      * where the two errors are 1/2 of the ulpï¿½s. Two intermediate protectio digits.
       */
      BigDecimal zerr = x.abs().multiply(x.ulp()).add(y.abs().multiply(y.ulp()));
      MathContext mc = new MathContext(2 + err2prec(z, zerr));
@@ -324,7 +324,7 @@ public class BigDecimalMath {
          final double xDbl = x.doubleValue();
          final double xUlpDbl = x.ulp().doubleValue();
          if (Math.pow(xDbl, TAYLOR_NTERM) < TAYLOR_NTERM * (TAYLOR_NTERM - 1.0) * (TAYLOR_NTERM - 2.0) * xUlpDbl) {
-             /* Add TAYLOR_NTERM terms of the Taylor expansion (Euler’s sum formula)
+             /* Add TAYLOR_NTERM terms of the Taylor expansion (Eulerï¿½s sum formula)
               */
              BigDecimal resul = BigDecimal.ONE;
              /* x^i */
@@ -332,8 +332,8 @@ public class BigDecimalMath {
              /* i factorial */
              BigInteger ifac = BigInteger.ONE;
              /* TAYLOR_NTERM terms to be added means we move x.ulp() to the right
-              * for each power of 10 in TAYLOR_NTERM, so the addition won’t add noise beyond
-              * what’s already in x.
+              * for each power of 10 in TAYLOR_NTERM, so the addition wonï¿½t add noise beyond
+              * whatï¿½s already in x.
               */
              MathContext mcTay = new MathContext(err2prec(1., xUlpDbl / TAYLOR_NTERM));
              for (int i = 1; i <= TAYLOR_NTERM; i++) {
@@ -974,7 +974,7 @@ public class BigDecimalMath {
              BigDecimal c = divideRound(multiplyRound(xpowi, ifacN),
                      ifacD.multiply(new BigInteger("" + (2 * i + 1))));
              resul = resul.add(c);
-             /* series started 1+x/12+... which yields an estimate of the sum’s error
+             /* series started 1+x/12+... which yields an estimate of the sumï¿½s error
               */
 
 
@@ -1501,7 +1501,7 @@ public class BigDecimalMath {
  } /* BigDecimalMath.gamma */
 
 
- /** Pochhammer’s function.
+ /** Pochhammerï¿½s function.
   * @param x The main argument.
   * @param n The non-negative index.
   * @return (x)_n = x(x+1)(x+2)*...*(x+n-1).
@@ -1999,7 +1999,7 @@ double x = 0.0;
  } /* broadhurstBBP */
 
 
- /** Add and round according to the larger of the two ulp’s.
+ /** Add and round according to the larger of the two ulpï¿½s.
   * @param x The left summand
   * @param y The right summand
   * @return The sum x+y.
@@ -2020,7 +2020,7 @@ double x = 0.0;
  } /* addRound */
 
 
- /** Subtract and round according to the larger of the two ulp’s.
+ /** Subtract and round according to the larger of the two ulpï¿½s.
   * @param x The left term.
   * @param y The right term.
   * @return The difference x-y.

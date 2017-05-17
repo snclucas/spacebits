@@ -31,7 +31,7 @@ public class Planet extends AbstractCelestialObject {
 	
 	@Override
 	public TypeInfo getType() {
-		return getType();
+		return type();
 	}
 
 	public double getRadius() {

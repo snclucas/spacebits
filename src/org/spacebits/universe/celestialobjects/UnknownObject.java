@@ -19,7 +19,7 @@ public class UnknownObject extends AbstractCelestialObject {
 	
 	@Override
 	public TypeInfo getType() {
-		return getType();
+		return type();
 	}
 
 	@Override

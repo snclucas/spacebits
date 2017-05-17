@@ -13,10 +13,13 @@ public abstract class AbstractLocation implements Location {
 	protected String id;
 	protected Coordinates coordinates;	
 	
+	protected final String ident;
+	
 	public AbstractLocation(String name, Coordinates coordinates) {
 		this.id = Configuration.getUUID();
 		this.name = name;
 		this.coordinates = coordinates;
+		this.ident = Configuration.getUUID();
 	}
 	
 	
@@ -31,8 +34,8 @@ public abstract class AbstractLocation implements Location {
 	
 	
 	@Override
-	public int getId() {
-		return this.hashCode();
+	public String getIdent() {
+		return ident;
 	}
 	
 	

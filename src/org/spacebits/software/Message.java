@@ -2,9 +2,9 @@ package org.spacebits.software;
 
 public interface Message {
 
-	int getRecieverId();
+	String getRecieverIdent();
 	
-	int getSenderId();
+	String getSenderIdent();
 	
 	String getMessage();
 	

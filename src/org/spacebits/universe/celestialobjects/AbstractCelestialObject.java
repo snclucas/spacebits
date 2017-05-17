@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.spacebits.Configuration;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.sensors.SignalResponse;
 import org.spacebits.universe.AbstractLocation;
@@ -14,12 +15,14 @@ import org.spacebits.universe.SimpleLocation;
 public abstract class AbstractCelestialObject extends AbstractLocation implements CelestialObject {
 
 	public static TypeInfo category() {
-		return new TypeInfo("CelestialObject ");
+		return new TypeInfo("CelestialObject");
 	}
 	
 	protected Location location;
 	protected List<CelestialObject> celestialObjects;
 	protected SensorSignalResponseProfile sensorSignalResponseProfile;
+	
+	protected final String ident;
 	
 	
 	public AbstractCelestialObject(String name, Coordinates coordinates, SensorSignalResponseProfile sensorSignalResponseProfile) {
@@ -27,6 +30,7 @@ public abstract class AbstractCelestialObject extends AbstractLocation implement
 		celestialObjects = new ArrayList<CelestialObject>();
 		this.sensorSignalResponseProfile = sensorSignalResponseProfile;
 		this.location = new SimpleLocation(name, coordinates);
+		this.ident = Configuration.getUUID();
 	}
 	
 	public AbstractCelestialObject(String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile) {
@@ -34,16 +38,17 @@ public abstract class AbstractCelestialObject extends AbstractLocation implement
 		celestialObjects = new ArrayList<CelestialObject>();
 		this.sensorSignalResponseProfile = sensorSignalResponseProfile;
 		this.location = new SimpleLocation(name, coordinates.add(relativeTo.getLocation().getCoordinates()));
+		this.ident = Configuration.getUUID();
 	}
 	
 	@Override
-	public int getId() {
-		return this.hashCode();
+	public String getIdent() {
+		return ident;
 	}
 	
 	@Override
 	public final TypeInfo getCategory() {
-		return CelestialObject.categoryID;
+		return category();
 	}
 	
 	

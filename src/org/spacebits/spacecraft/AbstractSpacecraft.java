@@ -1,8 +1,8 @@
 package org.spacebits.spacecraft;
 
 import java.util.List;
-import java.util.UUID;
 
+import org.spacebits.Configuration;
 import org.spacebits.components.Component;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
@@ -27,7 +27,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 	
 	protected Bus bus;
 	
-	private String ident = UUID.randomUUID().toString().replaceAll("-", "");
+	protected final String ident;
 	
 	
 	
@@ -37,6 +37,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 		this.bus = new SpacecraftBus("Spacecraft bus", this);
 		this.bus.setSpacecraft(this);
 		systemsOnline = false;
+		this.ident = Configuration.getUUID();
 	}
 
 	@Override

@@ -56,12 +56,6 @@ public class SimpleLinearFuelConsumptionProfile extends AbstractProfile implemen
 	private boolean validateModel() {
 		return true;
 	}
-	
-	
-	@Override
-	public int getId() {
-		return this.hashCode();
-	}
 
 
 	@Override

@@ -52,7 +52,7 @@ public class SpacecraftFirmwareTest {
 		assertEquals("Number of computers should be 1", 1, computers.size());
 		
 		
-		List<SpacecraftBusComponent> components = SpacecraftFirmware.findBusComponent(spacecraftBus, SystemComputer.type());
+		List<SpacecraftBusComponent> components = SpacecraftFirmware.findBusComponentByType(spacecraftBus, SystemComputer.type());
 		SpacecraftBusComponent component = components.get(0);
 		assertEquals("", component, systemComputer);
 		

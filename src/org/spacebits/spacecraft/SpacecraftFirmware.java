@@ -27,10 +27,16 @@ public class SpacecraftFirmware {
 	}
 	
 	
-	public static List<SpacecraftBusComponent> findBusComponent(Bus bus, TypeInfo componentType) {
+	public static List<SpacecraftBusComponent> findBusComponentByCategory(Bus bus, TypeInfo componentCategory) {
 		return bus.getComponents().stream()
-				 .filter(x->x.getCategory().toString() == componentType.toString() ||
-						 x.getType().toString() == componentType.toString())
+				 .filter(x->x.getCategory().toString().equals(componentCategory.toString()))
+				 .collect(Collectors.toList());
+	}
+	
+	
+	public static List<SpacecraftBusComponent> findBusComponentByType(Bus bus, TypeInfo componentType) {
+		return bus.getComponents().stream()
+				 .filter(x->x.getType().toString().equals(componentType.toString()))
 				 .collect(Collectors.toList());
 	}
 

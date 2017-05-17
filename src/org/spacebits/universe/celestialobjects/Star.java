@@ -16,9 +16,7 @@ public class Star extends AbstractCelestialObject {
 	public final static String M_CLASS_STAR = "M-class star"; // e.g. Betegeuse
 	
 	
-	public static TypeInfo type() {
-		return new TypeInfo("Star");
-	}
+	
 	
 	protected List<Asteroid> asteroids;
 	protected List<Planet> planets;
@@ -48,6 +46,12 @@ public class Star extends AbstractCelestialObject {
 	@Override
 	public String describe() {
 		return "A luminous sphere of plasma large enough to be held together by its own gravity.";
+	}
+	
+	
+	
+	public static TypeInfo type() {
+		return new TypeInfo("Star");
 	}
 	
 	@Override

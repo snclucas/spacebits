@@ -52,8 +52,6 @@ public class SensorArrayTest {
 		double signalDetectionThreshold = -9;	
 		int numberOfSensorElements = 23;
 		
-		SensorProfile sensorProfile = new SensorProfile(Sensor.OPTICAL, signalDetectionThreshold, gainPerElement);
-		
 		Sensor fractalSensor = SensorFactory.getSensor(FractalSensorArray.type(), Sensor.OPTICAL, numberOfSensorElements);
 		
 		assertEquals("Sensor category incorrect", Sensor.category(), fractalSensor.getCategory());

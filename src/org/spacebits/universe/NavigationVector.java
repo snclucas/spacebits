@@ -47,8 +47,14 @@ public class NavigationVector {
 		if (getClass() != obj.getClass())
 			return false;
 		NavigationVector other = (NavigationVector) obj;
-		if (!Arrays.equals(vectorComponents, other.vectorComponents))
+		
+		if(   this.vectorComponents[0].compareTo(other.vectorComponents[0]) !=0  )
 			return false;
+		if(this.vectorComponents[1].compareTo(other.vectorComponents[1]) !=0)
+			return false;
+		if(this.vectorComponents[2].compareTo(other.vectorComponents[2]) !=0)
+			return false;
+		
 		return true;
 	}
 	

@@ -16,7 +16,7 @@ import org.spacebits.status.SystemStatusMessage;
 public interface SystemComputer extends Computer {
 	
 	static TypeInfo category() {
-		return new TypeInfo("SystemComputer");
+		return new TypeInfo("Computer");
 	}
 	
 	static TypeInfo type() {
@@ -37,7 +37,8 @@ public interface SystemComputer extends Computer {
 
 	List<SystemStatusMessage> checkSystems();
 
-	List<SpacecraftBusComponent> findBusComponent(TypeInfo componentType) throws ComponentConfigurationException;
+	List<SpacecraftBusComponent> findComponentByType(TypeInfo componentType) throws ComponentConfigurationException;
+	List<SpacecraftBusComponent> findComponentByCategory(TypeInfo componentCategory) throws ComponentConfigurationException;
 	
 	double getTotalCPUThroughputAvailable();
 	double getTotalPowerAvailable();

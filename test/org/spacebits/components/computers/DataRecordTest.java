@@ -3,9 +3,7 @@ package org.spacebits.components.computers;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.spacebits.components.computers.DataRecord;
 import org.spacebits.universe.Coordinates;
-import org.spacebits.universe.Location;
 import org.spacebits.universe.celestialobjects.CelestialObject;
 import org.spacebits.universe.celestialobjects.SensorSignalResponseLibrary;
 import org.spacebits.universe.celestialobjects.Star;
@@ -18,7 +16,7 @@ public class DataRecordTest {
 		Star sol = new Star("Sol", Star.G_CLASS_STAR,  new Coordinates(),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
 		
-		DataRecord record = new DataRecord("sol", CelestialObject.categoryID, sol);
+		DataRecord record = new DataRecord("sol", CelestialObject.category(), sol);
 		assertEquals("Data record ID not correct", "sol", record.getRecordID());
 		assertEquals("Data record type not equal to its archivable data", 
 				sol.getCategory(), record.getRecordType());

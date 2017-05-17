@@ -1,5 +1,6 @@
 package org.spacebits.components;
 
+import org.spacebits.Configuration;
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.exceptions.ComponentConfigurationException;
@@ -18,6 +19,8 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 	protected boolean online;
 	
 	protected String name;
+	
+	protected final String ident;
 
 	protected Bus spacecraftBus;
 	
@@ -36,6 +39,7 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 		this.currentPower = busResourceSpecification.getNominalPower();
 		this.currentCPUThroughput = busResourceSpecification.getNominalCPUThroughout();
 		this.online = false;
+		this.ident = Configuration.getUUID();
 	}
 	
 	
@@ -66,8 +70,8 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 
 
 	@Override
-	public int getId() {
-		return this.hashCode();
+	public String getIdent() {
+		return this.ident;
 	}
 
 

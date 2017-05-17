@@ -25,7 +25,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 		return new TypeInfo("NavigationSoftware");
 	}
 
-	Map<Integer, Sensor> sensors;
+	Map<String, Sensor> sensors;
 	List<SensorResult> sensorResults;
 	
 	public NavigationSoftware(String name) {
@@ -34,7 +34,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 
 	public NavigationSoftware(String name, Computer computer) {
 		super(name);
-		sensors = new HashMap<Integer, Sensor>();
+		sensors = new HashMap<String, Sensor>();
 		sensorResults = new ArrayList<SensorResult>();
 		populateSensors();
 	}
@@ -49,7 +49,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	private void populateSensors() {
 		List<Sensor> sensorList = getSensors();
 		for(Sensor sensor : sensorList)
-			sensors.put(sensor.getId(), sensor);
+			sensors.put(sensor.getIdent(), sensor);
 	}
 
 
@@ -68,13 +68,13 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	public List<SensorResult> scanAll(){
 		List<Sensor> sensors = getSensors();
 		for(Sensor sensor : sensors) 
-			sensorResults.addAll(scan(sensor.getId()));
+			sensorResults.addAll(scan(sensor.getIdent()));
 		return sensorResults;
 	}
 
 
-	public List<SensorResult> scan(int sensorId){
-		Sensor sensor = sensors.get(sensorId);
+	public List<SensorResult> scan(String sensorIdent){
+		Sensor sensor = sensors.get(sensorIdent);
 		List<SensorResult> sensorResults = sensor.passiveScan(10.0, sensor.getSensorProfile());
 		sensorResults.addAll(sensorResults);
 		return sensorResults;
@@ -82,7 +82,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 
 
 	private List<Sensor> getSensors() {
-		List<SpacecraftBusComponent> components = computer.getSystemComputer().findBusComponent(Sensor.category());
+		List<SpacecraftBusComponent> components = computer.getSystemComputer().findComponentByCategory(Sensor.category());
 		List<Sensor> sensors = new ArrayList<Sensor>();
 		for(SpacecraftBusComponent sensor : components)
 			sensors.add((Sensor)sensor);

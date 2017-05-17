@@ -10,6 +10,10 @@ public interface Engine extends SpacecraftBusComponent, Executable, BusCommunica
 	public static TypeInfo category() {
 		return new TypeInfo("Engine");
 	}
+	
+	public static TypeInfo type() {
+		return new TypeInfo("Engine");
+	}
 		
 	EngineVector getEngineVector();
 	

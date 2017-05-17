@@ -53,10 +53,10 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 
 
 	@Override
-	public Map<Integer, Message> broadcastMessage(Message message) {
-		Map<Integer, Message> replies = new HashMap<Integer, Message>();
+	public Map<String, Message> broadcastMessage(Message message) {
+		Map<String, Message> replies = new HashMap<String, Message>();
 		for(SpacecraftBusComponent component : registeredComponents) {
-			replies.put(component.getId(), ((BusCommunicator)component).recieveBusMessage(message));
+			replies.put(component.getIdent(), ((BusCommunicator)component).recieveBusMessage(message));
 		}
 		return replies;
 	}
