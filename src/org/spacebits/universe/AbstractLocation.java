@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import org.spacebits.Configuration;
 import org.spacebits.components.TypeInfo;
+import org.spacebits.physics.Unit;
 import org.spacebits.utils.Utils;
 
 public abstract class AbstractLocation implements Location {
@@ -60,7 +61,7 @@ public abstract class AbstractLocation implements Location {
 
 
 	@Override
-	public BigDecimal distanceToLocation(Location location, double unit)
+	public BigDecimal distanceToLocation(Location location, Unit unit)
 	{
 		return Utils.distanceToLocation(this.getCoordinates(), location.getCoordinates(), unit);
 	}

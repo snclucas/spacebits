@@ -9,6 +9,7 @@ import org.spacebits.Configuration;
 import org.spacebits.data.PhysicsDataProvider;
 import org.spacebits.physics.Physics;
 import org.spacebits.physics.Unit;
+import org.spacebits.universe.CelestialConstants;
 
 public class PhysicsTest {
 	
@@ -46,7 +47,7 @@ public class PhysicsTest {
 	public void testStellarMagnitudeConversions() {
 		
 		double luminosityOfSolInLg = 1;
-		double luminosityOfSolInW = Unit.G_STAR_LUMINOSITY;
+		double luminosityOfSolInW = CelestialConstants.G_STAR_LUMINOSITY;
 		double absMagOfSol = 4.85;
 		double calculatedAbsMagOfSol = Physics.luminosityInLg2AbsMag(luminosityOfSolInLg);
 		double calculatedAbsMagOfSol2 = Physics.luminosityInW2AbsMag(luminosityOfSolInW);
@@ -70,7 +71,7 @@ public class PhysicsTest {
 	
 	@Test
 	public void testLuminosityCalculations() {
-		BigDecimal distance = new BigDecimal(10.0*Unit.Pc);
+		BigDecimal distance = new BigDecimal(10.0*Unit.Pc.value());
 		double absMag = 4.85;
 		double luminosity = Physics.absMag2LuminosityInW(absMag);
 		
@@ -89,16 +90,16 @@ public class PhysicsTest {
 		double absoluteMagnitudeOfSol = 4.85;
 		
 		// A star of absolute magnitude 4.85 will have an apparent magnitude of 4.85 at 10Pc
-		double calculatedApparentMagnitudeOfSol = Physics.absoluteMagnitude2ApparentMagnitudeAtDistance(absoluteMagnitudeOfSol, new BigDecimal(10 * Unit.Pc));
+		double calculatedApparentMagnitudeOfSol = Physics.absoluteMagnitude2ApparentMagnitudeAtDistance(absoluteMagnitudeOfSol, new BigDecimal(10 * Unit.Pc.value()));
 		
 		// At 10pc a star of apparent magnitude -26.8  will have an absolute magnitude of -26.8 at 10Pc
-		double calculatedAbsoluteMagnitudeOfSol = Physics.apparentMagnitude2AbsoluteMagnitude(apparentMagnitudeOfSol, 10 * Unit.Pc);
+		double calculatedAbsoluteMagnitudeOfSol = Physics.apparentMagnitude2AbsoluteMagnitude(apparentMagnitudeOfSol, 10 * Unit.Pc.value());
 		
 		assertEquals("Absolute to apparent magnitude incorrect", calculatedApparentMagnitudeOfSol, absoluteMagnitudeOfSol, 0.001);
 		assertEquals("Apparent to absolute magnitude incorrect", calculatedAbsoluteMagnitudeOfSol, apparentMagnitudeOfSol, 0.001);
 		
 		// move an absolute magnitude of 4.85 to 4.72E-6Pc then its apparent magnitude should be -26.8
-		assertEquals("Absolute to apparent magnitude incorrect", apparentMagnitudeOfSol, Physics.absoluteMagnitude2ApparentMagnitudeAtDistance(absoluteMagnitudeOfSol, new BigDecimal(4.72E-6 * Unit.Pc)), 0.001);
+		assertEquals("Absolute to apparent magnitude incorrect", apparentMagnitudeOfSol, Physics.absoluteMagnitude2ApparentMagnitudeAtDistance(absoluteMagnitudeOfSol, new BigDecimal(4.72E-6 * Unit.Pc.value())), 0.001);
 	}
 	
 

@@ -31,19 +31,19 @@ public class BusRequirementSpecificationTest {
 	@Test
 	public void testBusRequirementSpecification() {
 		
-		double mass = 1.5 * Unit.kg;
-		double volume = 4.5 * Unit.m3;		
-		double height = 1.5 * Unit.m;
-		double width = 4.5 * Unit.m;
-		double length = 1.5 * Unit.m;
+		double mass = 1.5 * Unit.kg.value();
+		double volume = 4.5 * Unit.m3.value();		
+		double height = 1.5 * Unit.m.value();
+		double width = 4.5 * Unit.m.value();
+		double length = 1.5 * Unit.m.value();
 		
 		PhysicalSpecification physicalSpecification = new PhysicalSpecification(mass, volume, length, width, height);
 		
 		
-		double nominalPower = 1.5 * Unit.W;
-		double nominalCPU = 4.5 * Unit.MFLOP;		
-		double maxPower = 1.5 * Unit.W;
-		double maxCPU = 4.5 * Unit.MFLOP;
+		double nominalPower = 1.5 * Unit.W.value();
+		double nominalCPU = 4.5 * Unit.MFLOP.value();		
+		double maxPower = 1.5 * Unit.W.value();
+		double maxCPU = 4.5 * Unit.MFLOP.value();
 		
 		OperationalSpecification operationalSpecification = 
 				new OperationalSpecification(nominalPower, nominalCPU, maxPower, maxCPU);
@@ -65,11 +65,11 @@ public class BusRequirementSpecificationTest {
 		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, busComponentSpecification.getMaximumOperationalCPUThroughput(), 0.001);
 				
 		
-		mass = 10.5 * Unit.kg;
-		volume = 40.5 * Unit.m3;
-		height = 10.5 * Unit.m;
-		width = 40.5 * Unit.m;
-		length = 10.5 * Unit.m;
+		mass = 10.5 * Unit.kg.value();
+		volume = 40.5 * Unit.m3.value();
+		height = 10.5 * Unit.m.value();
+		width = 40.5 * Unit.m.value();
+		length = 10.5 * Unit.m.value();
 		
 		busComponentSpecification.setMass(mass);
 		busComponentSpecification.setVolume(volume);
@@ -78,10 +78,10 @@ public class BusRequirementSpecificationTest {
 		busComponentSpecification.setLength(length);
 		
 		
-		nominalPower = 10.5 * Unit.W;
-		nominalCPU = 40.5 * Unit.MFLOP;
-		maxPower = 10.5 * Unit.W;
-		maxCPU = 40.5 * Unit.MFLOP;
+		nominalPower = 10.5 * Unit.W.value();
+		nominalCPU = 40.5 * Unit.MFLOP.value();
+		maxPower = 10.5 * Unit.W.value();
+		maxCPU = 40.5 * Unit.MFLOP.value();
 		
 		busComponentSpecification.setNominalPower(nominalPower);
 		busComponentSpecification.setNominalCPUThroughout(nominalCPU);

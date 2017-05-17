@@ -17,9 +17,9 @@ public class UtilsTest {
 		//	17h 42.4m
 		//−28.92°
 
-		Coordinates coords = Utils.galacticCoordinatesToAbsoluteCoordinates(270, 10, new BigDecimal(1*Unit.kPc));
-		System.out.println(coords.get(0, Unit.Pc).doubleValue() + " " + 
-				coords.get(1, Unit.Pc).doubleValue() + " " + coords.get(2, Unit.Ly).doubleValue());
+		Coordinates coords = Utils.galacticCoordinatesToAbsoluteCoordinates(270, 10, new BigDecimal(1*Unit.kPc.value()));
+		System.out.println(coords.get(0, Unit.Pc.value()).doubleValue() + " " + 
+				coords.get(1, Unit.Pc.value()).doubleValue() + " " + coords.get(2, Unit.Ly.value()).doubleValue());
 
 
 

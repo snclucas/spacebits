@@ -11,10 +11,10 @@ public class OperationalSpecificationTest {
 	@Test
 	public void testOperationalSpecification() {
 		
-		double nominalPower = 1.5 * Unit.W;
-		double nominalCPU = 4.5 * Unit.MFLOP;		
-		double maxPower = 1.5 * Unit.W;
-		double maxCPU = 4.5 * Unit.MFLOP;
+		double nominalPower = 1.5 * Unit.W.value();
+		double nominalCPU = 4.5 * Unit.MFLOP.value();		
+		double maxPower = 1.5 * Unit.W.value();
+		double maxCPU = 4.5 * Unit.MFLOP.value();
 		
 		OperationalSpecification operationalSpecification = 
 				new OperationalSpecification(nominalPower, nominalCPU, maxPower, maxCPU);
@@ -24,10 +24,10 @@ public class OperationalSpecificationTest {
 		assertEquals("Max power from operationalSpecification incorrect", maxPower, operationalSpecification.getMaximumOperationalPower(), 0.001);
 		assertEquals("Max CPU from operationalSpecification incorrect", maxCPU, operationalSpecification.getMaximumOperationalCPUThroughput(), 0.001);
 				
-		nominalPower = 10.5 * Unit.W;
-		nominalCPU = 40.5 * Unit.MFLOP;
-		maxPower = 10.5 * Unit.W;
-		maxCPU = 40.5 * Unit.MFLOP;
+		nominalPower = 10.5 * Unit.W.value();
+		nominalCPU = 40.5 * Unit.MFLOP.value();
+		maxPower = 10.5 * Unit.W.value();
+		maxCPU = 40.5 * Unit.MFLOP.value();
 		
 		operationalSpecification.setNominalPower(nominalPower);
 		operationalSpecification.setNominalCPUThroughout(nominalCPU);

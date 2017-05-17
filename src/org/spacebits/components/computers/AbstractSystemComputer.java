@@ -10,6 +10,7 @@ import org.spacebits.components.comms.CommunicationComponent;
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.propulsion.Engine;
 import org.spacebits.exceptions.ComponentConfigurationException;
+import org.spacebits.physics.Unit;
 import org.spacebits.software.Message;
 import org.spacebits.software.Software;
 import org.spacebits.software.SystemMessage;
@@ -200,8 +201,8 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	
 	
 	@Override
-	public double getTotalPowerAvailable(double unit) {
-		return SpacecraftFirmware.getTotalPowerAvailable(spacecraftBus) / unit;
+	public double getTotalPowerAvailable(Unit unit) {
+		return SpacecraftFirmware.getTotalPowerAvailable(spacecraftBus) / unit.value();
 	}
 	
 	
@@ -218,8 +219,8 @@ public abstract class AbstractSystemComputer extends AbstractComputer implements
 	
 	
 	@Override
-	public double getTotalCurrentPower(double unit) {
-		return SpacecraftFirmware.getTotalCurrentPower(spacecraftBus) / unit;
+	public double getTotalCurrentPower(Unit unit) {
+		return SpacecraftFirmware.getTotalCurrentPower(spacecraftBus) / unit.value();
 	}
 
 	

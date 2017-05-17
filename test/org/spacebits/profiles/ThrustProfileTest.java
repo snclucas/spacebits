@@ -1,13 +1,6 @@
 package org.spacebits.profiles;
 
 import org.junit.Test;
-import org.spacebits.components.TypeInfo;
-import org.spacebits.components.comms.Status;
-import org.spacebits.status.StatusProvider;
-import org.spacebits.status.SystemStatus;
-import org.spacebits.status.SystemStatusMessage;
-
-import static org.junit.Assert.assertEquals;
 
 public class ThrustProfileTest {
 

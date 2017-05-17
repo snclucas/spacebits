@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import org.spacebits.components.Identifiable;
 import org.spacebits.components.TypeInfo;
+import org.spacebits.physics.Unit;
 
 public interface Location extends Identifiable {
 	
@@ -12,5 +13,5 @@ public interface Location extends Identifiable {
 	Coordinates getCoordinates();
 	BigDecimal getCoordinate(int index);
 	NavigationVector vectorToLocation(Location location, boolean normalized);
-	BigDecimal distanceToLocation(Location location, double unit);
+	BigDecimal distanceToLocation(Location location, Unit unit);
 }

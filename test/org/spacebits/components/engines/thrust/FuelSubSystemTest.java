@@ -20,7 +20,7 @@ public class FuelSubSystemTest {
 	/*  */
 	@Test
 	public void testFuelSubSystem() {
-		double tankCapacity = 100 * Unit.l;
+		double tankCapacity = 100 * Unit.l.value();
 		FuelStorageTank hydrazineTank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type(), tankCapacity);
 
 		assertEquals("Expected capacity of tank not correct", tankCapacity, hydrazineTank.getCapacity(), 0.001);
@@ -48,12 +48,12 @@ public class FuelSubSystemTest {
 
 		FuelSubSystem fuelDeliverySystem = FuelSubSystemFactory.getFuelSubsystem(FuelSubSystem.BASIC_FUEL_SUBSYSTEM, FuelSubSystem.PROPULSION_FUEL_SUBSYSTEM);
 
-		double expectedMassOfFuelSubSystemOnly = 250 * Unit.kg; // Basic fuel sub system
+		double expectedMassOfFuelSubSystemOnly = 250 * Unit.kg.value(); // Basic fuel sub system
 		double massOfFuelSubSystemOnly = fuelDeliverySystem.getMass();
 		assertEquals("Expected mass of fuel subsystem only not correct", expectedMassOfFuelSubSystemOnly, massOfFuelSubSystemOnly, 0.001);
 
 
-		double expectedVolumeOfFuelSubSystemOnly = 10.0 * Unit.m3;
+		double expectedVolumeOfFuelSubSystemOnly = 10.0 * Unit.m3.value();
 		double volumeOfFuelSubSystemOnly = fuelDeliverySystem.getVolume();
 		assertEquals("Expected volume of fuel subsystem not correct", expectedVolumeOfFuelSubSystemOnly, volumeOfFuelSubSystemOnly, 0.001);
 

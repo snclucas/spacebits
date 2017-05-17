@@ -14,16 +14,16 @@ public class SpacecraftComponentDataTest {
 	@Test
 	public void testSpacecraftComponentData() {
 		
-		double mass = 1.5 * Unit.kg;
-		double volume = 4.5 * Unit.m3;		
-		double height = 1.5 * Unit.m;
-		double width = 4.5 * Unit.m;
-		double length = 1.5 * Unit.m;
+		double mass = 1.5 * Unit.kg.value();
+		double volume = 4.5 * Unit.m3.value();		
+		double height = 1.5 * Unit.m.value();
+		double width = 4.5 * Unit.m.value();
+		double length = 1.5 * Unit.m.value();
 		
-		double nominalPower = 1.5 * Unit.W;
-		double nominalCPU = 4.5 * Unit.MFLOP;		
-		double maxPower = 1.5 * Unit.W;
-		double maxCPU = 4.5 * Unit.MFLOP;
+		double nominalPower = 1.5 * Unit.W.value();
+		double nominalCPU = 4.5 * Unit.MFLOP.value();		
+		double maxPower = 1.5 * Unit.W.value();
+		double maxCPU = 4.5 * Unit.MFLOP.value();
 		
 		double[] values = new double[]{100.34, 34.45};
 		

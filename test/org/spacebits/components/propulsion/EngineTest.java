@@ -99,7 +99,7 @@ public class EngineTest {
 		assertEquals("Engine required power incorrect", nominalPower, engine.getRequiredPower(powerLevel), 0.001);
 
 		// Call drive with power level = 50% WITHOUT calling execute;
-		powerLevel = 50 * Unit.percent;
+		powerLevel = 50 * Unit.percent.value();
 
 		engine.callDrive(powerLevel);
 
@@ -143,7 +143,7 @@ public class EngineTest {
 		assertEquals("Engine power not set correctly", expectedPower, engine.getCurrentPower(), 0.001);
 		assertEquals("Engine thrust not set correctly", expectedThrust, thrust[0], 0.001);
 
-		powerLevel = 50.0 * Unit.percent; 
+		powerLevel = 50.0 * Unit.percent.value(); 
 		engine.callDrive(powerLevel); //50% power
 		engine.execute();
 		thrust = engine.getThrust(velocity);
@@ -171,15 +171,15 @@ public class EngineTest {
 	
 	
 	
-	double mass = 100 * Unit.kg;
-	double volume = 1.0 * Unit.m3;
-	double nominalPower = 1 * Unit.kW;
-	double nominalCPU = 1 * Unit.kFLOP;
+	double mass = 100 * Unit.kg.value();
+	double volume = 1.0 * Unit.m3.value();
+	double nominalPower = 1 * Unit.kW.value();
+	double nominalCPU = 1 * Unit.kFLOP.value();
 	
-	double maxPower = 1000 * Unit.kW;
-	double maxCPU = 1 * Unit.kFLOP;
+	double maxPower = 1000 * Unit.kW.value();
+	double maxCPU = 1 * Unit.kFLOP.value();
 	
-	double maximumThrust = 1.04523 * Unit.kN; // N	
+	double maximumThrust = 1.04523 * Unit.kN.value(); // N	
 	
 	
 	private ThrustingEngine getTestEngine(boolean vectored) {

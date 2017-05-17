@@ -30,7 +30,7 @@ public class UniverseTest {
 		Spacecraft spacecraft = SpacecraftFactory.getSpacecraft("Shuttle");
 		Universe.addSpacecraft(spacecraft);
 		
-		Coordinates spacecraftLocation = new Coordinates(new BigDecimal(8*Unit.kPc + 149600000 * Unit.Km),new BigDecimal(0),new BigDecimal(100*Unit.Ly));
+		Coordinates spacecraftLocation = new Coordinates(new BigDecimal(8*Unit.kPc.value() + 149600000 * Unit.Km.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
 		Universe.updateSpacecraftLocation(spacecraft.getIdent(), spacecraftLocation);
 
 		EnvironmentData data = environmentDataProvider.getEnvironmentData(spacecraft.getIdent());

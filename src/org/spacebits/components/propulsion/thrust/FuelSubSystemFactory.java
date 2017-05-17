@@ -16,10 +16,10 @@ public class FuelSubSystemFactory {
 
 		case FuelSubSystem.BASIC_FUEL_SUBSYSTEM:
 
-			double mass = 250 * Unit.kg;
-			double volume = 10.0 * Unit.m3;
-			double nominalPower = 100 * Unit.W; 
-			double nominalCPUThroughput = 10 * Unit.kFLOP;
+			double mass = 250 * Unit.kg.value();
+			double volume = 10.0 * Unit.m3.value();
+			double nominalPower = 100 * Unit.W.value(); 
+			double nominalCPUThroughput = 10 * Unit.kFLOP.value();
 
 			BusComponentSpecification busSpecs = new BusComponentSpecification(
 					new PhysicalSpecification(mass, volume),

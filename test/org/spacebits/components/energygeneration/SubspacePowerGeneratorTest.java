@@ -17,9 +17,9 @@ public class SubspacePowerGeneratorTest {
 		
 		double mass = 25.0;
 		double volume = 1.0;
-		double nominalPower = 100 * Unit.W; 
-		double nominalCPUThroughput = 10 * Unit.kFLOP;
-		double maxOutputPower = 100 * Unit.kW;
+		double nominalPower = 100 * Unit.W.value(); 
+		double nominalCPUThroughput = 10 * Unit.kFLOP.value();
+		double maxOutputPower = 100 * Unit.kW.value();
 		
 		BusComponentSpecification busSpecs = new BusComponentSpecification(
 				new PhysicalSpecification(mass, volume),

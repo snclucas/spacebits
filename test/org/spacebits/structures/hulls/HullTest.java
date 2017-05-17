@@ -17,13 +17,13 @@ import org.spacebits.structures.hulls.SimpleMonocoqueHull;
 public class HullTest {
 
 	Material material = Configuration.getMaterialDataProvider().getMaterial(LocalMaterialDataProvider.ALUMINUM);
-	double nominalPower = 1 * Unit.kW;
-	double nominalCPUThroughput = 1 * Unit.kFLOP;
-	double length = 10 * Unit.m;
-	double width = 10 * Unit.m;
+	double nominalPower = 1 * Unit.kW.value();
+	double nominalCPUThroughput = 1 * Unit.kFLOP.value();
+	double length = 10 * Unit.m.value();
+	double width = 10 * Unit.m.value();
 	double height = width;
-	double volume  = length*width * Unit.m3;
-	double thickness = 0.25 * Unit.m;
+	double volume  = length*width * Unit.m3.value();
+	double thickness = 0.25 * Unit.m.value();
 	double mass = material.getDensity() * volume; // Not needed, calculated by Hull
 
 	double impactResistanceModifierFromHullConstruction = 1.1;

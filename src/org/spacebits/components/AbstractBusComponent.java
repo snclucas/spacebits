@@ -3,6 +3,7 @@ package org.spacebits.components;
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.exceptions.ComponentConfigurationException;
+import org.spacebits.physics.Unit;
 import org.spacebits.software.Message;
 import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.Bus;
@@ -91,9 +92,14 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 		this.name = name;
 	}
 
-	
+	@Override
 	public double getMass() {
 		return busResourceSpecification.getMass();
+	}
+	
+	@Override
+	public double getMass(Unit unit) {
+		return busResourceSpecification.getMass(unit);
 	}
 
 	
@@ -101,9 +107,14 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 		busResourceSpecification.setMass(mass);
 	}
 
-	
+	@Override
 	public double getVolume() {
 		return busResourceSpecification.getVolume();
+	}
+	
+	@Override
+	public double getVolume(Unit unit) {
+		return busResourceSpecification.getVolume(unit);
 	}
 
 	
@@ -165,8 +176,8 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 	}
 
 	@Override
-	public double getCurrentPower(double unit) {
-		return getCurrentPower() / unit;
+	public double getCurrentPower(Unit unit) {
+		return getCurrentPower() / unit.value();
 	}
 
 

@@ -24,14 +24,14 @@ public class Driver {
 	public Driver() {
 		
 		Location sol = new SimpleLocation("Sol", new Coordinates(
-				new BigDecimal(8*Unit.kPc),
+				new BigDecimal(8*Unit.kPc.value()),
 				new BigDecimal(0),
-				new BigDecimal(100*Unit.Ly)));
+				new BigDecimal(100*Unit.Ly.value())));
 		
 		Location initialSpacecraftLocation = new SimpleLocation("Spacecraft", new Coordinates(
 				new BigDecimal(0),
 				new BigDecimal(0),
-				new BigDecimal(-10000*Unit.AU)), sol);
+				new BigDecimal(-10000*Unit.AU.value())), sol);
 		
 		
 		System.out.println(sol);

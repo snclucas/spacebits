@@ -57,7 +57,7 @@ public class SpacecraftFactory {
 			spacecraft.addComponent(sensor);
 			
 			
-			double tankCapacity = 100 * Unit.l;
+			double tankCapacity = 100 * Unit.l.value();
 			Fuel fuel = spacecraftDataProvider.getFuel(Fuel.HYDRAZINE);
 			FuelStorageTank tank = FuelStorageTankFactory.getFuelStorageTank(CryogenicLiquidStorageTank.type(), tankCapacity);
 			tank.setFuel(fuel, tankCapacity);

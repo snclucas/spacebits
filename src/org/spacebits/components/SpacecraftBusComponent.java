@@ -2,6 +2,7 @@ package org.spacebits.components;
 
 import org.spacebits.Diagnosable;
 import org.spacebits.components.computers.SystemComputer;
+import org.spacebits.physics.Unit;
 import org.spacebits.spacecraft.Bus;
 import org.spacebits.status.StatusProvider;
 import org.spacebits.status.SystemStatusMessage;
@@ -23,7 +24,7 @@ public interface SpacecraftBusComponent extends Component, Diagnosable, StatusPr
 	double getMaximumOperationalCPUThroughput();
 	
 	double getCurrentPower();
-	double getCurrentPower(double unit);
+	double getCurrentPower(Unit unit);
 	double getCurrentCPUThroughput();
 	
 	SystemComputer getSystemComputer();

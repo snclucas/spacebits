@@ -47,7 +47,7 @@ public class PropulsionManagementSoftwareTest {
 		spacecraft.addComponent(powerGenerator);
 
 		// Simple computer
-		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOP);
+		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOP.value());
 		spacecraft.addComponent(computer);
 		
 		
@@ -86,7 +86,7 @@ public class PropulsionManagementSoftwareTest {
 		spacecraft.addComponent(powerGenerator);
 
 		// Simple computer
-		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOP);
+		SystemComputer computer = new BasicSystemComputer("Simple System Computer", data.getBusComponentSpecification(), 1000 * Unit.GFLOP.value());
 		spacecraft.addComponent(computer);
 		
 		for(SpacecraftBusComponent component : computer.getSpacecraftBus().getComponents()) {
@@ -105,7 +105,7 @@ public class PropulsionManagementSoftwareTest {
 		FuelConsumingEngine engine = (FuelConsumingEngine)EngineFactory.getEngine(SimpleThruster.type(), false);
 		spacecraft.addComponent((SpacecraftBusComponent)engine);
 
-		double powerLevel = 34.45 * Unit.percent;
+		double powerLevel = 34.45 * Unit.percent.value();
 		SystemStatusMessage systemMsg4 = engineManagementSoftware.callDrive(powerLevel, engine.getId());
 		assertEquals("Critical error status returned for drive", Status.SUCCESS, systemMsg4.getStatus());
 		assertEquals("Engine power level incorrect", powerLevel, engine.getPowerLevel(), 0.0001);

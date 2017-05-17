@@ -1,67 +1,87 @@
 package org.spacebits.physics;
 
-
 public class Unit {
 	
-	public static double Unity = 1.0;
+	public enum Type {DIMENTIONLESS, LENGTH, MASS, VOLUME, TIME, FORCE, POWER, CPU}
 	
 	//Units for mass
-	public static double g = 1.0e-3;
-	public static double kg = 1.0;
-	public static double Tonne = 1.0e3;
+	public static Unit g = new Unit(1.0e-3, Type.MASS, "g");
+	public static Unit kg = new Unit(1.0, Type.MASS, "kg");
+	public static Unit Tonne = new Unit(1.0e3 * Unit.kg.value(), Type.MASS, "Tonne");
+	
+	public static Unit One = new Unit(1.0, Type.DIMENTIONLESS, "");
+
 	
 	//Units for volume
-	public static double m3 = 1.0;
-	public static double l = 1.0e-3;
+	public static Unit m3 = new Unit(1.0, Type.VOLUME, "m3");
+	public static Unit l = new Unit(1.0e-3, Type.VOLUME, "l");
 	
 	//Units for thrust/force
-	public static double N = 1.0;
-	public static double kN = 1.0e3;
-	public static double MN = 1.0e6;
+	public static Unit N = new Unit(1.0, Type.FORCE, "N");
+	public static Unit kN = new Unit(1.0e3 * Unit.N.value(), Type.FORCE, "kN");
+	public static Unit MN = new Unit(1.0e3 * Unit.kN.value(), Type.FORCE, "MN");
+	
 	
 	//Units for CPU throughput
-	public static double kFLOP = 1.0e-3;
-	public static double MFLOP = 1.0;
-	public static double GFLOP = 1.0e3;
-	public static double TFLOP = 1.0e6;
+	public static Unit kFLOP = new Unit(1.0e-3, Type.CPU, "kFLOP");
+	public static Unit MFLOP = new Unit(1.0, Type.CPU, "MFLOP");
+	public static Unit GFLOP = new Unit(1.0e3, Type.CPU, "GFLOP");
+	public static Unit TFLOP = new Unit(1.0e6, Type.CPU, "TFLOP");
+	
 	
 	//Units for power
-	public static double uW = 1.0e-6;
-	public static double mW = 1.0e-3;
-	public static double W = 1.0;
-	public static double kW = 1.0e3;
-	public static double MW = 1.0e6;
-	public static double GW = 1.0e9;
+	public static Unit uW = new Unit(1.0e-6, Type.POWER, "uW");
+	public static Unit mW = new Unit(1.0e-3, Type.POWER, "mW");
+	public static Unit W = new Unit(1.0, Type.POWER, "W");
+	public static Unit kW = new Unit(1.0e3, Type.POWER, "kW");
+	public static Unit MW = new Unit(1.0e6, Type.POWER, "MW");
+	public static Unit GW = new Unit(1.0e9, Type.POWER, "GW");
 	
 	//Units for speed
-	public static double mps = Unit.m3 / Unit.s;
-	public static double lmps = 1e3 * mps;
-	public static double c = Constants.c;
+	//public static double mps = Unit.m3 / Unit.s;
+	//public static double lmps = 1e3 * mps;
+	//public static double c = Constants.c;
 	
 	
 	//Units for energy
 	public static double GJ = 1.0e-9;
 	
 	//Units for length
-	public static double cm = 1.0e-2;
-	public static double m = 1.0;
-	public static double Km = 1.0e3;
-	public static double Ly = 9460730472580800.0 * Unit.m;
-	public static double Pc = 3.2615679661840633266036314297735 * Ly;
-	public static double kPc = 1.0e3 * Pc;
-	
-	public static double AU =  1.49597870700e11 * Unit.m;
+	public static Unit cm = new Unit(1.0e-2, Type.LENGTH, "cm");
+	public static Unit m = new Unit(1.0, Type.LENGTH, "m");
+	public static Unit Km = new Unit(1.0e3, Type.LENGTH, "Km");
+	public static Unit Ly = new Unit(9460730472580800.0, Type.LENGTH, "Ly");
+	public static Unit Pc = new Unit(3.2615679661840633266036314297735 * Unit.Ly.value(), Type.LENGTH, "Pc");
+	public static Unit kPc = new Unit(1.0e3 * Unit.Pc.value(), Type.LENGTH, "kPc");
+	public static Unit AU = new Unit(1.49597870700e11 * Unit.m.value(), Type.LENGTH, "AU");
 	
 	//Units for time
-	public static double s = 1.0;
-	public static double day = 86400.0;
-	public static double year = 365 * 86400.0;
+	public static Unit s = new Unit(1.0, Type.TIME, "s");
+	public static Unit day = new Unit(86400.0, Type.TIME, "day");
+	public static Unit year = new Unit(365 * 86400.0, Type.TIME, "year");
 	
-	public static double percent = 1.0e-2;
-	
-	
-	public static double G_STAR_LUMINOSITY = 3.846E26 * W;
+	public static Unit percent = new Unit(1.0e-2, Type.DIMENTIONLESS, "%");
 	
 	
+	private double value;
+	private Type type;
+	private String symbol;
+	
+	public Unit(double value, Type type, String symbol) {
+		this.value = value;
+		this.type = type;
+	}
+	
+	public double value() {
+		return this.value;
+	}
+	
+	public Type type() {
+		return this.type;
+	}
+	
+	public String symbol() {
+		return this.symbol;
+	}
 
 }

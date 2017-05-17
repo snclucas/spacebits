@@ -1,5 +1,8 @@
 package org.spacebits.spacecraft;
 
+import org.spacebits.exceptions.IncorrectUnitException;
+import org.spacebits.physics.Unit;
+
 public class PhysicalSpecification {
 	
 	private double mass;
@@ -32,7 +35,14 @@ public class PhysicalSpecification {
 
 
 	public double getMass() {
-		return mass;
+		return getMass(Unit.kg);
+	}
+	
+	
+	public double getMass(Unit unit) {
+		if(unit.type() != Unit.Type.MASS)
+			throw new IncorrectUnitException("Expecting volume unit");
+		return mass / unit.value();
 	}
 
 
@@ -43,6 +53,13 @@ public class PhysicalSpecification {
 
 	public double getVolume() {
 		return volume;
+	}
+	
+	
+	public double getVolume(Unit unit) {
+		if(unit.type() != Unit.Type.VOLUME)
+			throw new IncorrectUnitException("Expecting volume unit");
+		return volume / unit.value();
 	}
 
 

@@ -8,6 +8,7 @@ import org.spacebits.components.comms.CommunicationComponent;
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.propulsion.Engine;
 import org.spacebits.exceptions.ComponentConfigurationException;
+import org.spacebits.physics.Unit;
 import org.spacebits.software.MessageMediator;
 import org.spacebits.spacecraft.BusRequirement;
 import org.spacebits.status.SystemStatusMessage;
@@ -40,10 +41,10 @@ public interface SystemComputer extends Computer {
 	
 	double getTotalCPUThroughputAvailable();
 	double getTotalPowerAvailable();
-	double getTotalPowerAvailable(double unit);
+	double getTotalPowerAvailable(Unit unit);
 	
 	double getTotalCurrentPower();
-	double getTotalCurrentPower(double unit);
+	double getTotalCurrentPower(Unit unit);
     double getTotalCurrentCPUThroughput();
 
     List<Engine> getEngines();

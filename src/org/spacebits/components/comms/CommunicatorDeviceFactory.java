@@ -20,7 +20,7 @@ public class CommunicatorDeviceFactory extends DataFactory {
 			CommunicationComponent communicationComponent = 
 					new RadioCommunicator(RadioCommunicator.type().toString(), data.getBusComponentSpecification(), propagationModel);
 			communicationComponent.setDeviceNoiseLevel(Physics.dBm2W(-80)); // -80 dBm
-			communicationComponent.setEfficiency(90 * Unit.percent);
+			communicationComponent.setEfficiency(90 * Unit.percent.value());
 			return communicationComponent;
 		}
 		else if(commType.equals(SubSpaceCommunicator.type())){

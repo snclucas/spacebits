@@ -31,8 +31,8 @@ public class SimpleLocationTest {
 		assertEquals("Location 1 not equal to location 2", simpleLocation1, simpleLocation2);
 		assertNotEquals("Location 1 equal to location 3", simpleLocation1, simpleLocation3);
 		
-		assertEquals("Distance from location 1 to location 1 should be 0", 0.0, Utils.distanceToLocation(simpleLocation1.getCoordinates(), simpleLocation1.getCoordinates(), Unit.Unity).doubleValue(), 0.0001);
-		assertEquals("Distance from location 1 to location 3 should be 0", 1.0, Utils.distanceToLocation(simpleLocation1.getCoordinates(), simpleLocation3.getCoordinates(), Unit.Unity).doubleValue(), 0.0001);
+		assertEquals("Distance from location 1 to location 1 should be 0", 0.0, Utils.distanceToLocation(simpleLocation1.getCoordinates(), simpleLocation1.getCoordinates(), Unit.One).doubleValue(), 0.0001);
+		assertEquals("Distance from location 1 to location 3 should be 0", 1.0, Utils.distanceToLocation(simpleLocation1.getCoordinates(), simpleLocation3.getCoordinates(), Unit.One).doubleValue(), 0.0001);
 		
 		
 		NavigationVector navVec1 = new NavigationVector(new BigDecimal(0E300), new BigDecimal(0E300), new BigDecimal(0E300));
@@ -47,14 +47,14 @@ public class SimpleLocationTest {
 	@Test
 	public void testLocationVectorTo() {
 		Location sol = new SimpleLocation("Sol", new Coordinates(
-				new BigDecimal(8*Unit.kPc),
+				new BigDecimal(8*Unit.kPc.value()),
 				new BigDecimal(0),
-				new BigDecimal(100*Unit.Ly)));
+				new BigDecimal(100*Unit.Ly.value())));
 		
 		Location initialSpacecraftLocation = new SimpleLocation("Spacecraft", new Coordinates(
 				new BigDecimal(0),
 				new BigDecimal(0),
-				new BigDecimal(-1*Unit.AU)), sol);
+				new BigDecimal(-1*Unit.AU.value())), sol);
 		
 		
 		

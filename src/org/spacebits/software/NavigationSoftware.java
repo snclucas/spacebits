@@ -12,7 +12,6 @@ import org.spacebits.Configuration;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.computers.Computer;
-import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.components.sensors.PositioningSensor;
 import org.spacebits.components.sensors.Sensor;
 import org.spacebits.components.sensors.SensorResult;

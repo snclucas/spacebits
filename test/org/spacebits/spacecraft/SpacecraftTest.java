@@ -25,7 +25,7 @@ public class SpacecraftTest {
 	@Test
 	public void testSpacecraft() {
 		assertEquals(Spacecraft.category, spacecraft.getCategory());
-		
+		// Should fail to online (Critical status: No system computer found! Aborting spacecraft onlining.)
 		SystemStatus systemStatus = spacecraft.online();
 		
 		assertEquals(false, spacecraft.isOnline());
@@ -43,6 +43,11 @@ public class SpacecraftTest {
 		assertEquals(true, systemStatus.isOK());
 		assertEquals(false, systemStatus.hasCriticalMessages());
 		assertEquals(false, systemStatus.hasWarningMessages());
+		
+		
+		System.out.println(spacecraft.getMass());
+		
+	
 	}
 	
 	

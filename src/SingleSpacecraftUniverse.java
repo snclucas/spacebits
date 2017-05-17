@@ -16,7 +16,7 @@ public class SingleSpacecraftUniverse {
 		
 		Universe.addSpacecraft(spacecraft);
 		Universe.updateSpacecraftLocation(spacecraft.getIdent(), 
-				new Coordinates(new BigDecimal(8*Unit.kPc), new BigDecimal(0.0), new BigDecimal(0.0)));
+				new Coordinates(new BigDecimal(8*Unit.kPc.value()), new BigDecimal(0.0), new BigDecimal(0.0)));
 		
 		
 		

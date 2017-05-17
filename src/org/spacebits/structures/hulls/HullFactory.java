@@ -13,14 +13,14 @@ public class HullFactory {
 
 	public static Hull getHull(String hullType){
 		if(hullType.equalsIgnoreCase("Shuttle")){			
-			double nominalPower = 1 * Unit.kW;
-			double nominalCPUThroughput = 1 * Unit.kFLOP;
+			double nominalPower = 1 * Unit.kW.value();
+			double nominalCPUThroughput = 1 * Unit.kFLOP.value();
 
-			double length = 10 * Unit.m;
-			double width = 6 * Unit.m;
-			double height = 6 * Unit.m;
-			double volume  = length*width * Unit.m3;
-			double thickness = 0.25 * Unit.m;
+			double length = 10 * Unit.m.value();
+			double width = 6 * Unit.m.value();
+			double height = 6 * Unit.m.value();
+			double volume  = length*width * Unit.m3.value();
+			double thickness = 0.25 * Unit.m.value();
 			Material material = Configuration.getMaterialDataProvider().getMaterial(LocalMaterialDataProvider.REINFORCED_TITANIUM);
 			double mass = material.getDensity() * volume; // Not needed, calculated by Hull
 			BusComponentSpecification busSpecs = new BusComponentSpecification(

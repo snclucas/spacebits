@@ -74,14 +74,14 @@ public class Coordinates {
 	@Override
 	public String toString() {
 		String location0 = location[0].toString();
-		if(location[0].compareTo(new BigDecimal(1* Unit.Ly))>0)
-			location0 = (location[0].divide(new BigDecimal(1.0*Unit.Ly), Configuration.mc)).toString() + "Ly";
+		if(location[0].compareTo(new BigDecimal(1* Unit.Ly.value()))>0)
+			location0 = (location[0].divide(new BigDecimal(1.0*Unit.Ly.value()), Configuration.mc)).toString() + "Ly";
 		String location1 = location[1].toString();
-		if(location[1].compareTo(new BigDecimal(1* Unit.Ly))>0)
-			location1 = (location[1].divide(new BigDecimal(1.0*Unit.Ly), Configuration.mc)).toString() + "Ly";
+		if(location[1].compareTo(new BigDecimal(1* Unit.Ly.value()))>0)
+			location1 = (location[1].divide(new BigDecimal(1.0*Unit.Ly.value()), Configuration.mc)).toString() + "Ly";
 		String location2 = location[2].toString();
-		if(location[2].compareTo(new BigDecimal(1* Unit.Ly))>0)
-			location2 = (location[2].divide(new BigDecimal(1.0*Unit.Ly), Configuration.mc)).toString() + "Ly";
+		if(location[2].compareTo(new BigDecimal(1* Unit.Ly.value()))>0)
+			location2 = (location[2].divide(new BigDecimal(1.0*Unit.Ly.value()), Configuration.mc)).toString() + "Ly";
 		
 		return location0 + ", " + location1 + ", " + location2;
 	}

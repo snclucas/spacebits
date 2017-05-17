@@ -26,7 +26,7 @@ public class Universe {
 
 	public final static CelestialObject galacticCenter 
 	= new Region("Galactic center", new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0)),
-			new SensorSignalResponseProfile(1000.0, 1000.0, 1000.0, 1000.0, 1000.0), 10.0 * Unit.Pc);
+			new SensorSignalResponseProfile(1000.0, 1000.0, 1000.0, 1000.0, 1000.0), 10.0 * Unit.Pc.value());
 
 
 	public Universe(UniverseDataProvider dataProvider) {
@@ -70,17 +70,17 @@ public class Universe {
 		Universe universe = new Universe(dataProvider);
 
 		Star sol = new Star("Sol", Star.G_CLASS_STAR,  new Coordinates(
-				new BigDecimal(8*Unit.kPc),
+				new BigDecimal(8*Unit.kPc.value()),
 				new BigDecimal(0),
-				new BigDecimal(100*Unit.Ly)),
+				new BigDecimal(100*Unit.Ly.value())),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
 		universe.addLocation(sol);
 
 		Star alphaCenturi = new Star("Alpha centuri", Star.G_CLASS_STAR,  
 				new Coordinates(
-						new BigDecimal(8*Unit.kPc + 2.98*Unit.Ly),
-						new BigDecimal(2.83* Unit.Ly),
-						new BigDecimal(101.34*Unit.Ly)),
+						new BigDecimal(8*Unit.kPc.value() + 2.98*Unit.Ly.value()),
+						new BigDecimal(2.83* Unit.Ly.value()),
+						new BigDecimal(101.34*Unit.Ly.value())),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.M_CLASS_STAR));
 		universe.addLocation(alphaCenturi);
 
@@ -90,12 +90,12 @@ public class Universe {
 
 		//Above Sol north pole, 1e8 Km
 		universe.addLocation(new SubspaceBeacon("SolBeacon", 
-				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1*Unit.AU)), sol,
+				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1*Unit.AU.value())), sol,
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
 
 
 		universe.addLocation(new SubspaceBeacon("ACBeacon", 
-				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1*Unit.AU)), alphaCenturi,
+				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1*Unit.AU.value())), alphaCenturi,
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
 
 		return universe;

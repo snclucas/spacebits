@@ -21,11 +21,11 @@ public class Utils {
 	
 	
 	
-	public static BigDecimal distanceToLocation(Coordinates coordinates1, Coordinates coordinates2, double unit)
+	public static BigDecimal distanceToLocation(Coordinates coordinates1, Coordinates coordinates2, Unit unit)
 	{
-		BigDecimal dx = (coordinates1.get(0).subtract(coordinates2.get(0))).divide(new BigDecimal(unit), Configuration.mc);
-		BigDecimal dy = (coordinates1.get(1).subtract(coordinates2.get(1))).divide(new BigDecimal(unit), Configuration.mc);
-		BigDecimal dz = (coordinates1.get(2).subtract(coordinates2.get(2))).divide(new BigDecimal(unit), Configuration.mc);
+		BigDecimal dx = (coordinates1.get(0).subtract(coordinates2.get(0))).divide(new BigDecimal(unit.value()), Configuration.mc);
+		BigDecimal dy = (coordinates1.get(1).subtract(coordinates2.get(1))).divide(new BigDecimal(unit.value()), Configuration.mc);
+		BigDecimal dz = (coordinates1.get(2).subtract(coordinates2.get(2))).divide(new BigDecimal(unit.value()), Configuration.mc);
 		return MathUtils.bigSqrt(dx.multiply(dx).add(dy.multiply(dy)).add(dz.multiply(dz)));
 	}
 
@@ -53,9 +53,9 @@ public class Utils {
 	public static Coordinates galacticCoordinatesToAbsoluteCoordinates(double rightAscension, double declination, BigDecimal distance) {
 		BigDecimal xSol = new BigDecimal(0.0, Configuration.mc).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
 		
-		BigDecimal ySol = new BigDecimal(-8 * Unit.kPc, Configuration.mc).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
+		BigDecimal ySol = new BigDecimal(-8 * Unit.kPc.value(), Configuration.mc).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
 		
-		BigDecimal zSol = new BigDecimal(100 * Unit.Ly, Configuration.mc).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
+		BigDecimal zSol = new BigDecimal(100 * Unit.Ly.value(), Configuration.mc).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
 		
 		BigDecimal RA = new BigDecimal(rightAscension).setScale(Configuration.precision, Configuration.ROUNDING_MODE);
 		BigDecimal dec = new BigDecimal(declination).setScale(Configuration.precision, Configuration.ROUNDING_MODE);

@@ -8,6 +8,7 @@ import org.spacebits.components.sensors.Sensor;
 import org.spacebits.components.sensors.SignalResponse;
 import org.spacebits.data.PhysicsDataProvider;
 import org.spacebits.physics.Unit;
+import org.spacebits.universe.CelestialConstants;
 import org.spacebits.universe.celestialobjects.SensorSignalResponseProfile;
 
 import static org.junit.Assert.assertEquals;
@@ -89,37 +90,37 @@ public class SensorSignalResponseProfileTest {
 		double expectedSignalAt1Ly = 0.0;
 				
 		response = sensorSignalResponseProfile.getSignalResponse(Sensor.OPTICAL, new BigDecimal(0.0)).getSignalStrength();
-		assertEquals("Optical luminosity at 0 distance incorrect", 1.0, Unit.G_STAR_LUMINOSITY/response, 0.0001);
-		response = sensorSignalResponseProfile.getSignalResponse(Sensor.OPTICAL, new BigDecimal(1 * Unit.Ly)).getSignalStrength();
-		expectedSignalAt1Ly = Unit.G_STAR_LUMINOSITY*(1/Math.pow(Unit.Ly,physicsDataProvider.getValue(PhysicsDataProvider.OPTICAL_PROPAGATION_INDEX)));
+		assertEquals("Optical luminosity at 0 distance incorrect", 1.0, CelestialConstants.G_STAR_LUMINOSITY/response, 0.0001);
+		response = sensorSignalResponseProfile.getSignalResponse(Sensor.OPTICAL, new BigDecimal(1 * Unit.Ly.value())).getSignalStrength();
+		expectedSignalAt1Ly = CelestialConstants.G_STAR_LUMINOSITY*(1/Math.pow(Unit.Ly.value(),physicsDataProvider.getValue(PhysicsDataProvider.OPTICAL_PROPAGATION_INDEX)));
 		assertEquals("Optical luminosity at 1Ly distance incorrect", 1.0, expectedSignalAt1Ly/response, 0.0001);
 		
 		
 		response = sensorSignalResponseProfile.getSignalResponse(Sensor.RADAR, new BigDecimal(0.0)).getSignalStrength();
 		assertEquals("RADAR luminosity at 0 distance incorrect", 1.0, 2.78618070244841E26/response, 0.0001);
-		response = sensorSignalResponseProfile.getSignalResponse(Sensor.RADAR, new BigDecimal(1 * Unit.Ly)).getSignalStrength();
-		expectedSignalAt1Ly = 2.78618070244841E26*(1/Math.pow(Unit.Ly,physicsDataProvider.getValue(PhysicsDataProvider.RADAR_PROPAGATION_INDEX)));
+		response = sensorSignalResponseProfile.getSignalResponse(Sensor.RADAR, new BigDecimal(1 * Unit.Ly.value())).getSignalStrength();
+		expectedSignalAt1Ly = 2.78618070244841E26*(1/Math.pow(Unit.Ly.value(),physicsDataProvider.getValue(PhysicsDataProvider.RADAR_PROPAGATION_INDEX)));
 		assertEquals("RADAR luminosity at 1Ly distance incorrect", 1.0, expectedSignalAt1Ly/response, 0.0001);
 		
 		
 		response = sensorSignalResponseProfile.getSignalResponse(Sensor.GRAVIMETRIC, new BigDecimal(0.0)).getSignalStrength();
 		assertEquals("GRAV luminosity at 0 distance incorrect", 1.0, 4.415798828277003E27/response, 0.0001);
-		response = sensorSignalResponseProfile.getSignalResponse(Sensor.GRAVIMETRIC, new BigDecimal(1 * Unit.Ly)).getSignalStrength();
-		expectedSignalAt1Ly = 4.415798828277003E27*(1/Math.pow(Unit.Ly,physicsDataProvider.getValue(PhysicsDataProvider.GRAVIMETRIC_PROPAGATION_INDEX)));
+		response = sensorSignalResponseProfile.getSignalResponse(Sensor.GRAVIMETRIC, new BigDecimal(1 * Unit.Ly.value())).getSignalStrength();
+		expectedSignalAt1Ly = 4.415798828277003E27*(1/Math.pow(Unit.Ly.value(),physicsDataProvider.getValue(PhysicsDataProvider.GRAVIMETRIC_PROPAGATION_INDEX)));
 		assertEquals("GRAV luminosity at 1Ly distance incorrect", 1.0, expectedSignalAt1Ly/response, 0.0001);
 		
 		
 		response = sensorSignalResponseProfile.getSignalResponse(Sensor.MAGNETOMETRIC, new BigDecimal(0.0)).getSignalStrength();
 		assertEquals("MAG luminosity at 0 distance incorrect", 1.0, 4.415798828277003E19/response, 0.0001);
-		response = sensorSignalResponseProfile.getSignalResponse(Sensor.MAGNETOMETRIC, new BigDecimal(1 * Unit.Ly)).getSignalStrength();
-		expectedSignalAt1Ly = 4.415798828277003E19*(1/Math.pow(Unit.Ly,physicsDataProvider.getValue(PhysicsDataProvider.MAGNETOMETRIC_PROPAGATION_INDEX)));
+		response = sensorSignalResponseProfile.getSignalResponse(Sensor.MAGNETOMETRIC, new BigDecimal(1 * Unit.Ly.value())).getSignalStrength();
+		expectedSignalAt1Ly = 4.415798828277003E19*(1/Math.pow(Unit.Ly.value(),physicsDataProvider.getValue(PhysicsDataProvider.MAGNETOMETRIC_PROPAGATION_INDEX)));
 		assertEquals("MAG luminosity at 1Ly distance incorrect", 1.0, expectedSignalAt1Ly/response, 0.0001);
 		
 		
 		response = sensorSignalResponseProfile.getSignalResponse(Sensor.SUBSPACE_RESONANCE, new BigDecimal(0.0)).getSignalStrength();
 		assertEquals("SUB luminosity at 0 distance incorrect", 1.0, 1.757961177258812E42/response, 0.0001);
-		response = sensorSignalResponseProfile.getSignalResponse(Sensor.SUBSPACE_RESONANCE, new BigDecimal(1 * Unit.Ly)).getSignalStrength();
-		expectedSignalAt1Ly = 1.757961177258812E42*(1/Math.pow(Unit.Ly,physicsDataProvider.getValue(PhysicsDataProvider.SUBSPACE_PROPAGATION_INDEX)));
+		response = sensorSignalResponseProfile.getSignalResponse(Sensor.SUBSPACE_RESONANCE, new BigDecimal(1 * Unit.Ly.value())).getSignalStrength();
+		expectedSignalAt1Ly = 1.757961177258812E42*(1/Math.pow(Unit.Ly.value(),physicsDataProvider.getValue(PhysicsDataProvider.SUBSPACE_PROPAGATION_INDEX)));
 		assertEquals("SUB luminosity at 1Ly distance incorrect", 1.0, expectedSignalAt1Ly/response, 0.0001);
 	}
 

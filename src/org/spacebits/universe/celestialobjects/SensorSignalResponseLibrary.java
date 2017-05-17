@@ -24,7 +24,7 @@ public class SensorSignalResponseLibrary {
 	public static SensorSignalResponseProfile getStandardSignalResponseProfile(String objectClassification) {
 		switch(objectClassification) {
 		case SUBSPACE_BEACON:
-			return new SensorSignalResponseProfile(50, responseForSphere(100 * Unit.m, 100.0), 0.0, 0.0, 10);
+			return new SensorSignalResponseProfile(50, responseForSphere(100 * Unit.m.value(), 100.0), 0.0, 0.0, 10);
 		case Star.O_CLASS_STAR:
 			return new SensorSignalResponseProfile(-5.5, responseForSphere(10 * CelestialConstants.O_STAR_RADIUS, 1.0), 1000.0, 100.0, 0.0);
 		case Star.B_CLASS_STAR:

@@ -30,7 +30,7 @@ public class SubspaceBeaconTransceiverTest {
 	public void testDataRecord() {
 
 		Location actualLocation = new SimpleLocation("Actual location", 
-				new Coordinates(new BigDecimal(5.0 * Unit.Pc),  new BigDecimal(5.0001000010000000344 * Unit.Pc),  new BigDecimal(5.0 * Unit.Pc)));
+				new Coordinates(new BigDecimal(5.0 * Unit.Pc.value()),  new BigDecimal(5.0001000010000000344 * Unit.Pc.value()),  new BigDecimal(5.0 * Unit.Pc.value())));
 		
 		PhysicalSpecification physicalSpecification1 = new PhysicalSpecification(23, 12, 67, 45, 23);
 		OperationalSpecification operationalSpecification1 = 
@@ -43,10 +43,10 @@ public class SubspaceBeaconTransceiverTest {
 						new SensorProfile(Sensor.SUBSPACE_RESONANCE, 1, 1));
 		
 		// Beacon coordinates
-		BigDecimal b1x =  new BigDecimal(10 * Unit.Pc); BigDecimal b1y =  new BigDecimal(50 * Unit.Pc); BigDecimal b1z =  new BigDecimal(0 * Unit.Pc); 
-		BigDecimal b2x = new BigDecimal(-10 * Unit.Pc); BigDecimal b2y =  new BigDecimal(0 * Unit.Pc); BigDecimal b2z =  new BigDecimal(0 * Unit.Pc); 
-		BigDecimal b3x = new BigDecimal(10 * Unit.Pc); BigDecimal b3y = new BigDecimal(10 * Unit.Pc); BigDecimal b3z = new BigDecimal(-10 * Unit.Pc); 
-		BigDecimal b4x = new BigDecimal(10 * Unit.Pc); BigDecimal b4y = new BigDecimal(-10 * Unit.Pc); BigDecimal b4z = new BigDecimal(10 * Unit.Pc); 
+		BigDecimal b1x =  new BigDecimal(10 * Unit.Pc.value()); BigDecimal b1y =  new BigDecimal(50 * Unit.Pc.value()); BigDecimal b1z =  new BigDecimal(0 * Unit.Pc.value()); 
+		BigDecimal b2x = new BigDecimal(-10 * Unit.Pc.value()); BigDecimal b2y =  new BigDecimal(0 * Unit.Pc.value()); BigDecimal b2z =  new BigDecimal(0 * Unit.Pc.value()); 
+		BigDecimal b3x = new BigDecimal(10 * Unit.Pc.value()); BigDecimal b3y = new BigDecimal(10 * Unit.Pc.value()); BigDecimal b3z = new BigDecimal(-10 * Unit.Pc.value()); 
+		BigDecimal b4x = new BigDecimal(10 * Unit.Pc.value()); BigDecimal b4y = new BigDecimal(-10 * Unit.Pc.value()); BigDecimal b4z = new BigDecimal(10 * Unit.Pc.value()); 
 		
 		SensorSignalResponseProfile sensorSignalResponseProfile = SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON);
 		SubspaceBeacon subspaceBeacon1 = new SubspaceBeacon("Test beacon 1", new Coordinates(b1x, b1y, b1z), sensorSignalResponseProfile);
@@ -70,10 +70,10 @@ public class SubspaceBeaconTransceiverTest {
 		assertEquals("Y coordinate of beacon 4 incorrect", b4y.doubleValue(), subspaceBeacon4.getCoordinates().get(1).doubleValue(), 0.001);
 		
 		
-		BigDecimal distanceToBeacon1 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon1.getCoordinates(), Unit.Unity);
-		BigDecimal distanceToBeacon2 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon2.getCoordinates(), Unit.Unity);
-		BigDecimal distanceToBeacon3 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon3.getCoordinates(), Unit.Unity);
-		BigDecimal distanceToBeacon4 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon4.getCoordinates(), Unit.Unity);
+		BigDecimal distanceToBeacon1 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon1.getCoordinates(), Unit.One);
+		BigDecimal distanceToBeacon2 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon2.getCoordinates(), Unit.One);
+		BigDecimal distanceToBeacon3 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon3.getCoordinates(), Unit.One);
+		BigDecimal distanceToBeacon4 =  Utils.distanceToLocation(actualLocation.getCoordinates(), subspaceBeacon4.getCoordinates(), Unit.One);
 		
 		
 		BigDecimal beaconSignalDispersion1 = Physics.distanceToSubspaceSignalDispersion(distanceToBeacon1);
@@ -87,10 +87,10 @@ public class SubspaceBeaconTransceiverTest {
 		BigDecimal calculatedDistanceFromSignalDispersion3 = Physics.subspaceSignalDispersionToDistance(beaconSignalDispersion3);
 		BigDecimal calculatedDistanceFromSignalDispersion4 = Physics.subspaceSignalDispersionToDistance(beaconSignalDispersion4);
 				
-		assertEquals("Distance to beacon 1 incorrect", calculatedDistanceFromSignalDispersion1.doubleValue()  / Unit.Pc, distanceToBeacon1.doubleValue() / Unit.Pc, 0.001);
-		assertEquals("Distance to beacon 2 incorrect", calculatedDistanceFromSignalDispersion2.doubleValue()  / Unit.Pc, distanceToBeacon2.doubleValue() / Unit.Pc, 0.001);
-		assertEquals("Distance to beacon 3 incorrect", calculatedDistanceFromSignalDispersion3.doubleValue()  / Unit.Pc, distanceToBeacon3.doubleValue() / Unit.Pc, 0.001);
-		assertEquals("Distance to beacon 4 incorrect", calculatedDistanceFromSignalDispersion4.doubleValue()  / Unit.Pc, distanceToBeacon4.doubleValue() / Unit.Pc, 0.001);
+		assertEquals("Distance to beacon 1 incorrect", calculatedDistanceFromSignalDispersion1.doubleValue()  / Unit.Pc.value(), distanceToBeacon1.doubleValue() / Unit.Pc.value(), 0.001);
+		assertEquals("Distance to beacon 2 incorrect", calculatedDistanceFromSignalDispersion2.doubleValue()  / Unit.Pc.value(), distanceToBeacon2.doubleValue() / Unit.Pc.value(), 0.001);
+		assertEquals("Distance to beacon 3 incorrect", calculatedDistanceFromSignalDispersion3.doubleValue()  / Unit.Pc.value(), distanceToBeacon3.doubleValue() / Unit.Pc.value(), 0.001);
+		assertEquals("Distance to beacon 4 incorrect", calculatedDistanceFromSignalDispersion4.doubleValue()  / Unit.Pc.value(), distanceToBeacon4.doubleValue() / Unit.Pc.value(), 0.001);
 		
 		
 		subspaceBeaconTransceiver.beaconSignals.add(new BeaconSignal(subspaceBeacon1, beaconSignalDispersion1.doubleValue()));
@@ -105,9 +105,9 @@ public class SubspaceBeaconTransceiverTest {
 		double expectedLocationY = actualLocation.getCoordinate(1).doubleValue();
 		double expectedLocationZ = actualLocation.getCoordinate(2).doubleValue();
 		
-		assertEquals("X postion incorrect (1)", expectedLocationX/Unit.Pc, position.get(0).doubleValue(), 0.0001);
-		assertEquals("Y postion incorrect (1)", expectedLocationY/Unit.Pc, position.get(1).doubleValue(), 0.0001);
-		assertEquals("Z postion incorrect (1)", expectedLocationZ/Unit.Pc, position.get(2).doubleValue(), 0.0001);
+		assertEquals("X postion incorrect (1)", expectedLocationX/Unit.Pc.value(), position.get(0).doubleValue(), 0.0001);
+		assertEquals("Y postion incorrect (1)", expectedLocationY/Unit.Pc.value(), position.get(1).doubleValue(), 0.0001);
+		assertEquals("Z postion incorrect (1)", expectedLocationZ/Unit.Pc.value(), position.get(2).doubleValue(), 0.0001);
 		
 	}
 	

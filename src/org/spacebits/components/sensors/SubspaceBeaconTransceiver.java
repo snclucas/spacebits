@@ -93,22 +93,22 @@ public class SubspaceBeaconTransceiver extends AbstractSensor implements Positio
 			cntr++;
 		}
 
-		final BigDecimal x1 = getBeaconCoordinate(0, 0, Unit.Pc);
-		final BigDecimal y1 = getBeaconCoordinate(0, 1, Unit.Pc);
-		final BigDecimal z1 = getBeaconCoordinate(0, 2, Unit.Pc);
+		final BigDecimal x1 = getBeaconCoordinate(0, 0, Unit.Pc.value());
+		final BigDecimal y1 = getBeaconCoordinate(0, 1, Unit.Pc.value());
+		final BigDecimal z1 = getBeaconCoordinate(0, 2, Unit.Pc.value());
 
-		final BigDecimal x2 = getBeaconCoordinate(1, 0, Unit.Pc);
-		final BigDecimal y2 = getBeaconCoordinate(1, 1, Unit.Pc);
-		final BigDecimal z2 = getBeaconCoordinate(1, 2, Unit.Pc);
+		final BigDecimal x2 = getBeaconCoordinate(1, 0, Unit.Pc.value());
+		final BigDecimal y2 = getBeaconCoordinate(1, 1, Unit.Pc.value());
+		final BigDecimal z2 = getBeaconCoordinate(1, 2, Unit.Pc.value());
 
-		final BigDecimal x3 = getBeaconCoordinate(2, 0, Unit.Pc);
-		final BigDecimal y3 = getBeaconCoordinate(2, 1, Unit.Pc);
-		final BigDecimal z3 = getBeaconCoordinate(2, 2, Unit.Pc);
+		final BigDecimal x3 = getBeaconCoordinate(2, 0, Unit.Pc.value());
+		final BigDecimal y3 = getBeaconCoordinate(2, 1, Unit.Pc.value());
+		final BigDecimal z3 = getBeaconCoordinate(2, 2, Unit.Pc.value());
 
 
-		final BigDecimal R1 = distances[0].abs().divide(new BigDecimal(Unit.Pc), context);
-		final BigDecimal R2 = distances[1].abs().divide(new BigDecimal(Unit.Pc), context);	
-		final BigDecimal R3 = distances[2].abs().divide(new BigDecimal(Unit.Pc), context);
+		final BigDecimal R1 = distances[0].abs().divide(new BigDecimal(Unit.Pc.value()), context);
+		final BigDecimal R2 = distances[1].abs().divide(new BigDecimal(Unit.Pc.value()), context);	
+		final BigDecimal R3 = distances[2].abs().divide(new BigDecimal(Unit.Pc.value()), context);
 
 		double[] pos = DistanceSolver.solve(1e-10, x1.doubleValue(), y1.doubleValue(), z1.doubleValue(), R1.doubleValue(), 
 				x2.doubleValue(), y2.doubleValue(), z2.doubleValue(), R2.doubleValue()

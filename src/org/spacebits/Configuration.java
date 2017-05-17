@@ -26,7 +26,7 @@ public class Configuration {
 	public static int ROUNDING_MODE = BigDecimal.ROUND_HALF_UP;
 	public static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
 	
-	public static double distanceForEnvironmentData = 100.0 * Unit.Ly;
+	public static double distanceForEnvironmentData = 100.0 * Unit.Ly.value();
 	
 	public static String getUUID() {
 		return UUID.randomUUID().toString().replaceAll("-", "");

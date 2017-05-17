@@ -4,14 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.spacebits.Configuration;
-import org.spacebits.components.energygeneration.PowerGenerator;
-import org.spacebits.components.energygeneration.SimpleSolarArray;
 import org.spacebits.data.SpacecraftComponentData;
 import org.spacebits.data.SpacecraftDataProvider;
 import org.spacebits.physics.Unit;
-import org.spacebits.spacecraft.BusComponentSpecification;
-import org.spacebits.spacecraft.OperationalSpecification;
-import org.spacebits.spacecraft.PhysicalSpecification;
 
 public class SimpleSolarArrayTest {
 	
@@ -21,8 +16,8 @@ public class SimpleSolarArrayTest {
 		SpacecraftDataProvider spacecraftDataProvider =  Configuration.getSpacecraftDataProvider();
 		SpacecraftComponentData data = spacecraftDataProvider.getComponentParameters(SimpleSolarArray.type());
 		
-		double arrayArea = 1 * Unit.m * 10 * Unit.m;
-		double efficiency = 75 * Unit.percent;
+		double arrayArea = 1 * Unit.m.value() * 10 * Unit.m.value();
+		double efficiency = 75 * Unit.percent.value();
 		
 		PowerGenerator simpleSolarArray = new SimpleSolarArray("Test simple solar aarray", data.getBusComponentSpecification(), arrayArea, efficiency);
 	//	assertEquals("Array area of simple solar array incorrect", arrayArea, simpleSolarArray.get, 0.001);

@@ -1,5 +1,7 @@
 package org.spacebits.spacecraft;
 
+import org.spacebits.physics.Unit;
+
 public class BusComponentSpecification {
 	
 	private PhysicalSpecification physicalSpecification;
@@ -48,6 +50,10 @@ public class BusComponentSpecification {
 		return physicalSpecification.getMass();
 	}
 	
+	public double getMass(Unit unit) {
+		return physicalSpecification.getMass(unit);
+	}
+	
 	
 	public void setMass(double mass) {
 		physicalSpecification.setMass(mass);
@@ -56,6 +62,10 @@ public class BusComponentSpecification {
 	
 	public double getVolume() {
 		return physicalSpecification.getVolume();
+	}
+	
+	public double getVolume(Unit unit) {
+		return physicalSpecification.getVolume(unit);
 	}
 	
 	
@@ -68,8 +78,8 @@ public class BusComponentSpecification {
 		return operationalSpecification.getNominalPower();
 	}
 	
-	public double getNominalPower(double unit) {
-		return operationalSpecification.getNominalPower() / unit;
+	public double getNominalPower(Unit unit) {
+		return operationalSpecification.getNominalPower() / unit.value();
 	}
 	
 	
@@ -92,8 +102,8 @@ public class BusComponentSpecification {
 		return operationalSpecification.getMaximumOperationalPower();
 	}
 	
-	public double getMaximumOperationalPower(double unit) {
-		return operationalSpecification.getMaximumOperationalPower() / unit;
+	public double getMaximumOperationalPower(Unit unit) {
+		return operationalSpecification.getMaximumOperationalPower() / unit.value();
 	}
 	
 	

@@ -7,24 +7,24 @@ import java.math.RoundingMode;
 import org.spacebits.Configuration;
 import org.spacebits.components.sensors.PowerLawSignalPropagationModel;
 import org.spacebits.data.PhysicsDataProvider;
+import org.spacebits.universe.CelestialConstants;
 import org.spacebits.utils.math.BigDecimalMath;
 
 public class Physics {
 	
-	private static MathContext context = new MathContext(120, RoundingMode.HALF_UP);
 	
 	private static PhysicsDataProvider physicsDataProvider = Configuration.getPhysicsDataProvider();
 
 	public static BigDecimal subspaceSignalDispersionToDistance(BigDecimal signalDispersion) {
 		signalDispersion = signalDispersion.setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);
-		BigDecimal tenpc = new BigDecimal(10.0 * Unit.Pc, context).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);
-		return BigDecimalMath.sqrt(signalDispersion).multiply(tenpc, context); 
+		BigDecimal tenpc = new BigDecimal(10.0 * Unit.Pc.value(), Configuration.mc).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);
+		return BigDecimalMath.sqrt(signalDispersion).multiply(tenpc, Configuration.mc); 
 	}
 
 	
 	public static BigDecimal distanceToSubspaceSignalDispersion(BigDecimal distance) {
 		BigDecimal index = new BigDecimal(2.0).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);
-		BigDecimal tenpc = new BigDecimal(10.0 * Unit.Pc).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);;
+		BigDecimal tenpc = new BigDecimal(10.0 * Unit.Pc.value()).setScale(Configuration.precision, BigDecimal.ROUND_HALF_UP);;
 		return BigDecimalMath.pow(distance.divide(tenpc, new MathContext(Configuration.precision, RoundingMode.HALF_DOWN)), index);
 	}
 	
@@ -52,13 +52,13 @@ public class Physics {
 	}
 	
 	public static double absMag2LuminosityInW(double absMag) {
-		return Math.pow(10, (-0.4)*((absMag-4.85))  ) * Unit.G_STAR_LUMINOSITY;
+		return Math.pow(10, (-0.4)*((absMag-4.85))  ) * CelestialConstants.G_STAR_LUMINOSITY;
 	}
 	
 	
 	
 	public static double luminosityInW2AbsMag(double luminosity) {
-		double luminosityInLg = luminosity / Unit.G_STAR_LUMINOSITY;
+		double luminosityInLg = luminosity / CelestialConstants.G_STAR_LUMINOSITY;
 		return 4.85 - ( 2.5 * (  Math.log10(luminosityInLg)  ) ) ;
 	}
 	
@@ -71,14 +71,14 @@ public class Physics {
 	public static double absoluteMagnitude2ApparentMagnitudeAtDistance(double absMag, BigDecimal distance) {
 		if(distance.compareTo(new BigDecimal(1e-50)) < 0)
 			return absMag;
-		double distanceInPc = distance.divide(new BigDecimal(Unit.Pc), context).doubleValue();
+		double distanceInPc = distance.divide(new BigDecimal(Unit.Pc.value()), Configuration.mc).doubleValue();
 		double distanceModulous = 5.0 * Math.log10(distanceInPc) - 5.0;
 		return distanceModulous + absMag;
 	}
 	
 	
 	public static double apparentMagnitude2AbsoluteMagnitude(double appMag, double distance) {
-		double distanceInPc = distance / Unit.Pc;
+		double distanceInPc = distance / Unit.Pc.value();
 		double distanceModulous = 5.0 * Math.log10(distanceInPc) - 5.0;
 		return appMag - distanceModulous;
 	}

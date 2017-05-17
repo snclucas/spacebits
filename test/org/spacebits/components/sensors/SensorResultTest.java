@@ -19,7 +19,7 @@ public class SensorResultTest {
 	public void testSensorResult() {
 		
 		
-		Star sol = new Star("Sol", Star.G_CLASS_STAR,  new Coordinates(new BigDecimal(8*Unit.kPc),new BigDecimal(0),new BigDecimal(100*Unit.Ly)),
+		Star sol = new Star("Sol", Star.G_CLASS_STAR,  new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value())),
 				new SensorSignalResponseProfile(1.0, 1.0, 1.0, 1.0, 1.0));
 		
 		BigDecimal distance = new BigDecimal(24423522352352345.234234);

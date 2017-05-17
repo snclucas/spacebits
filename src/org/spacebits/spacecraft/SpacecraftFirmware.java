@@ -28,13 +28,6 @@ public class SpacecraftFirmware {
 	
 	
 	public static List<SpacecraftBusComponent> findBusComponent(Bus bus, TypeInfo componentType) {
-		
-		for(SpacecraftBusComponent component : bus.getComponents()) {
-			System.out.println(componentType + " " + component.getCategory() + " " + component.getType() + " " + (component.getType() == componentType));
-		}
-		
-		
-		
 		return bus.getComponents().stream()
 				 .filter(x->x.getCategory().toString() == componentType.toString() ||
 						 x.getType().toString() == componentType.toString())

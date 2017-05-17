@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.sensors.Sensor;
 import org.spacebits.components.sensors.SensorProfile;
+import org.spacebits.physics.Constants;
 import org.spacebits.physics.Unit;
 import org.spacebits.universe.celestialobjects.CelestialObject;
 import org.spacebits.universe.celestialobjects.SensorSignalResponseLibrary;
@@ -78,7 +79,7 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
 			if(type == (((CelestialObject)loc).getType()))
-				if( Utils.distanceToLocation(loc.getCoordinates(), coordinates, Unit.Unity).compareTo(distance) <= 0)
+				if( Utils.distanceToLocation(loc.getCoordinates(), coordinates, Unit.One).compareTo(distance) <= 0)
 					locations.add(loc);
 		}
 		return locations;
@@ -92,7 +93,7 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 		Iterator<Entry<Integer, CelestialObject>> it = galacticLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
-			if( Utils.distanceToLocation(loc.getCoordinates(), coordinates, Unit.Unity).compareTo(distance) <= 0)
+			if( Utils.distanceToLocation(loc.getCoordinates(), coordinates, Unit.One).compareTo(distance) <= 0)
 				locations.add(loc);
 		}
 		return locations;
@@ -101,12 +102,12 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 
 
 	private void populate() {
-		Star sol = new Star("Sol", Star.G_CLASS_STAR, new Coordinates(new BigDecimal(8*Unit.kPc),new BigDecimal(0),new BigDecimal(100*Unit.Ly)),
+		Star sol = new Star("Sol", Star.G_CLASS_STAR, new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value())),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
 		addLocation(sol);
 
 		Star alphaCenturi = new Star("Alpha centuri", Star.G_CLASS_STAR,  
-				new Coordinates(new BigDecimal(8*Unit.kPc + 2.98*Unit.Ly),new BigDecimal(2.83* Unit.Ly),new BigDecimal(101.34*Unit.Ly)),
+				new Coordinates(new BigDecimal(8*Unit.kPc.value() + 2.98*Unit.Ly.value()),new BigDecimal(2.83* Unit.Ly.value()),new BigDecimal(101.34*Unit.Ly.value())),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.O_CLASS_STAR));
 		addLocation(alphaCenturi);
 		
@@ -115,11 +116,11 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 		//Setup subspace beacons
 		
 		//Above Sol north pole, 1e8 Km
-		addLocation(new SubspaceBeacon("SolBeacon", new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km)), sol,
+		addLocation(new SubspaceBeacon("SolBeacon", new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km.value())), sol,
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
 		
 		addLocation(new SubspaceBeacon("ACBeacon", 
-				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km)), alphaCenturi,
+				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1e8*Unit.Km.value())), alphaCenturi,
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
 	}
 
@@ -128,22 +129,22 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 	public double getSignalPropagationSpeed(SensorProfile sensorProfile) {
 		TypeInfo sensorType = sensorProfile.getSensorType();
 		if(sensorType == Sensor.OPTICAL) {
-			return 1.0 * Unit.c;
+			return 1.0 * Constants.c;
 		}
 		else if(sensorType == Sensor.RADAR) {
-			return 1.0 * Unit.c;
+			return 1.0 * Constants.c;
 		}
 		else if(sensorType == Sensor.GRAVIMETRIC) {
-			return 1.0 * Unit.c;
+			return 1.0 * Constants.c;
 		}
 		else if(sensorType == Sensor.MAGNETOMETRIC) {
-			return 1.0 * Unit.c;
+			return 1.0 * Constants.c;
 		}
 		else if(sensorType == Sensor.GRAVIMETRIC) {
-			return 1.0 * Unit.c;
+			return 1.0 * Constants.c;
 		}
 		else if(sensorType == Sensor.SUBSPACE_RESONANCE) {
-			return 100000.0 * Unit.c;
+			return 100000.0 * Constants.c;
 		}
 		else
 			return 0.0;
