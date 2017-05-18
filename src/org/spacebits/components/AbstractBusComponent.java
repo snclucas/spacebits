@@ -86,30 +86,29 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 		componentVisitor.visit(this);
 	}
 
-
+	@Override
 	public String getName() {
 		return this.name;
 	}
 	
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	@Override
 	public double getMass() {
 		return busResourceSpecification.getMass();
 	}
 	
+	
 	@Override
 	public double getMass(Unit unit) {
 		return busResourceSpecification.getMass(unit);
 	}
-
 	
+
+	@Override
 	public void setMass(double mass) {
 		busResourceSpecification.setMass(mass);
 	}
+	
 
 	@Override
 	public double getVolume() {
@@ -132,38 +131,44 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 	}
 	
 	
-	public double getNominalPower(double unit) {
-		return busResourceSpecification.getNominalPower() / unit;
+	public double getNominalPower(Unit unit) {
+		return busResourceSpecification.getNominalPower() / unit.value();
 	}
 
 	
+	@Override
 	public void setNominalPower(double nominalPower) {
 		busResourceSpecification.setNominalPower(nominalPower);
 	}
 
 	
+	@Override
 	public double getNominalCPUThroughput() {
 		return busResourceSpecification.getNominalCPUThroughout();
 	}
 
 	
+	@Override
 	public void setNominalCPUThroughput(double nominalCPUThroughput) {
 		busResourceSpecification.setNominalCPUThroughout(nominalCPUThroughput);
 	}
 	
 	
+	@Override
 	public double getMaximumOperationalPower() {
 		return busResourceSpecification.getMaximumOperationalPower();
 	}
-
 	
-	public void setMaximumOperationalPower(double maximumOperationalPower) {
-		busResourceSpecification.setMaximumOperationalPower(maximumOperationalPower);
+	
+	@Override
+	public double getMaximumOperationalCPUThroughput() {
+		return busResourceSpecification.getMaximumOperationalCPUThroughput();
 	}
 	
 	
-	public double getMaximumOperationalCPUThroughput() {
-		return busResourceSpecification.getMaximumOperationalCPUThroughput();
+	@Override
+	public double getMaximumOperationalCPUThroughput(Unit unit) {
+		return busResourceSpecification.getMaximumOperationalCPUThroughput() / unit.value();
 	}
 
 	
@@ -190,7 +195,10 @@ public abstract class AbstractBusComponent extends UniverseAware implements Spac
 		return currentCPUThroughput * (isOnline()?1:0);
 	}
 
-
+	@Override
+	public double getCurrentCPUThroughput(Unit unit) {
+		return currentCPUThroughput * (isOnline()?1:0) / unit.value();
+	}
 
 
 	public SystemComputer getSystemComputer() {

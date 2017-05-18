@@ -1,6 +1,6 @@
 package org.spacebits.profiles;
 
-import org.spacebits.Diagnosable;
+import org.spacebits.components.Diagnosable;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.status.StatusProvider;
 

@@ -6,6 +6,17 @@ import org.spacebits.spacecraft.BusComponentSpecification;
 
 public abstract class AbstractPowerGenerator extends AbstractBusComponent implements PowerGenerator {
 
+
+	protected double maxPower;
+	
+	public static TypeInfo category() {
+		return new TypeInfo("PowerGenerator");
+	}
+	
+	
+	public static TypeInfo type() {
+		return new TypeInfo("PowerGenerator");
+	}
 	
 	public AbstractPowerGenerator(String name, BusComponentSpecification busResourceSpecification) {
 		super(name, busResourceSpecification);
@@ -14,7 +25,18 @@ public abstract class AbstractPowerGenerator extends AbstractBusComponent implem
 
 	@Override
 	public final TypeInfo getCategory() {
-		return categoryID;
+		return category();
+	}
+	
+	
+	@Override
+	public TypeInfo getType() {
+		return type();
+	}
+	
+	@Override
+	public double getMaximumPowerOutput() {
+		return maxPower;
 	}
 	
 }

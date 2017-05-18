@@ -38,6 +38,9 @@ public class SystemComputerTest {
 
 	@Before
 	public void setUp() {
+		double arrayArea = 1 * Unit.m.value() * 10 * Unit.m.value();
+		double efficiency = 75 * Unit.percent.value();
+		
 		SystemComputer computer = new BasicSystemComputer("Test computer", busSpecs, 10 * Unit.GFLOP.value());
 		spacecraftBus.addComponent(computer);
 		
@@ -45,7 +48,7 @@ public class SystemComputerTest {
 				new PhysicalSpecification(mass, volume),
 				new OperationalSpecification(0, nominalCPU, 0, maximumCPU));
 		
-		PowerGenerator powerGenerator = new SubspacePowerExtractor("Test power generator", powerGeneratorBusSpecs, 1 * Unit.kW.value());
+		PowerGenerator powerGenerator = new SubspacePowerExtractor("Test power generator", powerGeneratorBusSpecs, arrayArea, efficiency);
 		spacecraftBus.addComponent(powerGenerator);
 	}
 

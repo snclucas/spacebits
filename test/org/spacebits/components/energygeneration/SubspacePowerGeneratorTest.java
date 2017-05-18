@@ -21,15 +21,18 @@ public class SubspacePowerGeneratorTest {
 		double nominalCPUThroughput = 10 * Unit.kFLOP.value();
 		double maxOutputPower = 100 * Unit.kW.value();
 		
+		double arrayArea = 1 * Unit.m.value() * 10 * Unit.m.value();
+		double efficiency = 75 * Unit.percent.value();
+		
 		BusComponentSpecification busSpecs = new BusComponentSpecification(
 				new PhysicalSpecification(mass, volume),
 				new OperationalSpecification( nominalPower, nominalCPUThroughput, nominalPower, nominalCPUThroughput));
 		
-		SubspacePowerExtractor subspacePowerGenerator = new SubspacePowerExtractor("Test sub-ether generator", busSpecs, maxOutputPower);
+		SubspacePowerExtractor subspacePowerGenerator = new SubspacePowerExtractor("Test sub-ether generator", busSpecs, arrayArea, efficiency);
 		assertEquals("Max output power of sunether generator incorrect", maxOutputPower, subspacePowerGenerator.getMaximumPowerOutput(), 0.001);
 		
 		
-		assertEquals("SubspacePowerExtractor category incorrect", SubspacePowerExtractor.categoryID, subspacePowerGenerator.getCategory());	
+		assertEquals("SubspacePowerExtractor category incorrect", SubspacePowerExtractor.category(), subspacePowerGenerator.getCategory());	
 		assertEquals("SubspacePowerExtractor type incorrect", SubspacePowerExtractor.type(), subspacePowerGenerator.getType());
 		
 		

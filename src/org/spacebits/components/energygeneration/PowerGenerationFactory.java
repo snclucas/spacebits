@@ -16,15 +16,17 @@ public class PowerGenerationFactory extends DataFactory {
 			double efficiency = 75 * Unit.percent.value();
 			
 			PowerGenerator solarArray = 
-					new SimpleSolarArray("Simple Solar Array", data.getBusComponentSpecification(), arrayArea, efficiency);
+					new SimpleSolarArray("Simple Solar Array", data.getBusComponentSpecification(), 
+							arrayArea, efficiency);
 
 			return solarArray;
 		}
 		else if(powerGenerationType.equals(SubspacePowerExtractor.type())){
-			double maximumPowerOutputFromEther = 100 * Unit.kW.value();
+			double arrayArea = 1.0* Unit.m.value() * 15 * Unit.m.value();	
+			double efficiency = 75 * Unit.percent.value();
 			
 			PowerGenerator solarArray = 
-					new SubspacePowerExtractor("Sub ether extractor", data.getBusComponentSpecification(), maximumPowerOutputFromEther);
+					new SubspacePowerExtractor("Sub ether extractor", data.getBusComponentSpecification(), arrayArea, efficiency);
 
 			return solarArray;
 		}

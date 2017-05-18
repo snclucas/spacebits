@@ -19,11 +19,12 @@ public class SimpleSolarArrayTest {
 		double arrayArea = 1 * Unit.m.value() * 10 * Unit.m.value();
 		double efficiency = 75 * Unit.percent.value();
 		
-		PowerGenerator simpleSolarArray = new SimpleSolarArray("Test simple solar aarray", data.getBusComponentSpecification(), arrayArea, efficiency);
+		PowerGenerator simpleSolarArray = new SimpleSolarArray("Test simple solar aarray", 
+				data.getBusComponentSpecification(), arrayArea, efficiency);
 	//	assertEquals("Array area of simple solar array incorrect", arrayArea, simpleSolarArray.get, 0.001);
 		
 		
-		assertEquals("SimpleSolarArray category incorrect", SimpleSolarArray.categoryID, simpleSolarArray.getCategory());	
+		assertEquals("SimpleSolarArray category incorrect", SimpleSolarArray.category(), simpleSolarArray.getCategory());	
 		assertEquals("SimpleSolarArray type incorrect", SimpleSolarArray.type(), simpleSolarArray.getType());
 		
 		

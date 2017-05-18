@@ -1,6 +1,5 @@
 package org.spacebits.components;
 
-import org.spacebits.Diagnosable;
 import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.physics.Unit;
 import org.spacebits.spacecraft.Bus;
@@ -12,7 +11,7 @@ public interface SpacecraftBusComponent extends Component, Diagnosable, StatusPr
 	void registerWithBus(Bus bus);
 	
 	double getNominalPower();
-	double getNominalPower(double unit);
+	double getNominalPower(Unit unit);
 	
 	void setNominalPower(double nominalPower);
 	
@@ -22,10 +21,12 @@ public interface SpacecraftBusComponent extends Component, Diagnosable, StatusPr
 	double getMaximumOperationalPower();
 	
 	double getMaximumOperationalCPUThroughput();
+	double getMaximumOperationalCPUThroughput(Unit unit);
 	
 	double getCurrentPower();
 	double getCurrentPower(Unit unit);
 	double getCurrentCPUThroughput();
+	double getCurrentCPUThroughput(Unit unit);
 	
 	SystemComputer getSystemComputer();
 	

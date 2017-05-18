@@ -5,8 +5,11 @@ import org.spacebits.components.TypeInfo;
 
 public interface PowerGenerator extends SpacecraftBusComponent {
 	
-	TypeInfo categoryID = new TypeInfo("PowerGenerator");
+	public static TypeInfo category() {
+		return new TypeInfo("PowerGenerator");
+	}
 	
+	public double getPowerOutput();
 	public double getMaximumPowerOutput();
 
 }

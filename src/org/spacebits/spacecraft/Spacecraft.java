@@ -2,8 +2,8 @@ package org.spacebits.spacecraft;
 
 import java.util.List;
 
-import org.spacebits.Diagnosable;
 import org.spacebits.components.Component;
+import org.spacebits.components.Diagnosable;
 import org.spacebits.components.Onlineable;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;

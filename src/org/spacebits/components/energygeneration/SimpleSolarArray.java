@@ -1,7 +1,10 @@
 package org.spacebits.components.energygeneration;
 
+import org.spacebits.Configuration;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
+import org.spacebits.data.EnvironmentDataProvider;
+import org.spacebits.physics.Unit;
 import org.spacebits.software.Message;
 import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.BusComponentSpecification;
@@ -9,29 +12,23 @@ import org.spacebits.status.SystemStatus;
 
 public class SimpleSolarArray extends AbstractPowerGenerator {
 	
+	private EnvironmentDataProvider environmentDataProvider = Configuration.getEnvironmentDataProvider();
+	
 	public static TypeInfo type() {
 		return new TypeInfo("SimpleSolarArray");
 	}
 
 	private double arrayArea;
 	private double efficiency;
-	private double lightFlux;
 	
-	
-	
-	public SimpleSolarArray(String name, BusComponentSpecification busResourceSpecification, double arrayArea, double efficiency) {
+	public SimpleSolarArray(String name, BusComponentSpecification busResourceSpecification, 
+			double arrayArea, double efficiency) {
 		super(name, busResourceSpecification);
+		this.arrayArea = arrayArea;
+		this.efficiency = efficiency;
+		this.maxPower = arrayArea*efficiency*10.0*Unit.kW.value();
 	}
 	
-
-	
-	
-	@Override
-	public TypeInfo getType() {
-		return type();
-	}
-
-
 
 	@Override
 	public double getCurrentPower() {
@@ -69,17 +66,9 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	public void setEfficiency(double efficiency) {
 		this.efficiency = efficiency;
 	}
-
-
-	public void setLightFlux(double lightFlux) {
-		this.lightFlux = lightFlux;
-	}
 	
 	
-	@Override
-	public double getMaximumPowerOutput() {
-		return arrayArea*efficiency*lightFlux;
-	}
+	
 
 	@Override
 	public SystemStatus runDiagnostics(int level) {
@@ -105,9 +94,19 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	@Override
 	public String toString() {
 		return "SimpleSolarArray [arrayArea=" + arrayArea + ", efficiency="
-				+ efficiency + ", lightFlux=" + lightFlux + "]";
+				+ efficiency + ", lightFlux=" + getLightFlux() + "]";
 	}
 
+
+	@Override
+	public double getPowerOutput() {
+		return arrayArea*efficiency*getLightFlux();
+	}
+
+	
+	private double getLightFlux() {
+		return environmentDataProvider.getEnvironmentData(getSystemComputer().getSpacecraftBus().getSpacecraft().getIdent()).getSolarFlux();
+	}
 	
 
 }

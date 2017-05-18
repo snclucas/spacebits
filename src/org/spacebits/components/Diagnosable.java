@@ -1,4 +1,4 @@
-package org.spacebits;
+package org.spacebits.components;
 
 import org.spacebits.status.SystemStatus;
 

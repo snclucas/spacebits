@@ -2,6 +2,7 @@ package org.spacebits.components.energygeneration;
 
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
+import org.spacebits.physics.Unit;
 import org.spacebits.software.Message;
 import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.BusComponentSpecification;
@@ -9,15 +10,20 @@ import org.spacebits.status.SystemStatus;
 
 public class SubspacePowerExtractor extends AbstractPowerGenerator {
 	
+	private double arrayArea;
+	private double efficiency;
+	
 	public static TypeInfo type() {
 		return new TypeInfo("SubspacePowerExtractor");
 	}
+
 	
-	private double maximumPowerOutput;
-	
-	public SubspacePowerExtractor(String name, BusComponentSpecification busResourceSpecification, double maximumPowerOutput) {
+	public SubspacePowerExtractor(String name, BusComponentSpecification busResourceSpecification, 
+			double arrayArea, double efficiency) {
 		super(name, busResourceSpecification);
-		this.maximumPowerOutput = maximumPowerOutput;
+		this.arrayArea = arrayArea;
+		this.efficiency = efficiency;
+		this.maxPower = arrayArea*efficiency*10.0*Unit.kW.value();
 	}
 	
 	
@@ -30,6 +36,23 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 	@Override
 	public double getCurrentPower() {
 		return getNominalPower();
+	}
+	
+	
+	public double getArrayArea() {
+		return arrayArea;
+	}
+
+	public void setArrayArea(double arrayArea) {
+		this.arrayArea = arrayArea;
+	}
+
+	public double getEfficiency() {
+		return efficiency;
+	}
+
+	public void setEfficiency(double efficiency) {
+		this.efficiency = efficiency;
 	}
 	
 	
@@ -73,14 +96,13 @@ public class SubspacePowerExtractor extends AbstractPowerGenerator {
 	@Override
 	public String toString() {
 		return "SubEtherPowerGenerator [maximumPowerOutputFromEther="
-				+ maximumPowerOutput + "]";
+				+ getMaximumPowerOutput() + "]";
 	}
-
-
+	
+	
 	@Override
-	public double getMaximumPowerOutput() {
-		return maximumPowerOutput;
+	public double getPowerOutput() {
+		return 0;
 	}
-
 
 }
