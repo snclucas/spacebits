@@ -10,19 +10,19 @@ import org.spacebits.physics.Unit;
 import org.spacebits.universe.CelestialConstants;
 import org.spacebits.universe.Coordinates;
 import org.spacebits.universe.EnvironmentData;
-import org.spacebits.universe.LocalUniverseDataProvider;
+import org.spacebits.universe.LocalUniverseLocationDataProvider;
 import org.spacebits.universe.Universe;
-import org.spacebits.universe.UniverseDataProvider;
+import org.spacebits.universe.UniverseLocationDataProvider;
 import org.spacebits.universe.celestialobjects.CelestialObject;
 import org.spacebits.universe.celestialobjects.Star;
 import org.spacebits.utils.Utils;
 
 public class LocalEnvironmentDataProvider implements EnvironmentDataProvider {
-	
-	UniverseDataProvider dataProvider = new LocalUniverseDataProvider();
+	Universe universe = Configuration.getUniverse();
+	UniverseLocationDataProvider dataProvider = new LocalUniverseLocationDataProvider();
 	
 	public EnvironmentData getEnvironmentData(String spacecraftIdent) {
-		Coordinates coordinates = Universe.getSpacecraftLocation(spacecraftIdent);
+		Coordinates coordinates = universe.getSpacecraftLocation(spacecraftIdent);
 		return getEnvironmentData(coordinates);
 	}
 	
@@ -43,6 +43,7 @@ public class LocalEnvironmentDataProvider implements EnvironmentDataProvider {
 				SignalResponse response = star.getSensorSignalResponse().getSignalResponse(Sensor.OPTICAL, BigDecimal.ZERO);
 				d = d.max(new BigDecimal(CelestialConstants.G_STAR_RADIUS));
 				luminosity += response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() );
+				System.out.println(star.getName() + " " + response.getSignalStrength() / (4*Math.PI* (d.pow(2)).doubleValue() ));
 			}
 		} 
 		return new EnvironmentData(luminosity, 0.0, subspaceNoise);

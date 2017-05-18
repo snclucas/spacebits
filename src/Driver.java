@@ -3,6 +3,7 @@
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.spacebits.Configuration;
 import org.spacebits.components.sensors.LinearSensorArray;
 import org.spacebits.components.sensors.Sensor;
 import org.spacebits.components.sensors.SensorFactory;
@@ -22,6 +23,7 @@ public class Driver {
 	
 	
 	public Driver() {
+		Universe universe = Configuration.getUniverse();
 		
 		Location sol = new SimpleLocation("Sol", new Coordinates(
 				new BigDecimal(8*Unit.kPc.value()),
@@ -43,9 +45,9 @@ public class Driver {
 		
 		Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 		
-		Universe.addSpacecraft(simpleSpacecraft);
+		universe.addSpacecraft(simpleSpacecraft);
 		
-		Universe.updateSpacecraftLocation(simpleSpacecraft.getIdent(), initialSpacecraftLocation);
+		universe.updateSpacecraftLocation(simpleSpacecraft.getIdent(), initialSpacecraftLocation);
 		
 		Sensor sensor = SensorFactory.getSensor(LinearSensorArray.type(), Sensor.RADAR, 1);
 		simpleSpacecraft.addComponent(sensor);

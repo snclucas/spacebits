@@ -74,7 +74,7 @@ public class SpacecraftFirmwareTest {
 		assertEquals("Total CPU throughput available not correct", systemComputer.getMaxCPUThroughput(), totalCPUAvailable, 0.00001);
 		
 		double expectedTotalPowerAvailable = 0.0;
-		for(SpacecraftBusComponent scComponent : SpacecraftFirmware.getPowerGenerators(spacecraftBus))
+		for(PowerGenerator scComponent : SpacecraftFirmware.getPowerGenerators(spacecraftBus))
 			expectedTotalPowerAvailable += ((PowerGenerator)scComponent).getMaximumPowerOutput();
 			
 		

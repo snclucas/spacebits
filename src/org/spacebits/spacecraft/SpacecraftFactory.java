@@ -12,6 +12,7 @@ import org.spacebits.components.computers.ComputerFactory;
 import org.spacebits.components.computers.SystemComputer;
 import org.spacebits.components.energygeneration.PowerGenerationFactory;
 import org.spacebits.components.energygeneration.PowerGenerator;
+import org.spacebits.components.energygeneration.SimpleSolarArray;
 import org.spacebits.components.energygeneration.SubspacePowerExtractor;
 import org.spacebits.components.propulsion.EngineFactory;
 import org.spacebits.components.propulsion.thrust.FuelConsumingEngine;
@@ -33,6 +34,7 @@ import org.spacebits.structures.storage.fuel.FuelStorageTankFactory;
 public class SpacecraftFactory {
 	
 	public final static String SHUTTLE="Shuttle"; 
+	public final static String SIMPLE_SATELITE="Simple satelite"; 
 	
 	public static Spacecraft getSpacecraft(String spacecraftType) throws InvalidParameterException{
 		SpacecraftDataProvider spacecraftDataProvider = Configuration.getSpacecraftDataProvider();
@@ -76,6 +78,18 @@ public class SpacecraftFactory {
 			spacecraft.addComponent(commDevice);
 			
 			return spacecraft;
+		case SIMPLE_SATELITE:
+			Hull satHull = HullFactory.getHull("SimpleSatelite");
+			
+			Spacecraft sat = new SimpleSpacecraft("SimpleSatelite", satHull);
+			
+			SystemComputer satSystemComputer = ComputerFactory.getComputer(BasicSystemComputer.type());	
+			sat.addComponent(satSystemComputer);
+			
+			PowerGenerator simpleSolarCell = PowerGenerationFactory.getPowerGenerator(SimpleSolarArray.type());
+			sat.addComponent(simpleSolarCell);
+			
+			return sat;
 		default:
 			throw new InvalidParameterException("No such spacecraft.");
 			

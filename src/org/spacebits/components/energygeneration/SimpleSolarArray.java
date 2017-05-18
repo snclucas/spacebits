@@ -14,12 +14,8 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	
 	private EnvironmentDataProvider environmentDataProvider = Configuration.getEnvironmentDataProvider();
 	
-	public static TypeInfo type() {
-		return new TypeInfo("SimpleSolarArray");
-	}
-
 	private double arrayArea;
-	private double efficiency;
+	private final double efficiency;
 	
 	public SimpleSolarArray(String name, BusComponentSpecification busResourceSpecification, 
 			double arrayArea, double efficiency) {
@@ -55,18 +51,10 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 		return arrayArea;
 	}
 
-	public void setArrayArea(double arrayArea) {
-		this.arrayArea = arrayArea;
-	}
 
 	public double getEfficiency() {
 		return efficiency;
 	}
-
-	public void setEfficiency(double efficiency) {
-		this.efficiency = efficiency;
-	}
-	
 	
 	
 
@@ -106,6 +94,16 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 	
 	private double getLightFlux() {
 		return environmentDataProvider.getEnvironmentData(getSystemComputer().getSpacecraftBus().getSpacecraft().getIdent()).getSolarFlux();
+	}
+	
+	
+	public static TypeInfo type() {
+		return new TypeInfo("SimpleSolarArray");
+	}
+	
+	@Override
+	public TypeInfo getType() {
+		return type();
 	}
 	
 

@@ -2,7 +2,7 @@ package org.spacebits.physics;
 
 public class Unit {
 	
-	public enum Type {DIMENTIONLESS, LENGTH, MASS, VOLUME, TIME, FORCE, POWER, CPU}
+	public enum Type {DIMENTIONLESS, LENGTH, MASS, AREA, VOLUME, TIME, FORCE, POWER, CPU}
 	
 	//Units for mass
 	public static Unit g = new Unit(1.0e-3, Type.MASS, "g");
@@ -11,6 +11,8 @@ public class Unit {
 	
 	public static Unit One = new Unit(1.0, Type.DIMENTIONLESS, "");
 
+	//Units for area
+	public static Unit m2 = new Unit(1.0, Type.AREA, "m2");
 	
 	//Units for volume
 	public static Unit m3 = new Unit(1.0, Type.VOLUME, "m3");

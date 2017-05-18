@@ -9,14 +9,14 @@ import org.spacebits.data.EnvironmentDataProvider;
 import org.spacebits.physics.Unit;
 import org.spacebits.universe.Coordinates;
 import org.spacebits.universe.Universe;
-import org.spacebits.universe.UniverseDataProvider;
+import org.spacebits.universe.UniverseLocationDataProvider;
 import org.spacebits.universe.celestialobjects.CelestialObject;
 import org.spacebits.universe.celestialobjects.UnknownObject;
 import org.spacebits.utils.Utils;
 
 public class LocalSensorResponseMediator implements SensorResponseMediator {
-
-	UniverseDataProvider universeDataProvider = Configuration.getUniverseDataProvider();
+	Universe universe = Configuration.getUniverse();
+	UniverseLocationDataProvider universeDataProvider = Configuration.getUniverseLocationDataProvider();
 	EnvironmentDataProvider environmentDataProvider = Configuration.getEnvironmentDataProvider();
 
 	@Override
@@ -26,7 +26,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 		double signalPropagationSpeed = universeDataProvider.getSignalPropagationSpeed(sensorProfile);
 
 		List<SensorResult> results = new ArrayList<SensorResult>();
-		Coordinates spacecraftLocation = Universe.getSpacecraftLocation(spacecraftIdent);
+		Coordinates spacecraftLocation = universe.getSpacecraftLocation(spacecraftIdent);
 		
 		BigDecimal maximumDistanceScanned = new BigDecimal((duration * signalPropagationSpeed) / 2.0); // There and back
 		
@@ -40,7 +40,7 @@ public class LocalSensorResponseMediator implements SensorResponseMediator {
 
 	public List<SensorResult> passiveScan(String spacecraftIdent, double duration, SensorProfile sensorProfile) {
 		List<SensorResult> results = new ArrayList<SensorResult>();
-		Coordinates spacecraftLocation = Universe.getSpacecraftLocation(spacecraftIdent);
+		Coordinates spacecraftLocation = universe.getSpacecraftLocation(spacecraftIdent);
 		
 		BigDecimal maximumDistanceScanned = new BigDecimal(1000000 * Unit.Ly.value()); 
 		

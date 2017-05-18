@@ -1,12 +1,10 @@
 package org.spacebits.universe;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.spacebits.Configuration;
 import org.spacebits.components.TypeInfo;
-import org.spacebits.exceptions.ComponentConfigurationException;
 import org.spacebits.physics.Unit;
 import org.spacebits.spacecraft.Spacecraft;
 import org.spacebits.universe.celestialobjects.CelestialObject;
@@ -18,63 +16,56 @@ import org.spacebits.universe.structures.SubspaceBeacon;
 
 public class Universe {
 	
-	private UniverseDataProvider dataProvider;
-
-	private static Map<String,Spacecraft> spacecraftInUniverse = new HashMap<String, Spacecraft>();
-
-	private static Map<String,Coordinates> spacecraftLocationInUniverse = new HashMap<String, Coordinates>();
+	private UniverseLocationDataProvider universeLocationDataProvider = Configuration.getUniverseLocationDataProvider();
+	private UniverseSpacecraftLocationDataProvider universeSpacecraftLocationDataProvider = Configuration.getUniverseSpacecraftLocationDataProvider();
+	
 
 	public final static CelestialObject galacticCenter 
 	= new Region("Galactic center", new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(0.0)),
 			new SensorSignalResponseProfile(1000.0, 1000.0, 1000.0, 1000.0, 1000.0), 10.0 * Unit.Pc.value());
 
 
-	public Universe(UniverseDataProvider dataProvider) {
+	public Universe(UniverseLocationDataProvider dataProvider) {
 		super();
-		this.dataProvider = dataProvider;
+		this.universeLocationDataProvider = dataProvider;
 	}
 
 
-	public static Universe getUniverse() {
-		return setupSimpleUniverse();
+	public List<CelestialObject> getCelelestialObjects() {
+		return universeLocationDataProvider.getLocationsByCategory(CelestialObject.category());
 	}
 
 
-	public static void addSpacecraft(Spacecraft spacecraft) {
-		spacecraftInUniverse.put(spacecraft.getIdent(), spacecraft);
-	}
-
-	
-	public static void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates) {
-		spacecraftLocationInUniverse.put(spacecraftIdent, coordinates);
-	}
-	
-	
-	public static void updateSpacecraftLocation(String spacecraftIdent, Location location) {
-		spacecraftLocationInUniverse.put(spacecraftIdent, location.getCoordinates());
+	public void addSpacecraft(Spacecraft spacecraft) {
+		universeSpacecraftLocationDataProvider.addSpacecraft(spacecraft);
 	}
 
 	
-	public static Coordinates getSpacecraftLocation(String spacecraftIdent) {
-		if(spacecraftLocationInUniverse.get(spacecraftIdent) == null)
-			throw new ComponentConfigurationException("Spacecraft location has not been set");
-		return spacecraftLocationInUniverse.get(spacecraftIdent);
+	public void updateSpacecraftLocation(String spacecraftIdent, Coordinates coordinates) {
+		universeSpacecraftLocationDataProvider.updateSpacecraftLocation(spacecraftIdent, coordinates);
+	}
+	
+	
+	public void updateSpacecraftLocation(String spacecraftIdent, Location location) {
+		universeSpacecraftLocationDataProvider.updateSpacecraftLocation(spacecraftIdent, location.getCoordinates());
+	}
+
+	
+	public Coordinates getSpacecraftLocation(String spacecraftIdent) {
+		return universeSpacecraftLocationDataProvider.getSpacecraftLocation(spacecraftIdent);
 	}
 
 
 
 
-	private static Universe setupSimpleUniverse() {
-
-		UniverseDataProvider dataProvider = new LocalUniverseDataProvider();
-		Universe universe = new Universe(dataProvider);
-
+	public void setupSimpleUniverse() {
+System.out.println("Adding ");
 		Star sol = new Star("Sol", Star.G_CLASS_STAR,  new Coordinates(
 				new BigDecimal(8*Unit.kPc.value()),
 				new BigDecimal(0),
 				new BigDecimal(100*Unit.Ly.value())),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
-		universe.addLocation(sol);
+		addLocation(sol);
 
 		Star alphaCenturi = new Star("Alpha centuri", Star.G_CLASS_STAR,  
 				new Coordinates(
@@ -82,23 +73,22 @@ public class Universe {
 						new BigDecimal(2.83* Unit.Ly.value()),
 						new BigDecimal(101.34*Unit.Ly.value())),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.M_CLASS_STAR));
-		universe.addLocation(alphaCenturi);
+		addLocation(alphaCenturi);
 
 
 
 		//Setup subspace beacons
 
 		//Above Sol north pole, 1e8 Km
-		universe.addLocation(new SubspaceBeacon("SolBeacon", 
+		addLocation(new SubspaceBeacon("SolBeacon", 
 				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1*Unit.AU.value())), sol,
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
 
 
-		universe.addLocation(new SubspaceBeacon("ACBeacon", 
+		addLocation(new SubspaceBeacon("ACBeacon", 
 				new Coordinates(new BigDecimal(0.0),new BigDecimal(0.0),new BigDecimal(1*Unit.AU.value())), alphaCenturi,
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(SensorSignalResponseLibrary.SUBSPACE_BEACON)));
 
-		return universe;
 	}
 
 
@@ -107,30 +97,30 @@ public class Universe {
 
 
 
-	public UniverseDataProvider getDataProvider() {
-		return dataProvider;
+	public UniverseLocationDataProvider getDataProvider() {
+		return universeLocationDataProvider;
 	}
 
-	public void setDataProvider(UniverseDataProvider dataProvider) {
-		this.dataProvider = dataProvider;
+	public void setDataProvider(UniverseLocationDataProvider dataProvider) {
+		this.universeLocationDataProvider = dataProvider;
 	}
 
 
 	public List<CelestialObject> getLocationsByType(TypeInfo type) {
-		return dataProvider.getLocationsByType(type);
+		return universeLocationDataProvider.getLocationsByType(type);
 	}
 
 
 	public int addLocation(CelestialObject location) {
-		return dataProvider.addLocation(location);
+		return universeLocationDataProvider.addLocation(location);
 	}
 
 	public CelestialObject getLocationById(String locationID) {
-		return dataProvider.getLocationById(locationID);
+		return universeLocationDataProvider.getLocationById(locationID);
 	}
 
 	public CelestialObject getLocationByName(String locationProperName) {
-		return dataProvider.getLocationByName(locationProperName);
+		return universeLocationDataProvider.getLocationByName(locationProperName);
 	}
 
 
@@ -142,9 +132,9 @@ public class Universe {
 	
 	public double[] moveSpacecraft() {
 		double[] thrust = new double[]{};
-		for(Spacecraft spacecraft : spacecraftInUniverse.values()) {
+		//for(Spacecraft spacecraft : spacecraftInUniverse.values()) {
 			//thrust = spacecraft.getThrust();
-		}
+		//}
 		return thrust;
 	}
 

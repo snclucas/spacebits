@@ -16,9 +16,11 @@ import org.spacebits.data.MaterialDataProvider;
 import org.spacebits.data.PhysicsDataProvider;
 import org.spacebits.data.SpacecraftDataProvider;
 import org.spacebits.physics.Unit;
-import org.spacebits.universe.LocalUniverseDataProvider;
+import org.spacebits.universe.LocalUniverseLocationDataProvider;
+import org.spacebits.universe.LocalUniverseSpacecraftLocationDataProvider;
 import org.spacebits.universe.Universe;
-import org.spacebits.universe.UniverseDataProvider;
+import org.spacebits.universe.UniverseLocationDataProvider;
+import org.spacebits.universe.UniverseSpacecraftLocationDataProvider;
 
 public class Configuration {
 
@@ -28,18 +30,25 @@ public class Configuration {
 	
 	public static double distanceForEnvironmentData = 100.0 * Unit.Ly.value();
 	
+	private static Universe universe = new Universe(getUniverseLocationDataProvider());
+	
 	public static String getUUID() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
 	
 	
 	public static Universe getUniverse() {
-		return Universe.getUniverse();
+		return universe;
 	}
 	
 	
-	public static UniverseDataProvider getUniverseDataProvider() {
-		return new LocalUniverseDataProvider();
+	public static UniverseLocationDataProvider getUniverseLocationDataProvider() {
+		return new LocalUniverseLocationDataProvider();
+	}
+	
+	
+	public static UniverseSpacecraftLocationDataProvider getUniverseSpacecraftLocationDataProvider() {
+		return new LocalUniverseSpacecraftLocationDataProvider();
 	}
 	
 	

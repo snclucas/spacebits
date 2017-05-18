@@ -29,10 +29,7 @@ public abstract class AbstractPowerGenerator extends AbstractBusComponent implem
 	}
 	
 	
-	@Override
-	public TypeInfo getType() {
-		return type();
-	}
+	
 	
 	@Override
 	public double getMaximumPowerOutput() {

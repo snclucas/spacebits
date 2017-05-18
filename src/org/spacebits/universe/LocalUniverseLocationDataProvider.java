@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.sensors.Sensor;
@@ -21,19 +23,19 @@ import org.spacebits.utils.Utils;
 
 //XXX Make better
 
-public class LocalUniverseDataProvider extends AbstractUniverseDataProvider implements UniverseDataProvider {
+public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvider implements UniverseLocationDataProvider {
+	
+	private final Map<String, CelestialObject> celestialObjectLocations;
 
-	Map<String, CelestialObject> galacticLocations;
-
-	public LocalUniverseDataProvider() {
+	public LocalUniverseLocationDataProvider() {
 		super();
-		galacticLocations = new HashMap<String, CelestialObject>();
+		celestialObjectLocations = new HashMap<String, CelestialObject>();
 		populate();
 	}
 
 	@Override
 	public int addLocation(CelestialObject location) {
-		return galacticLocations.put(location.getIdent(), location) != null ? 1:0;
+		return celestialObjectLocations.put(location.getIdent(), location) != null ? 1:0;
 	}
 
 
@@ -41,19 +43,21 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 
 	@Override
 	public CelestialObject getLocationById(String locationID) {
-		return galacticLocations.get(locationID);
+		return celestialObjectLocations.get(locationID);
 	}
 	
 
 	@Override
 	public CelestialObject getLocationByName(String locationProperName) {
-		Iterator<Entry<String, CelestialObject>> it = galacticLocations.entrySet().iterator();
+		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
 			if(locationProperName.equals(loc.getName()))
 				return loc;
 		}
 		return null;
+		
+		
 	}
 	
 
@@ -61,10 +65,10 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 	public List<CelestialObject> getLocationsByType(TypeInfo type) {
 		List<CelestialObject> locations = new ArrayList<CelestialObject>();
 
-		Iterator<Entry<String, CelestialObject>> it = galacticLocations.entrySet().iterator();
+		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
-			if(type == (((CelestialObject)loc).getCategory()))
+			if(type == (((CelestialObject)loc).getType()))
 				locations.add(loc);
 		}
 		return locations;
@@ -72,17 +76,44 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 	
 	
 	@Override
+	public List<CelestialObject> getLocationsByCategory(TypeInfo category) {
+		
+		
+		List<CelestialObject> locations = new ArrayList<CelestialObject>();
+
+		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
+		while (it.hasNext()) {
+			CelestialObject loc = it.next().getValue();
+			if(category == (((CelestialObject)loc).getCategory()))
+				locations.add(loc);
+		}
+		return celestialObjectLocations.entrySet().stream()
+				.map(x -> x.getValue())
+				.filter(map -> map.getCategory().equals(category))
+				.collect(Collectors.toList());
+	}
+	
+	
+	@Override
 	public List<CelestialObject> getLocationsByTypeCloserThan(TypeInfo type, Coordinates coordinates, BigDecimal distance) {
 		List<CelestialObject> locations = new ArrayList<CelestialObject>();
 
-		Iterator<Entry<String, CelestialObject>> it = galacticLocations.entrySet().iterator();
+		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
 			if(type == (((CelestialObject)loc).getType()))
 				if( Utils.distanceToLocation(loc.getCoordinates(), coordinates, Unit.One).compareTo(distance) <= 0)
 					locations.add(loc);
 		}
-		return locations;
+		//return locations;
+		
+		
+		return celestialObjectLocations.entrySet().stream()
+				.map(x -> x.getValue())
+				.filter(map -> map.getType().equals(type))
+				.filter(map -> Utils.distanceToLocation(map.getCoordinates(), coordinates, Unit.One).compareTo(distance) <= 0)
+				.collect(Collectors.toList());
+		
 	}
 	
 	
@@ -90,7 +121,7 @@ public class LocalUniverseDataProvider extends AbstractUniverseDataProvider impl
 	@Override
 	public List<CelestialObject> getLocationsCloserThan(Coordinates coordinates, BigDecimal distance) {
 		List<CelestialObject> locations = new ArrayList<CelestialObject>();
-		Iterator<Entry<String, CelestialObject>> it = galacticLocations.entrySet().iterator();
+		Iterator<Entry<String, CelestialObject>> it = celestialObjectLocations.entrySet().iterator();
 		while (it.hasNext()) {
 			CelestialObject loc = it.next().getValue();
 			if( Utils.distanceToLocation(loc.getCoordinates(), coordinates, Unit.One).compareTo(distance) <= 0)

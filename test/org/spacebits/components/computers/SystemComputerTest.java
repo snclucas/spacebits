@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.energygeneration.PowerGenerator;
 import org.spacebits.components.energygeneration.SubspacePowerExtractor;
@@ -49,7 +50,7 @@ public class SystemComputerTest {
 				new OperationalSpecification(0, nominalCPU, 0, maximumCPU));
 		
 		PowerGenerator powerGenerator = new SubspacePowerExtractor("Test power generator", powerGeneratorBusSpecs, arrayArea, efficiency);
-		spacecraftBus.addComponent(powerGenerator);
+		spacecraftBus.addComponent((SpacecraftBusComponent)powerGenerator);
 	}
 
 	@Test
