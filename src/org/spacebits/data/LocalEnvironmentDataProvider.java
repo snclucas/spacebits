@@ -10,27 +10,22 @@ import org.spacebits.physics.Unit;
 import org.spacebits.universe.CelestialConstants;
 import org.spacebits.universe.Coordinates;
 import org.spacebits.universe.EnvironmentData;
-import org.spacebits.universe.LocalUniverseLocationDataProvider;
 import org.spacebits.universe.Universe;
-import org.spacebits.universe.UniverseLocationDataProvider;
 import org.spacebits.universe.celestialobjects.CelestialObject;
 import org.spacebits.universe.celestialobjects.Star;
 import org.spacebits.utils.Utils;
 
 public class LocalEnvironmentDataProvider implements EnvironmentDataProvider {
-	Universe universe = Configuration.getUniverse();
-	UniverseLocationDataProvider dataProvider = new LocalUniverseLocationDataProvider();
 	
-	public EnvironmentData getEnvironmentData(String spacecraftIdent) {
-		Coordinates coordinates = universe.getSpacecraftLocation(spacecraftIdent);
-		return getEnvironmentData(coordinates);
+	public LocalEnvironmentDataProvider () {
 	}
+	
 	
 	public EnvironmentData getEnvironmentData(Coordinates coordinates) {
 		double subspaceNoise = getSubspaceNoise(coordinates);
 		
 		List<CelestialObject> nearByStars = 
-				dataProvider.getLocationsByTypeCloserThan(Star.type(), coordinates, new BigDecimal(Configuration.distanceForEnvironmentData));
+				Universe.getInstance().getLocationsByTypeCloserThan(Star.type(), coordinates, new BigDecimal(Configuration.distanceForEnvironmentData));
 
 		if(nearByStars.size() == 0)
 			return new EnvironmentData(0.0, 0.0, subspaceNoise);

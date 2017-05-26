@@ -53,6 +53,16 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 	}
 	
 	
+	@Override
+	public Archive getData(TypeInfo typeInfo) {
+		if(dataArchives.containsKey(typeInfo)) {
+			return dataArchives.get(typeInfo);
+		}
+		else {
+			return null;
+		}
+	}
+	
 
 	@Override
 	public SystemStatus runDiagnostics(int level) {
@@ -84,6 +94,3 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 
 }
 
-class Archive extends HashMap<String, DataRecord> {
-	private static final long serialVersionUID = 925935940538264787L;
-}

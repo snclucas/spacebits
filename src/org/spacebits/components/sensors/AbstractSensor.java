@@ -8,7 +8,7 @@ import org.spacebits.components.TypeInfo;
 import org.spacebits.spacecraft.BusComponentSpecification;
 
 public abstract class AbstractSensor extends AbstractBusComponent implements Sensor {
-	
+
 	protected SensorProfile sensorProfile;
 
 	public AbstractSensor(String name, BusComponentSpecification busResourceSpecification, 
@@ -92,7 +92,10 @@ public abstract class AbstractSensor extends AbstractBusComponent implements Sen
 	}
 
 	
-	
+	@Override
+	public void tick() {
+	}
+
 
 	
 

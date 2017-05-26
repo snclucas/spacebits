@@ -15,7 +15,7 @@ import org.spacebits.universe.celestialobjects.UnknownObject;
 import org.spacebits.utils.Utils;
 
 public class LocalSensorResponseMediator implements SensorResponseMediator {
-	Universe universe = Configuration.getUniverse();
+	Universe universe = Universe.getInstance();
 	UniverseLocationDataProvider universeDataProvider = Configuration.getUniverseLocationDataProvider();
 	EnvironmentDataProvider environmentDataProvider = Configuration.getEnvironmentDataProvider();
 

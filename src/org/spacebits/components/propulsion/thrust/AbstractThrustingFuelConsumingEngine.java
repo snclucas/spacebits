@@ -100,5 +100,9 @@ public abstract class AbstractThrustingFuelConsumingEngine extends AbstractThrus
 	public void setFuelConsumptionProfile(FuelConsumptionProfile fuelConsumptionProfile) {
 		this.fuelConsumptionProfile = fuelConsumptionProfile;
 	}
+	
+	@Override
+	public void tick() {
+	}
 
 }

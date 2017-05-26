@@ -5,18 +5,11 @@ import static org.junit.Assert.assertEquals;
 import java.math.BigDecimal;
 
 import org.junit.Test;
-import org.spacebits.Configuration;
-import org.spacebits.data.EnvironmentDataProvider;
-import org.spacebits.data.LocalEnvironmentDataProvider;
 import org.spacebits.physics.Unit;
 import org.spacebits.spacecraft.Spacecraft;
 import org.spacebits.spacecraft.SpacecraftFactory;
 import org.spacebits.spacecraft.SpacecraftFirmware;
-import org.spacebits.universe.Coordinates;
-import org.spacebits.universe.EnvironmentData;
-import org.spacebits.universe.LocalUniverseLocationDataProvider;
-import org.spacebits.universe.Universe;
-import org.spacebits.universe.UniverseLocationDataProvider;
+import org.spacebits.universe.celestialobjects.SensorSignalResponseLibrary;
 import org.spacebits.universe.celestialobjects.SensorSignalResponseProfile;
 import org.spacebits.universe.celestialobjects.Star;
 import org.spacebits.utils.math.MathUtils;
@@ -27,17 +20,20 @@ public class UniverseTest {
 
 	@Test
 	public void testEnvronmentalData() {
-		Universe universe = Configuration.getUniverse();
-			
-		EnvironmentDataProvider environmentDataProvider = new LocalEnvironmentDataProvider();
+		Universe universe = Universe.getInstance();
 		
 		Spacecraft spacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SIMPLE_SATELITE);
-		universe.addSpacecraft(spacecraft);
+		
+		Star sol = new Star("Sol", Star.G_CLASS_STAR, new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value())),
+				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
+		Coordinates coords = sol.getCoordinates().add(
+				new Coordinates(new BigDecimal(10*Unit.AU.value()), BigDecimal.ZERO, BigDecimal.ZERO));
+		universe.addSpacecraft(spacecraft, coords);
 		
 		//Coordinates spacecraftLocation = new Coordinates(new BigDecimal(8*Unit.kPc.value() + 149600000 * Unit.Km.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value()));
 		//universe.updateSpacecraftLocation(spacecraft.getIdent(), spacecraftLocation);
 
-		EnvironmentData data = environmentDataProvider.getEnvironmentData(spacecraft.getIdent());
+		EnvironmentData data = universe.getEnvironmentData(universe.getSpacecraftLocation(spacecraft.getIdent()));
 		
 		System.out.println(SpacecraftFirmware.getTotalPowerAvailable(spacecraft.getSpacecraftBus()));
 		
@@ -47,8 +43,7 @@ public class UniverseTest {
 	@Test
 	public void testCelestialObjects() {
 		//Setup the universe
-		UniverseLocationDataProvider dataProvider = new LocalUniverseLocationDataProvider();
-		Universe universe = new Universe(dataProvider);
+		Universe universe = Universe.getInstance();
 
 		BigDecimal coord1 = new BigDecimal(10000000000000000.0); // 8kPc from galactic center
 		BigDecimal coord2 = new BigDecimal(10000000000000000.0); // 2.3 Ly

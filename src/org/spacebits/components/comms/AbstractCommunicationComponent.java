@@ -146,6 +146,8 @@ public abstract class AbstractCommunicationComponent extends AbstractBusComponen
 	}
 	
 	
-	
+	@Override
+	public void tick() {
+	}
 
 }

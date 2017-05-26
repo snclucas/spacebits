@@ -16,4 +16,5 @@ public interface UniverseLocationDataProvider {
 	List<CelestialObject> getLocationsCloserThan(Coordinates coordinates, BigDecimal distance);
 	List<CelestialObject> getLocationsByTypeCloserThan(TypeInfo type, Coordinates coordinates, BigDecimal distance);
 	double getSignalPropagationSpeed(SensorProfile sensorProfile);
+	void populate();
 }

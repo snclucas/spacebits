@@ -14,6 +14,14 @@ import org.spacebits.universe.SimpleLocation;
 
 public abstract class AbstractCelestialObject extends AbstractLocation implements CelestialObject {
 
+	
+	private String opticalSignature;
+	private String radarSignature;
+	private String gravimetricSignature;
+	private String magnetometricSignature;
+	private String subspaceResonanceSignature;
+	
+	
 	public static TypeInfo category() {
 		return new TypeInfo("CelestialObject");
 	}
@@ -31,8 +39,18 @@ public abstract class AbstractCelestialObject extends AbstractLocation implement
 		this.sensorSignalResponseProfile = sensorSignalResponseProfile;
 		this.location = new SimpleLocation(name, coordinates);
 		this.ident = Configuration.getUUID();
+		generateSigniatures();
 	}
 	
+	
+	private void generateSigniatures() {
+		opticalSignature = Configuration.getUUID();
+		radarSignature = Configuration.getUUID();
+		gravimetricSignature = Configuration.getUUID();
+		magnetometricSignature = Configuration.getUUID();
+		subspaceResonanceSignature = Configuration.getUUID();
+	}
+
 	public AbstractCelestialObject(String name, Coordinates coordinates, CelestialObject relativeTo, SensorSignalResponseProfile sensorSignalResponseProfile) {
 		super(name, coordinates);
 		celestialObjects = new ArrayList<CelestialObject>();
@@ -104,5 +122,38 @@ public abstract class AbstractCelestialObject extends AbstractLocation implement
 	public BigDecimal getCoordinate(int index) {
 		return this.location.getCoordinates().get(index);
 	}
+
+	
+
+	public String getOpticalSignature() {
+		return opticalSignature;
+	}
+
+
+	public String getRadarSignature() {
+		return radarSignature;
+	}
+
+
+	public String getGravimetricSignature() {
+		return gravimetricSignature;
+	}
+
+
+	public String getMagnetometricSignature() {
+		return magnetometricSignature;
+	}
+
+
+	public String getSubspaceResonanceSignature() {
+		return subspaceResonanceSignature;
+	}
+
+
+	public List<CelestialObject> getCelestialObjects() {
+		return celestialObjects;
+	}
+	
+	
 
 }

@@ -9,6 +9,8 @@ import org.spacebits.software.Message;
 import org.spacebits.software.SystemMessage;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatus;
+import org.spacebits.universe.Coordinates;
+import org.spacebits.universe.Universe;
 
 public class SimpleSolarArray extends AbstractPowerGenerator {
 	
@@ -93,7 +95,9 @@ public class SimpleSolarArray extends AbstractPowerGenerator {
 
 	
 	private double getLightFlux() {
-		return environmentDataProvider.getEnvironmentData(getSystemComputer().getSpacecraftBus().getSpacecraft().getIdent()).getSolarFlux();
+		Coordinates coordinates = Universe.getInstance()
+				.getSpacecraftLocation(getSystemComputer().getSpacecraftBus().getSpacecraft().getIdent());
+		return environmentDataProvider.getEnvironmentData(coordinates).getSolarFlux();
 	}
 	
 	

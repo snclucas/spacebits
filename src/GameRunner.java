@@ -1,3 +1,13 @@
+import java.math.BigDecimal;
+
+import org.spacebits.Configuration;
+import org.spacebits.physics.Unit;
+import org.spacebits.spacecraft.Spacecraft;
+import org.spacebits.spacecraft.SpacecraftFactory;
+import org.spacebits.universe.Coordinates;
+import org.spacebits.universe.Universe;
+import org.spacebits.universe.celestialobjects.SensorSignalResponseLibrary;
+import org.spacebits.universe.celestialobjects.Star;
 
 public class GameRunner {
 
@@ -6,15 +16,17 @@ public class GameRunner {
 	private int lastFpsTime;
 	private int fps;
 
-	public GameRunner() {
+	public GameRunner(Universe universe) {
 		gameRunning = true;
-		gameLoop();
-
+		gameLoop(universe);
 	}
 
 
-	public void gameLoop()
+	public void gameLoop(Universe universe)
 	{
+		 
+		
+		
 		long lastLoopTime = System.nanoTime();
 		final int TARGET_FPS = 10;
 		final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;   
@@ -38,17 +50,17 @@ public class GameRunner {
 			// we last recorded
 			if (lastFpsTime >= 1000000000)
 			{
-				System.out.println("(FPS: "+fps+")");
+				//System.out.println("(FPS: "+fps+")");
 				lastFpsTime = 0;
 				fps = 0;
 			}
 
 			// update the game logic
-            if(delta >-1)
-			    System.out.println(delta);
+            //if(delta >-1)
+			    //System.out.println(delta);
 
-			// draw everyting
-            
+			// draw everything
+            universe.tick();
 
 
 			// we want each frame to take 10 milliseconds, to do this
@@ -77,7 +89,13 @@ public class GameRunner {
 
 
 	public static void main(String[] args) {
-		new GameRunner();
+		
+		Universe universe = Universe.getInstance();
+		Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
+		Coordinates coords = new Coordinates(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+		universe.addSpacecraft(simpleSpacecraft, coords);
+		
+		new GameRunner(universe);
 	}
 
 }

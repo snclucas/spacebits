@@ -130,5 +130,8 @@ public abstract class AbstractFuelStorageTank extends AbstractBusComponent imple
 	}
 
 
-
+	@Override
+	public void tick() {
+	}
+	
 }

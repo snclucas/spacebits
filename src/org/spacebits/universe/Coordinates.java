@@ -49,6 +49,16 @@ public class Coordinates {
 						});
 	}
 	
+	
+	public Coordinates addDistance(BigDecimal[] distance) {
+		return new Coordinates( 
+				new BigDecimal[]{
+						this.location[0].add(distance[0]), 
+						this.location[1].add(distance[1]), 
+						this.location[2].add(distance[2])
+						});
+	}
+	
 
 	@Override
 	public int hashCode() {

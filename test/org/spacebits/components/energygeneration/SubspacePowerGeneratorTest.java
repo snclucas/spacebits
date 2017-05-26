@@ -13,7 +13,7 @@ public class SubspacePowerGeneratorTest {
 	
 	/*  */
 	@Test
-	public void testSubEtherPowerGenerator() {
+	public void testSubspacePowerExtractor() {
 		
 		double mass = 25.0;
 		double volume = 1.0;
@@ -28,12 +28,16 @@ public class SubspacePowerGeneratorTest {
 				new PhysicalSpecification(mass, volume),
 				new OperationalSpecification( nominalPower, nominalCPUThroughput, nominalPower, nominalCPUThroughput));
 		
-		SubspacePowerExtractor subspacePowerGenerator = new SubspacePowerExtractor("Test sub-ether generator", busSpecs, arrayArea, efficiency);
-		assertEquals("Max output power of sunether generator incorrect", maxOutputPower, subspacePowerGenerator.getMaximumPowerOutput(), 0.001);
+		SubspacePowerExtractor subspacePowerGenerator = new 
+				SubspacePowerExtractor("Test sub-ether generator", busSpecs, arrayArea, efficiency);
+		assertEquals("Max output power of sunether generator incorrect", arrayArea*efficiency*10.0*Unit.kW.value(), 
+				subspacePowerGenerator.getMaximumPowerOutput(), 0.001);
 		
 		
-		assertEquals("SubspacePowerExtractor category incorrect", SubspacePowerExtractor.category(), subspacePowerGenerator.getCategory());	
-		assertEquals("SubspacePowerExtractor type incorrect", SubspacePowerExtractor.type(), subspacePowerGenerator.getType());
+		assertEquals("SubspacePowerExtractor category incorrect", 
+				SubspacePowerExtractor.category(), subspacePowerGenerator.getCategory());	
+		assertEquals("SubspacePowerExtractor type incorrect", 
+				SubspacePowerExtractor.type(), subspacePowerGenerator.getType());
 		
 		
 		

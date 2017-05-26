@@ -93,5 +93,10 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 	public TypeInfo getCategory() {
 		return category();
 	}
+	
+	
+	@Override
+	public void tick() {
+	}
 
 }

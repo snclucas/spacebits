@@ -6,11 +6,12 @@ import org.spacebits.components.Component;
 import org.spacebits.components.Diagnosable;
 import org.spacebits.components.Onlineable;
 import org.spacebits.components.SpacecraftBusComponent;
+import org.spacebits.components.Tickable;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.status.StatusProvider;
 import org.spacebits.structures.hulls.Hull;
 
-public interface Spacecraft extends StatusProvider, Onlineable, Diagnosable {
+public interface Spacecraft extends StatusProvider, Onlineable, Diagnosable, Tickable {
 	
 	TypeInfo category = new TypeInfo("Spacecraft");
 	

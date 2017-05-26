@@ -55,4 +55,9 @@ public abstract class AbstractEnergyStorageDevice extends AbstractBusComponent i
 		this.dischargeRate = dischargeRate;
 	}
 	
+	
+	@Override
+	public void tick() {
+	}
+	
 }

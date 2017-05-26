@@ -23,7 +23,7 @@ public class Driver {
 	
 	
 	public Driver() {
-		Universe universe = Configuration.getUniverse();
+		Universe universe = Universe.getInstance();
 		
 		Location sol = new SimpleLocation("Sol", new Coordinates(
 				new BigDecimal(8*Unit.kPc.value()),
@@ -45,7 +45,9 @@ public class Driver {
 		
 		Spacecraft simpleSpacecraft = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
 		
-		universe.addSpacecraft(simpleSpacecraft);
+		Coordinates coords = sol.getCoordinates().add(
+				new Coordinates(new BigDecimal(10*Unit.AU.value()), BigDecimal.ZERO, BigDecimal.ZERO));
+		universe.addSpacecraft(simpleSpacecraft, coords);
 		
 		universe.updateSpacecraftLocation(simpleSpacecraft.getIdent(), initialSpacecraftLocation);
 		

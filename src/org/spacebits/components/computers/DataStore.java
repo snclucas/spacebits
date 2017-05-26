@@ -7,5 +7,5 @@ public interface DataStore {
 	
 	void saveData(DataRecord data);
 	DataRecord getData(String id, TypeInfo typeInfo);
-	
+	Archive getData(TypeInfo typeInfo);
 }

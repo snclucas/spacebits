@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,7 +29,6 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 	public LocalUniverseLocationDataProvider() {
 		super();
 		celestialObjectLocations = new HashMap<String, CelestialObject>();
-		populate();
 	}
 
 	@Override
@@ -132,7 +130,7 @@ public class LocalUniverseLocationDataProvider extends AbstractUniverseDataProvi
 
 
 
-	private void populate() {
+	public void populate() {
 		Star sol = new Star("Sol", Star.G_CLASS_STAR, new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value())),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
 		addLocation(sol);

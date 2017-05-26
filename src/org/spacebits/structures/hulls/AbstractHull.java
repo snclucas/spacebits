@@ -127,5 +127,10 @@ public abstract class AbstractHull extends AbstractBusComponent implements Hull 
 	public double getRadiationResistanceModifier() {
 		return hullSpecification.getRadiationResistanceModifier();
 	}
+	
+	@Override
+	public void tick() {
+		System.out.println(this.getName() + " tick!");
+	}
 
 }

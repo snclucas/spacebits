@@ -234,5 +234,10 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 		return ident;
 	}
 
+	
+	@Override
+	public void tick() {
+		getComponents().forEach(Component::tick);
+	}
 
 }

@@ -2,6 +2,8 @@ package org.spacebits.components.energygeneration;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
+
 import org.junit.Test;
 import org.spacebits.Configuration;
 import org.spacebits.data.SpacecraftComponentData;
@@ -9,7 +11,10 @@ import org.spacebits.data.SpacecraftDataProvider;
 import org.spacebits.physics.Unit;
 import org.spacebits.spacecraft.Spacecraft;
 import org.spacebits.spacecraft.SpacecraftFactory;
+import org.spacebits.universe.Coordinates;
 import org.spacebits.universe.Universe;
+import org.spacebits.universe.celestialobjects.SensorSignalResponseLibrary;
+import org.spacebits.universe.celestialobjects.Star;
 
 public class SimpleSolarArrayTest {
 	
@@ -34,11 +39,16 @@ public class SimpleSolarArrayTest {
 	
 	@Test
 	public void testPowerGeneration() {
-		Universe universe = Configuration.getUniverse();
+		Universe universe = Universe.getInstance();
 		Spacecraft shuttle = SpacecraftFactory.getSpacecraft(SpacecraftFactory.SHUTTLE);
-		universe.addSpacecraft(shuttle);
 		
-		//System.out.println(Universe.getUniverse().);
+		Star sol = new Star("Sol", Star.G_CLASS_STAR, new Coordinates(new BigDecimal(8*Unit.kPc.value()),new BigDecimal(0),new BigDecimal(100*Unit.Ly.value())),
+				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
+		Coordinates coords = sol.getCoordinates().add(
+				new Coordinates(new BigDecimal(10*Unit.AU.value()), BigDecimal.ZERO, BigDecimal.ZERO));
+		universe.addSpacecraft(shuttle, coords);
+		
+		
 		
 		
 		
