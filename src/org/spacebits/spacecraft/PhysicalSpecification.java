@@ -34,6 +34,16 @@ public class PhysicalSpecification {
 	}
 
 
+	public PhysicalSpecification() {
+		super();
+		this.mass = 0.0;
+		this.volume = 0.0;
+		this.length = 0.0;
+		this.width = 0.0;
+		this.height = 0.0;
+	}
+
+
 	public double getMass() {
 		return getMass(Unit.kg);
 	}

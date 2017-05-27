@@ -6,6 +6,7 @@ public class DataRecord {
 	
 	private final String id;
 	private final TypeInfo type;
+	private final TypeInfo category;
 	private final Object data;
 	
 	
@@ -13,10 +14,11 @@ public class DataRecord {
 		super();
 		this.id = "";
 		this.type = null;
+		this.category = null;
 		this.data = null;
 	}
 	
-	public DataRecord(String id, TypeInfo type, Object data) {
+	public DataRecord(String id, TypeInfo type, Identifiable data) {
 		super();
 		this.id = id;
 		this.type = type;

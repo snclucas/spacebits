@@ -13,6 +13,13 @@ public class BusComponentSpecification {
 		this.physicalSpecification = physicalSpecification;
 		this.operationalSpecification = operationalSpecification;
 	}
+	
+	
+	public BusComponentSpecification() {
+		super();
+		this.physicalSpecification = new PhysicalSpecification();
+		this.operationalSpecification = new OperationalSpecification();
+	}
 
 	
 

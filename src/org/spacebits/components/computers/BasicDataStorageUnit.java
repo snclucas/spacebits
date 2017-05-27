@@ -1,8 +1,12 @@
 package org.spacebits.components.computers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.spacebits.components.Identifiable;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.spacecraft.BusComponentSpecification;
@@ -90,6 +94,21 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 	@Override
 	public String toString() {
 		return "BasicDataStorageUnit";
+	}
+
+	@Override
+	public void saveData(Identifiable... data) {
+		List<Identifiable> list = new ArrayList<Identifiable>(Arrays.asList(data));
+		saveData(list);
+	}
+	
+	
+	@Override
+	public void saveData(List<? extends Identifiable> data) {
+		for(Identifiable d : data) {
+			DataRecord record = new DataRecord(d.getIdent(), d.getType(), d);
+			saveData(record);
+		}
 	}
 
 }

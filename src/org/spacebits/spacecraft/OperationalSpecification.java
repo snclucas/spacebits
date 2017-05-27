@@ -31,6 +31,13 @@ public class OperationalSpecification {
 	}
 
 
+	public OperationalSpecification() {
+		super();
+		this.nominalPower = 0.0;
+		this.nominalCPUThroughout = 0.0;
+		this.maximumOperationalPower = 0.0;
+		this.maximumOperationalCPUThroughput = 0.0;
+	}
 
 	public double getNominalPower() {
 		return nominalPower;
