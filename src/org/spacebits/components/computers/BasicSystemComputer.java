@@ -133,7 +133,8 @@ public class BasicSystemComputer extends AbstractSystemComputer implements Syste
 
 		double maximumAvailableVolume = getVolume();
 
-		storageDevice.saveData(new DataRecord("maximumAvailableVolume", SpacecraftData.category, Double.toString(maximumAvailableVolume)));
+		SystemData data = new SystemData("maximumAvailableVolume", Double.toString(maximumAvailableVolume));
+		storageDevice.saveData(new DataRecord("maximumAvailableVolume", data));
 
 		Spacecraft spacecraft = spacecraftBus.getSpacecraft();
 

@@ -9,6 +9,7 @@ import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.components.computers.DataRecord;
 import org.spacebits.components.computers.SpacecraftData;
+import org.spacebits.components.computers.SystemData;
 import org.spacebits.exceptions.ComponentConfigurationException;
 import org.spacebits.status.SystemStatus;
 import org.spacebits.structures.hulls.Hull;
@@ -86,9 +87,7 @@ public abstract class AbstractSpacecraft implements Spacecraft {
 			if(status.isOK()) {
 				systemsOnline = true;
 				online = true;
-				
-				DataRecord data = new DataRecord("spaceraft-ident", 
-						SpacecraftData.category, getSpacecraftBus().getSpacecraft().getIdent());
+				SystemData data = new SystemData("spaceraft-ident", getSpacecraftBus().getSpacecraft().getIdent());
 				
 				bus.getSystemComputer().getStorageDevice().saveData(data);
 				

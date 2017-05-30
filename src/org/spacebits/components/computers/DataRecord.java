@@ -19,15 +19,20 @@ public class DataRecord {
 		this.data = null;
 	}
 	
-	public DataRecord(String id, TypeInfo type, Identifiable data) {
+	public DataRecord(String id, Identifiable data) {
 		super();
 		this.id = id;
-		this.type = type;
+		this.type = data.getType();
+		this.category = data.getCategory();
 		this.data = data;
 	}
 	
 	public TypeInfo getRecordType() {
 		return type;
+	}
+	
+	public TypeInfo getRecordCategory() {
+		return category;
 	}
 
 	public String getRecordID() {

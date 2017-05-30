@@ -35,7 +35,7 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 	@Override
 	public SystemStatusMessage addComponent(SpacecraftBusComponent component) {
 		SystemStatusMessage message = new SystemStatusMessage(this, component.getName() + 
-				" registered with the messaging system", computer.getUniversalTime(), Status.INFO);
+				" registered with the messaging system", getSystemComputer().getUniversalTime(), Status.INFO);
 		registeredComponents.add(component);
 		return message;
 	}
@@ -48,7 +48,7 @@ public class SystemMessageService extends AbstractSoftware implements MessageMed
 		if(componentIsRegistered)
 			return ((BusCommunicator)registeredComponents.get(componentIndex)).recieveBusMessage(message);
 		else
-			return new SystemMessage(null, null, "Component not registered", computer.getUniversalTime());
+			return new SystemMessage(null, null, "Component not registered", getSystemComputer().getUniversalTime());
 	}
 
 

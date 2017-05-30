@@ -16,7 +16,7 @@ public class DataStoreTestSuite {
 		Star sol = new Star("Sol", Star.G_CLASS_STAR,  new Coordinates(),
 				SensorSignalResponseLibrary.getStandardSignalResponseProfile(Star.G_CLASS_STAR));
 		
-		DataRecord record = new DataRecord("sol", CelestialObject.category(), sol);
+		DataRecord record = new DataRecord("sol", sol);
 		assertEquals("Data record ID not correct", "sol", record.getRecordID());
 		assertEquals("Data record type not equal to its archivable data", 
 				sol.getCategory(), record.getRecordType());

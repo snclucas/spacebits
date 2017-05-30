@@ -31,7 +31,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 	public SystemStatusMessage callDrive(double powerLevel) {
 		SystemStatusMessage message = null;
-		List<SpacecraftBusComponent> engines = computer.getSystemComputer().findComponentByCategory(Engine.category());
+		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByCategory(Engine.category());
 		for(SpacecraftBusComponent engine : engines)
 			if(engine instanceof ThrustingEngine) {
 				message =    ((ThrustDriveInterface) engine).callDrive(powerLevel);
@@ -47,15 +47,15 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 		ThrustingEngine engine = findEngineByIdent(engineIdent);
 		if(engine == null)
 			return new SystemStatusMessage(this, "No engine found with ident:"+engineIdent, 
-					computer.getUniversalTime(), Status.CRITICAL);
+					getSystemComputer().getUniversalTime(), Status.CRITICAL);
 
 		BusRequirement busRequirement = engine.callDrive(powerLevel);
-		SystemStatusMessage operationPermittedMessage = computer.getSystemComputer().requestOperation(engine, busRequirement);
+		SystemStatusMessage operationPermittedMessage = getSystemComputer().getSystemComputer().requestOperation(engine, busRequirement);
 
 		if(operationPermittedMessage.getStatus() == Status.PERMITTED) {
 			engine.execute();
 			return new SystemStatusMessage(
-					engine, "Engine [ident:"+engine.getIdent() + "], power level set to " + powerLevel, computer.getUniversalTime(), Status.SUCCESS);
+					engine, "Engine [ident:"+engine.getIdent() + "], power level set to " + powerLevel, getSystemComputer().getUniversalTime(), Status.SUCCESS);
 		}
 		else
 			return operationPermittedMessage;
@@ -74,21 +74,21 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 	public SystemStatusMessage callVector(EngineVector engineVector, String engineIdent) {
 		ThrustingEngine engine = findEngineByIdent(engineIdent);
 		if(engine == null)
-			return new SystemStatusMessage(null, "No engine found with id: "+engineIdent, computer.getUniversalTime(), Status.CRITICAL);
+			return new SystemStatusMessage(null, "No engine found with id: "+engineIdent, getSystemComputer().getUniversalTime(), Status.CRITICAL);
 
 		BusRequirement busRequirement = engine.callVector(engineVector);
-		SystemStatusMessage operationPermittedMessage = computer.getSystemComputer().requestOperation(engine, busRequirement);
+		SystemStatusMessage operationPermittedMessage = getSystemComputer().getSystemComputer().requestOperation(engine, busRequirement);
 
 		if(operationPermittedMessage.getStatus() == Status.PERMITTED) {
 			if(engine.isVectored()) {
 				engine.execute();
 				return new SystemStatusMessage(
-						engine, "Engine [ident:"+engine.getIdent() + "], engine vector set to " + engineVector, computer.getUniversalTime(), Status.SUCCESS);
+						engine, "Engine [ident:"+engine.getIdent() + "], engine vector set to " + engineVector, getSystemComputer().getUniversalTime(), Status.SUCCESS);
 			}
 			else {
 				return new SystemStatusMessage(
 						engine, "Engine [ident:"+engine.getIdent() + "], cannot be vectored", 
-						computer.getUniversalTime(), Status.NOT_PERMITTED);
+						getSystemComputer().getUniversalTime(), Status.NOT_PERMITTED);
 			}
 		}
 		else
@@ -110,7 +110,7 @@ public class PropulsionManagementSoftware extends AbstractSoftware implements So
 
 
 	private ThrustingEngine findEngineByIdent(String ident) {
-		List<SpacecraftBusComponent> engines = computer.getSystemComputer().findComponentByCategory(Engine.category());
+		List<SpacecraftBusComponent> engines = getSystemComputer().getSystemComputer().findComponentByCategory(Engine.category());
 		//TODO LOOK at thisif(engines != null)
 			for(SpacecraftBusComponent engine : engines) {
 				if(engine.getIdent() == ident)

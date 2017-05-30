@@ -1,9 +1,12 @@
 package org.spacebits.components.computers;
 
+import java.util.Map;
+
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatusMessage;
 import org.spacebits.universe.Coordinates;
 import org.spacebits.universe.celestialobjects.CelestialObject;
+import org.spacebits.universe.structures.SubspaceBeacon;
 
 public abstract class AbstractNavigationComputer extends AbstractComputer implements NavigationComputer {
 
@@ -19,7 +22,11 @@ public abstract class AbstractNavigationComputer extends AbstractComputer implem
 	@Override
 	public SystemStatusMessage updateCurrentLocation() {
 		//Refresh locations of objects using sensor sweeps
-		Archive celestialLocations = getSystemComputer().getStorageDevice().getData(CelestialObject.category());
+		
+		DataStore dataStore = getSystemComputer().getStorageDevice();
+		
+		// Look for subspace beacons in navigation archive
+		Map<String,DataRecord> subspaceBeacons = dataStore.getData(CelestialObject.category(), SubspaceBeacon.type());
 		
 		
 		

@@ -12,6 +12,7 @@ import org.spacebits.Configuration;
 import org.spacebits.components.SpacecraftBusComponent;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.computers.Computer;
+import org.spacebits.components.computers.DataStore;
 import org.spacebits.components.sensors.PositioningSensor;
 import org.spacebits.components.sensors.Sensor;
 import org.spacebits.components.sensors.SensorResult;
@@ -20,6 +21,8 @@ import org.spacebits.universe.Coordinates;
 
 public class NavigationSoftware extends AbstractSoftware implements Software, NavigationInterface {
 	private static MathContext mc = new MathContext(Configuration.precision, RoundingMode.HALF_UP);
+	
+	private DataStore dataStore;
 	
 	public static TypeInfo type() {
 		return new TypeInfo("NavigationSoftware");
@@ -30,11 +33,13 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 	
 	public NavigationSoftware(String name) {
 		super(name);
+		this.dataStore = getSystemComputer().getStorageDevice();
 	}
 
 	public NavigationSoftware(String name, Computer computer) {
 		super(name);
 		populateSensors();
+		this.dataStore = getSystemComputer().getStorageDevice();
 	}
 	
 	
@@ -67,6 +72,7 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 		List<Sensor> sensors = getSensors();
 		for(Sensor sensor : sensors) 
 			sensorResults.addAll(scan(sensor.getIdent()));
+		dataStore.saveData(sensorResults);
 		return sensorResults;
 	}
 
@@ -75,12 +81,13 @@ public class NavigationSoftware extends AbstractSoftware implements Software, Na
 		Sensor sensor = sensors.get(sensorIdent);
 		List<SensorResult> sensorResults = sensor.passiveScan(10.0, sensor.getSensorProfile());
 		sensorResults.addAll(sensorResults);
+		dataStore.saveData(sensorResults);
 		return sensorResults;
 	}
 
 
 	private List<Sensor> getSensors() {
-		List<SpacecraftBusComponent> components = computer.getSystemComputer()
+		List<SpacecraftBusComponent> components = getSystemComputer()
 				.findComponentByCategory(Sensor.category());
 		List<Sensor> sensors = new ArrayList<Sensor>();
 		for(SpacecraftBusComponent sensor : components)

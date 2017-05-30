@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.universe.Universe;
 import org.spacebits.universe.celestialobjects.CelestialObject;
+import org.spacebits.universe.structures.SubspaceBeacon;
 
 public class DataRecordTest {
 	
@@ -19,6 +20,11 @@ public class DataRecordTest {
 		dataStore.saveData(objects);
 		
 		System.out.println(dataStore.getData(CelestialObject.category()).size());
+		
+		
+		dataStore.getData(CelestialObject.category(), SubspaceBeacon.type());
+		
+		System.out.println(dataStore.getData(CelestialObject.category(), SubspaceBeacon.type()).size());
 		
 	}
 	

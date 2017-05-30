@@ -5,12 +5,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.spacebits.components.Identifiable;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.comms.Status;
 import org.spacebits.spacecraft.BusComponentSpecification;
 import org.spacebits.status.SystemStatus;
+import org.spacebits.universe.celestialobjects.CelestialObject;
+import org.spacebits.universe.structures.SubspaceBeacon;
 
 
 public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
@@ -33,14 +36,14 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 
 	@Override
 	public void saveData(DataRecord data) {
-		if(dataArchives.containsKey(data.getRecordType())) {
-			Archive archive = dataArchives.get(data.getRecordType());
+		if(dataArchives.containsKey(data.getRecordCategory())) {
+			Archive archive = dataArchives.get(data.getRecordCategory());
 			archive.put(data.getRecordID(), data);
 		}
 		else {
 			Archive archive = new Archive();
 			archive.put(data.getRecordID(), data);
-			dataArchives.put(data.getRecordType(), archive);
+			dataArchives.put(data.getRecordCategory(), archive);
 		}
 	}
 
@@ -52,19 +55,34 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 			return archive.get(id);
 		}
 		else {
-			return null;
+			return new DataRecord();
 		}
 	}
 	
 	
 	@Override
-	public Archive getData(TypeInfo typeInfo) {
+	public Map<String, DataRecord> getData(TypeInfo typeInfo) {
 		if(dataArchives.containsKey(typeInfo)) {
 			return dataArchives.get(typeInfo);
 		}
 		else {
-			return null;
+			return new Archive();
 		}
+	}
+	
+	
+	@Override
+	public Map<String,DataRecord> getData(TypeInfo category, TypeInfo ... subTypes) {
+		Map<String,DataRecord> results = new HashMap<String,DataRecord>();
+		if(dataArchives.containsKey(category)) {
+			for(Map.Entry<String,DataRecord>  a : dataArchives.get(category).entrySet()) {
+				if(Arrays.asList(subTypes).contains(a.getValue().getRecordType())) {
+					results.put(a.getKey(), a.getValue());
+				}
+			}
+			
+		}
+		return results;
 	}
 	
 
@@ -106,7 +124,7 @@ public class BasicDataStorageUnit extends AbstractDataStorageUnit  {
 	@Override
 	public void saveData(List<? extends Identifiable> data) {
 		for(Identifiable d : data) {
-			DataRecord record = new DataRecord(d.getIdent(), d.getType(), d);
+			DataRecord record = new DataRecord(d.getIdent(), d);
 			saveData(record);
 		}
 	}

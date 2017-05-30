@@ -3,12 +3,13 @@ package org.spacebits.software;
 import org.spacebits.Configuration;
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.computers.Computer;
+import org.spacebits.components.computers.SystemComputer;
 
 public abstract class AbstractSoftware implements Software {
 	
 	private String name;
 	
-	protected Computer computer;
+	private Computer computer;
 	protected final String ident;
 	
 	public AbstractSoftware(String name) {
@@ -41,6 +42,11 @@ public abstract class AbstractSoftware implements Software {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+
+	public SystemComputer getSystemComputer() {
+		return computer.getSystemComputer();
 	}
 	
 	

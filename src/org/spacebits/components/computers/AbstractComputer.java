@@ -19,7 +19,6 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 	//public static TypeInfo type() {
 	//	return new TypeInfo("Computer");
 	//}
-	
 
 	
 	protected Map<TypeInfo, Software> loadedSoftware;
@@ -98,5 +97,7 @@ public abstract class AbstractComputer extends AbstractBusComponent implements C
 	@Override
 	public void tick() {
 	}
+	
+	
 
 }
