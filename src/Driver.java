@@ -35,7 +35,7 @@ public class Driver {
 				new BigDecimal(0),
 				new BigDecimal(-10000*Unit.AU.value())), sol);
 		
-		
+
 		System.out.println(sol);
 		System.out.println(initialSpacecraftLocation);
 		System.out.println(sol.vectorToLocation(initialSpacecraftLocation, true));
