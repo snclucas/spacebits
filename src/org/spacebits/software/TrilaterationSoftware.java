@@ -1,12 +1,15 @@
 package org.spacebits.software;
 
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.spacebits.components.TypeInfo;
 import org.spacebits.components.computers.Archive;
 import org.spacebits.components.computers.DataRecord;
 import org.spacebits.components.computers.DataStore;
 import org.spacebits.universe.Coordinates;
+import org.spacebits.universe.Location;
+import org.spacebits.universe.SimpleLocation;
 import org.spacebits.universe.celestialobjects.CelestialObject;
 import org.spacebits.universe.structures.SubspaceBeacon;
 import org.spacebits.utils.math.DistanceSolver;
@@ -49,18 +52,30 @@ public class TrilaterationSoftware extends AbstractSoftware implements Software 
 
 
 	private Coordinates calculatePosition() {
-		DataStore dataStore = getSystemComputer().getSystemComputer().getStorageDevice();
+
+
+
+		DataStore dataStore = getSystemComputer().getStorageDevice();
 
 		// Look for subspace beacons in navigation archive
 		Map<String,DataRecord> subspaceBeacons = dataStore.getData(CelestialObject.category(), SubspaceBeacon.type());
+
+		//Convert to locations
+		List<Location> subspaceBeaconsLocations = new ArrayList<>();
+		for (Map.Entry<String, DataRecord> entry : map.entrySet()) {
+			Location loc = new SimpleLocation(entry.getKey(), ((CelestialObject)entry.getValue()).getCoordinates()   );
+			subspaceBeaconsLocations.add(loc);
+		}
 		
 		if(subspaceBeacons.size() < 3) {
 			SystemMessage message = new SystemMessage(null, this, "Not enough beacons to triangulate.", getSystemComputer().getUniversalTime());
 			//getSystemComputer().addSystemMessage(message);
 		}
 		else {
-			
-			
+
+			Collections.sort(subspaceBeaconsLocations, (Location loc1, Location loc2) -> p1.firstName.compareTo(p2.firstName));
+
+
 			
 		//	DistanceSolver.solve(precision, x1, y1, z1, d1, x2, y2, z2, d2, x3, y3, z3, d3);
 		}
